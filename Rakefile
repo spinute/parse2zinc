@@ -1,7 +1,9 @@
 require 'rake/clean'
 
 CC = "clang++"
-OPT = "-g -Wall"
+OPT = "-g -m64 -Wall -lpthread -lm -lgurobi_c++ -lgurobi56 -stdlib=libstdc++"
+LIB = "/Library/gurobi563/mac64/lib/"
+INC = "/Library/gurobi563/mac64/include/"
 BINS = FileList["**/bin/*"]
 BIN_DISTDIR = "./bin"
 
@@ -13,6 +15,6 @@ end
 
 directory BIN_DISTDIR
 rule /.*/ => BIN_DISTDIR do |t,args|
-  sh "#{CC} #{'src/'+t.name+'.cc'} -o #{t.name} #{OPT}"
+  sh "#{CC} #{'src/'+t.name+'.cc'} -o #{t.name} #{OPT} -I#{INC} -L#{LIB}"
   sh "mv #{t.name} #{t.name+'.dSYM'} bin"
 end

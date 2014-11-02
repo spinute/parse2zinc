@@ -1,73 +1,17 @@
 #include <iostream>
 #include <fstream>
-#include <vector>
-#include <string>
-#include <map>
 #include <utility>
 #include <sstream>
+
+#include "/Library/gurobi563/mac64/include/gurobi_c++.h"
+
+#include "generator.h"
 
 using namespace std;
 
 inline int toInt(string s) {int v; istringstream sin(s);sin>>v;return v;}
 
-typedef pair<int, int> int_pair;
-
-void parse(const char* filename);
-
-/*
- fastdownward translator sas formatをパース
-*/
-
-// sasフォーマットのvariable sectionに対応する構造体
-struct variable{
-	string name;
-	bool axiom_layer;
-	int range;
-	vector<string> atoms;
-};
-
-// sasフォーマットのmutex sectionに対応する構造体
-struct mutex_group{
-	int n;
-	vector<int_pair> list;
-};
-
-struct effect{
-	int n_assoc_conditions;
-	std::vector<int_pair> assoc_condition;
-	int var;
-	int preval;
-	int postval;
-};
-
-// corresponding to operator section
-struct op{
-	string name;
-	int n_prevailCond;
-	vector<int_pair> prevailConditions;
-	int n_effects;
-	vector<effect> effects;
-	int cost; // optional <- metric is 1
-};
-
-struct axiom{
-	int n_axioms;
-	int n_conditions;
-	vector<int_pair> conditions;
-	pair<int, int_pair> axiom;
-};
-
-class problem{
-public:
-	problem();
-	~problem();
-	int version, metric, n_vars, n_ops, n_mtxs;
-	vector<variable> vars;
-	vector<mutex_group> mtxs;
-	vector<int> init;
-	variable goal;
-	vector<op> operators;
-};
+void gurobi_solve(void);
 
 int main(int argc, char const *argv[])
 {
@@ -77,7 +21,40 @@ int main(int argc, char const *argv[])
 	}
 	
 	parse(argv[1]);
+
+	gurobi_solve();
 	return 0;
+}
+
+void gurobi_solve(){
+	try{
+		GRBEnv env = GRBEnv();
+		GRBModel model = GRBModel(env);
+
+		// addVar(upper bound, lower bound, coefficient, type, name)
+		GRBVar x = model.addVar(0.0, 1.0, 0.0, GRB_BINARY, "x");
+
+		model.update();
+
+		model.setObjective(2 * x, GRB_MAXIMIZE);
+		// GRBLinExpr obj = 0.0;
+		// obj += 2*x;
+		// model.setObjective(obj, GRB_MAXIMIZE);
+
+		model.addConstr(x <= 3, "c0");
+
+		model.optimize();
+
+		cout << x.get(GRB_StringAttr_VarName) << ": " << 
+		        x.get(GRB_DoubleAttr_X) << endl;
+
+		cout << "Obj: " << model.get(GRB_DoubleAttr_ObjVal) << endl;
+	} catch(GRBException e) {
+		cout << "Error code: " << e.getErrorCode() << endl;
+		cout << e.getMessage() << endl;
+	} catch(...) {
+		cout << "Exeption during optimization." << endl;
+	}
 }
 
 void check_format(string str, string valid){
@@ -231,6 +208,4 @@ void parse(const char* filename){
 
 	ifs >> tmp;
 	check_format(tmp, "0");
-
-	return;
 }
