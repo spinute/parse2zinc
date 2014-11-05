@@ -6,6 +6,11 @@
 
 using namespace std;
 
+typedef vector<GRBVar> States;
+
+inline void double_vloop(vector<States>){}
+//関数ポインタ使えば書けるのでは
+
 void solve(Problem* problem_ptr){ //rapper function for solver
 	
 	//
@@ -32,39 +37,41 @@ bool gurobi_solve(int level, Problem* problem_ptr)
 		GRBEnv env = GRBEnv();
 		GRBModel model = GRBModel(env);
 
-		// addVar(upper bound, lower bound, coefficient, type, name)
+		// addVar(upper bound, lower bound, coefficient, type, name(optional))
 
-		typedef pair<GRBVar, int> state_time;
-		vector<state_time> grbVars;
 		// add vars in sas format variable section
-		for (auto i = problem.vars.begin(); i != problem.vars.end(); ++i)
+		vector<States>  level_state(level);
+		for (auto t=level_state.begin(); t<level_state.end(); ++t)
 		{
-			model.addVar(
-				(double)0, (double)(*i).range-1, 0.0, GRB_INTEGER, (*i).name);
-			
+			for (auto i = problem.vars.begin(); i != problem.vars.end(); ++i)
+			{
+				(*t).push_back(model.addVar((double)0,
+				   (double)(*i).range-1, 0.0, GRB_INTEGER));
+			}
 		}
-
-
 
 		model.update();
 
+		// 仮，変数値の最大化になっているが特に意味は無い
 		GRBLinExpr obj = 0.0;
-		for (auto i = grbVars.begin(); i != grbVars.end(); ++i)
+		for (auto t = level_state.begin(); t < level_state.end(); ++t)
 		{
-			obj += (*i);
+			for (auto i = (*t).begin(); i != (*t).end(); ++i)
+			{
+				obj += (*i);
+			}
 		}
 		model.setObjective(obj, GRB_MAXIMIZE);
-
 		
-		model.addConstr(x <= 3, "c0");
+		// model.addConstr(x <= 3, "c0");
 
 		model.optimize();
 
-		for (auto i = grbVars.begin(); i != grbVars.end(); ++i)
-		{
-			cout << (*i).get(GRB_StringAttr_VarName) << ": " << 
-			        (*i).get(GRB_DoubleAttr_X) << endl;
-		}
+		// for (auto i = grbVars.begin(); i != grbVars.end(); ++i)
+		// {
+		// 	cout << (*i).get(GRB_StringAttr_VarName) << ": " << 
+		// 	        (*i).get(GRB_DoubleAttr_X) << endl;
+		// }
 
 		cout << "Obj: " << model.get(GRB_DoubleAttr_ObjVal) << endl;
 	}

@@ -1,7 +1,7 @@
 require 'rake/clean'
 
 CC = "clang++"
-OPT = "-g -m64 -Wall -lpthread -lm -lgurobi_c++ -lgurobi56 -stdlib=libstdc++"
+OPT = "-g -m64 -Wall -lpthread -lm -lgurobi_c++ -lgurobi56 -stdlib=libstdc++ -std=c++11"
 LIB = "/Library/gurobi563/mac64/lib/"
 INC = "/Library/gurobi563/mac64/include/"
 BINS = FileList["**/bin/*"]

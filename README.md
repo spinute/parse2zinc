@@ -6,3 +6,5 @@ todo
  * 続いて同じモデルをminizincで生成する
   
  * labのつかい方(labに渡せるようにAPIは generate hoge.pddl hoge.problemとする)
+
+ * testing frameworkをなににするか（Google C++ testing framework, cppUnit, Boost, unittest++など）
