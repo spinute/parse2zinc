@@ -8,3 +8,5 @@ todo
  * labのつかい方(labに渡せるようにAPIは generate hoge.pddl hoge.problemとする)
 
  * testing frameworkをなににするか（Google C++ testing framework, cppUnit, Boost, unittest++など）
+
+ * SASフォーマットを使うのは間違っていた？（多値変数の間のmutexを表現することができず，結局２進にエンコードするしかない気がする。例 x+y+z < 3はバイナリだとat most 2 variable hold true だが，多値変数だとそうとは限らない）

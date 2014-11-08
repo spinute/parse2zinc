@@ -10,7 +10,7 @@ BIN_DISTDIR = "./bin"
 CLEAN.include()
 CLOBBER.include(BINS)
 
-task :default => [:clobber, :generator] do
+task :default => [:clobber, :sas_generator] do
 end
 
 directory BIN_DISTDIR
