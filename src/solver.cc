@@ -133,7 +133,11 @@ bool gurobi_solve(int level, Problem* problem_ptr)
 
 		// constraint
 		// sas format goal section
-		
+		// auto goalEnv = level_env.at(level-1);
+		// for (auto i = problem.goal.begin(); i != problem.goal.end(); ++i)
+		// {
+		// 	model.addConstr( goalEnv.at(i->first).at(i->second) == 1.0);
+		// }
 
 		model.update();
 		model.write("output.lp");
