@@ -19,7 +19,7 @@ void solve(Problem* problem_ptr){ //rapper function for solver
 	// there will be solver switch
 	//
 
-	const int MAX_DEPTH = 100;
+	const int MAX_DEPTH = 1;
 
 	// iterative deepening
 	for (int level = 1; level <= MAX_DEPTH; ++level)
@@ -124,14 +124,19 @@ bool gurobi_solve(int level, Problem* problem_ptr)
 		// sas format initial section
 
 		auto startEnv = level_env.at(0);
-		for (auto i = startEnv.begin(); i != startEnv.end(); ++i)
+		auto var_itr = startEnv.begin();
+		for (auto i = problem.init.begin(); i != problem.init.end(); ++i)
 		{
-			for (auto j = problem.init.begin(); j != problem.init.end(); ++j)
-			{
-				model.addConstr(i->at(*j) == 1.0);
-			}
+			model.addConstr(var_itr->at(*i) == 1.0);
+			++var_itr;
 		}
 
+		// constraint
+		// sas format goal section
+		
+
+		model.update();
+		model.write("output.lp");
 		model.optimize();
 
 		// output answers
