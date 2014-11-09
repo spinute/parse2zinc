@@ -63,6 +63,7 @@ typedef struct Problem
 	vector<int> init;
 	vector<int_pair> goal;
 	vector<op> operators;
+	// vector<axiom> axioms;
 }Problem;
 
 // rapper for switching solver and iterative deepening

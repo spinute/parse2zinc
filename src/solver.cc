@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cassert>
 
 #include "/Library/gurobi563/mac64/include/gurobi_c++.h"
 
@@ -22,7 +23,7 @@ void solve(const Problem* problem_ptr){ //rapper function for solver
 	// there will be solver switch
 	//
 
-	const int MAX_DEPTH = 2;
+	const int MAX_DEPTH = 3;
 
 	// iterative deepening
 	for (int level = 1; level <= MAX_DEPTH; ++level)
@@ -134,6 +135,7 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 			model.addConstr(var_itr->at(*i) == 1.0);
 			++var_itr;
 		}
+		assert(var_itr == startEnv.end());
 
 		// constraint
 		// sas format goal section
@@ -153,22 +155,53 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 
 		for (int t = 0; t < level; ++t)
 		{
-			Actions tmp_act;
+			Actions tmp_acts;
 			for (int i = 0; i < problem.n_ops; ++i)
 			{
-				tmp_act.push_back(model.addVar(0.0, 1.0, 0.0, GRB_BINARY));
+				tmp_acts.push_back(model.addVar(0.0, 1.0, 0.0, GRB_BINARY));
 			}
-			level_Actions.push_back(tmp_act);
+			level_Actions.push_back(tmp_acts);
 		}
+
+		model.update();
 
 		// constraint
 		// sas format operator section
 		
-		// for (auto t = .begin(); t != .end(); ++t)
-		// {
-			
-		// }
+		auto level_env_itr = level_env.begin();
 
+		//最終ステップではアクションを取らないのでendの一個前で止める
+		for (auto t = level_Actions.begin(); t != --(level_Actions.end()); ++t)
+		{
+			auto op_itr = problem.operators.begin();
+			for (auto i = t->begin(); i != t->end(); ++i)
+			{
+				target = 0.0;
+
+				// prevailcondition variables hold in t and t+1
+				for(auto pc = op_itr->prevailConditions.begin(); pc != op_itr->prevailConditions.end(); ++pc)
+				{
+					target += level_env_itr->at(pc->first).at(pc->second);
+					
+					// at next step also hold
+					++level_env_itr;
+					target += level_env_itr->at(pc->first).at(pc->second);
+					--level_env_itr;
+				}
+
+				// effect
+				for (auto i = op_itr->effects.begin(); i != op_itr->effects.end(); ++i)
+				{
+					
+				}
+
+				++op_itr;
+			}
+			assert(op_itr == problem.operators.end());
+
+			++level_env_itr;
+		}
+		assert( level_env_itr == --(level_env.end()) );
 
 		model.update();
 		model.write("output.lp");

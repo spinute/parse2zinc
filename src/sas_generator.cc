@@ -140,10 +140,9 @@ Problem* parse2gurobi(const char* filename)
 	check_format(tmp, "end_goal");
 
 	// operator section
-	int n_ops;
-	ifs >> n_ops;
+	ifs >> problem.n_ops;
 
-	for (int i = 0; i < n_ops; ++i)
+	for (int i = 0; i < problem.n_ops; ++i)
 	{
 		op this_operator;
 		ifs >> tmp;
