@@ -20,9 +20,9 @@ int main(int argc, char const *argv[])
 		return -1;
 	}
 	
-	Problem *problem_ptr = parse(argv[1]);
+	Problem *problem_ptr = parse2gurobi(argv[1]);
 
-	solve(problem_ptr); //for gurobi c++ interface test
+	solve(problem_ptr);
 	return 0;
 }
 
@@ -32,14 +32,14 @@ void check_format(string str, string valid)
 {
 	if (str!=valid)
 	{
-		string status = "invalid tag: ";
+		string status = "invalid tag: "; // '0' means axiom section error
 		status.append(valid);
 		perror(status.c_str());
 		exit(EXIT_FAILURE);
 	}
 }
 
-Problem* parse(const char* filename)
+Problem* parse2gurobi(const char* filename)
 {
 	static Problem problem;
 
@@ -98,7 +98,7 @@ Problem* parse(const char* filename)
 
 	for (int i = 0; i < n_mtxs; ++i)
 	{
-		mutex_group this_mutexes;  //??
+		mutex_group this_mutexes;  //what's the plural form of mutex??
 		ifs >> tmp;
 		check_format(tmp, "begin_mutex_group");
 		ifs >> tmp;
@@ -148,8 +148,8 @@ Problem* parse(const char* filename)
 		op this_operator;
 		ifs >> tmp;
 		check_format(tmp, "begin_operator");
-		ifs.ignore();
-		getline(ifs, this_operator.name);
+		ifs.ignore(); // ignore before 'getline'
+		getline(ifs, this_operator.name); // name hold space (ex. action ope ope ...)
 		ifs >> tmp;
 		this_operator.n_prevailCond = toInt(tmp);
 		for (int i = 0; i < this_operator.n_prevailCond; ++i)
@@ -187,6 +187,7 @@ Problem* parse(const char* filename)
 		problem.operators.push_back(this_operator);
 	}
 
+	// axiom section: in STRIPS always 0 (used in ADL, especially for all ...etc)
 	ifs >> tmp;
 	check_format(tmp, "0");
 

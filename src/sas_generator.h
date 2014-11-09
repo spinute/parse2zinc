@@ -66,12 +66,12 @@ typedef struct Problem
 }Problem;
 
 // rapper for switching solver and iterative deepening
-void solve(Problem* problem_ptr);
+void solve(const Problem* problem_ptr);
 
 // solve gurobi
-bool gurobi_solve(int level, Problem* problem_ptr);
+bool gurobi_solve(const int level, const Problem* problem_ptr);
 
 // parse .sas file
-Problem* parse(const char* filename);
+Problem* parse2gurobi(const char* filename);
 
 #endif

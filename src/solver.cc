@@ -10,11 +10,14 @@ typedef GRBVar Value;
 typedef vector<Value> Var;
 typedef vector<Var> Env;
 
+typedef GRBVar ActionVar;
+typedef vector<ActionVar> Actions;
+
 inline void double_vloop(vector<Env>){}
 //関数ポインタ使えば書けるのでは
 
-void solve(Problem* problem_ptr){ //rapper function for solver
-	
+void solve(const Problem* problem_ptr){ //rapper function for solver
+
 	//
 	// there will be solver switch
 	//
@@ -31,7 +34,7 @@ void solve(Problem* problem_ptr){ //rapper function for solver
 	}
 }
 
-bool gurobi_solve(int level, Problem* problem_ptr)
+bool gurobi_solve(const int level, const Problem* problem_ptr)
 {
 	Problem problem = *problem_ptr;
 
@@ -66,7 +69,8 @@ bool gurobi_solve(int level, Problem* problem_ptr)
 		model.update();
 
 		// objective function
-		// 仮，変数値の最大化になっているが特に意味は無い
+		// action variable のtrue 最小化
+		// にしたいけど今はダミー
 
 		GRBLinExpr obj = 0.0;
 
@@ -140,7 +144,32 @@ bool gurobi_solve(int level, Problem* problem_ptr)
 		{
 			model.addConstr( goalEnv.at(i->first).at(i->second) == 1.0);
 		}
+
+
+		// addVar
+		// sas format operator section
 		
+		vector<Actions> level_Actions;
+
+		for (int t = 0; t < level; ++t)
+		{
+			Actions tmp_act;
+			for (int i = 0; i < problem.n_ops; ++i)
+			{
+				tmp_act.push_back(model.addVar(0.0, 1.0, 0.0, GRB_BINARY));
+			}
+			level_Actions.push_back(tmp_act);
+		}
+
+		// constraint
+		// sas format operator section
+		
+		// for (auto t = .begin(); t != .end(); ++t)
+		// {
+			
+		// }
+
+
 		model.update();
 		model.write("output.lp");
 		model.optimize();
