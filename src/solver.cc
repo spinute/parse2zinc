@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cassert>
+#include <stdio.h>
 
 #include "/Library/gurobi563/mac64/include/gurobi_c++.h"
 
@@ -23,10 +24,10 @@ void solve(const Problem* problem_ptr){ //rapper function for solver
 	// there will be solver switch
 	//
 
-	const int MAX_DEPTH = 3;
+	const int MAX_DEPTH = 20;
 
 	// iterative deepening
-	for (int level = 1; level <= MAX_DEPTH; ++level)
+	for (int level = 2; level <= MAX_DEPTH; ++level)
 	{
 		if(gurobi_solve(level, problem_ptr))
 		{
@@ -177,6 +178,7 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 			for (auto i = t->begin(); i != t->end(); ++i)
 			{
 				target = 0.0;
+				
 
 				// prevailcondition variables hold in t and t+1
 				for(auto pc = op_itr->prevailConditions.begin(); pc != op_itr->prevailConditions.end(); ++pc)
@@ -190,10 +192,20 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 				}
 
 				// effect
-				for (auto i = op_itr->effects.begin(); i != op_itr->effects.end(); ++i)
+				for (auto ef = op_itr->effects.begin(); ef != op_itr->effects.end(); ++ef)
 				{
-					
+					if (ef->n_assoc_conditions == 0)
+					{
+						target += level_env_itr->at(ef->var).at(ef->preval);
+
+						++level_env_itr;
+						target += level_env_itr->at(ef->var).at(ef->postval);
+						--level_env_itr;
+					}
 				}
+
+				int cap = (op_itr->n_prevailCond + op_itr->n_effects)*2;
+				model.addConstr(target == cap);
 
 				++op_itr;
 			}
