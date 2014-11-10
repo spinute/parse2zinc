@@ -24,10 +24,10 @@ void solve(const Problem* problem_ptr){ //rapper function for solver
 	// there will be solver switch
 	//
 
-	const int MAX_DEPTH = 20;
+	const int MAX_DEPTH = 2;
 
 	// iterative deepening
-	for (int level = 2; level <= MAX_DEPTH; ++level)
+	for (int level = 1; level <= MAX_DEPTH; ++level)
 	{
 		if(gurobi_solve(level, problem_ptr))
 		{
@@ -59,7 +59,7 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 			{
 				variable this_var = problem.vars.at(i);
 				Var tmp_var;
-				for (int i = 0; i < this_var.range; ++i)
+				for (int j = 0; j < this_var.range; ++j)
 				{
 					tmp_var.push_back(model.addVar(0.0, 1.0, 0.0, GRB_BINARY));
 				}
@@ -69,24 +69,6 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 		}
 
 		model.update();
-
-		// objective function
-		// action variable のtrue 最小化
-		// にしたいけど今はダミー
-
-		GRBLinExpr obj = 0.0;
-
-		for (auto t = level_env.begin(); t < level_env.end(); ++t)
-		{
-			for (auto i = t->begin(); i != t->end(); ++i)
-			{
-				for (auto j = i->begin(); j != i->end(); ++j)
-				{
-					obj += *j;
-				}
-			}
-		}
-		model.setObjective(obj, GRB_MAXIMIZE);
 		
 		GRBLinExpr target = 0.0;
 
@@ -172,22 +154,25 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 		auto level_env_itr = level_env.begin();
 
 		//最終ステップではアクションを取らないのでendの一個前で止める
-		for (auto t = level_Actions.begin(); t != --(level_Actions.end()); ++t)
+		auto stop_level = --(level_Actions.end());
+		for (auto t = level_Actions.begin(); t != stop_level; ++t)
 		{
 			auto op_itr = problem.operators.begin();
 			for (auto i = t->begin(); i != t->end(); ++i)
 			{
 				target = 0.0;
-				
+				int cap = 0;
 
 				// prevailcondition variables hold in t and t+1
 				for(auto pc = op_itr->prevailConditions.begin(); pc != op_itr->prevailConditions.end(); ++pc)
 				{
 					target += level_env_itr->at(pc->first).at(pc->second);
+					++cap;
 					
-					// at next step also hold
+					// // at next step also hold
 					++level_env_itr;
 					target += level_env_itr->at(pc->first).at(pc->second);
+					++cap;
 					--level_env_itr;
 				}
 
@@ -196,16 +181,23 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 				{
 					if (ef->n_assoc_conditions == 0)
 					{
-						target += level_env_itr->at(ef->var).at(ef->preval);
+						if (ef->preval != -1)
+						{
+							target += level_env_itr->at(ef->var).at(ef->preval);
+							++cap;
+						}
 
 						++level_env_itr;
 						target += level_env_itr->at(ef->var).at(ef->postval);
+						++cap;
 						--level_env_itr;
 					}
 				}
 
-				int cap = (op_itr->n_prevailCond + op_itr->n_effects)*2;
+				// int cap = (op_itr->n_prevailCond + op_itr->n_effects)*2;
 				model.addConstr(target == cap);
+				// logical bug in
+				// imply になっていない (if action then target == cap)
 
 				++op_itr;
 			}
@@ -214,6 +206,20 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 			++level_env_itr;
 		}
 		assert( level_env_itr == --(level_env.end()) );
+
+		// objective functiona
+		// action variable のtrue 最小化
+
+		GRBLinExpr obj = 0.0;
+
+		for (auto t = level_Actions.begin(); t < level_Actions.end(); ++t)
+		{
+			for (auto i = t->begin(); i != t->end(); ++i)
+			{
+				obj += *i;
+			}
+		}
+		model.setObjective(obj, GRB_MINIMIZE);
 
 		model.update();
 		model.write("output.lp");
