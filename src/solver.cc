@@ -1,6 +1,5 @@
 #include <iostream>
 #include <cassert>
-#include <stdio.h>
 
 #include "/Library/gurobi563/mac64/include/gurobi_c++.h"
 
@@ -24,11 +23,12 @@ void solve(const Problem* problem_ptr){ //rapper function for solver
 	// there will be solver switch
 	//
 
-	const int MAX_DEPTH = 2;
+	const int MAX_DEPTH = 10;
 
 	// iterative deepening
-	for (int level = 1; level <= MAX_DEPTH; ++level)
+	for (int level = 2; level <= MAX_DEPTH; ++level)
 	{
+		cout << "***** level: " <<  level << " start ****" << endl << endl;
 		if(gurobi_solve(level, problem_ptr))
 		{
 			break;
@@ -161,6 +161,9 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 			for (auto i = t->begin(); i != t->end(); ++i)
 			{
 				target = 0.0;
+
+				// this is counter for objective function
+				// todo: targetを増やすときには必ずインクリメントするので，関数にまとめた方がよい
 				int cap = 0;
 
 				// prevailcondition variables hold in t and t+1
@@ -194,10 +197,12 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 					}
 				}
 
+				// capはできれば問題から閉じた式でに計算したい，が，-1の検出などが面倒
 				// int cap = (op_itr->n_prevailCond + op_itr->n_effects)*2;
-				model.addConstr(target == cap);
-				// logical bug in
-				// imply になっていない (if action then target == cap)
+				
+				// if action then target == cap
+				// !action or (target == cap)
+				model.addConstr( (*i) * cap + target <= cap );
 
 				++op_itr;
 			}
@@ -227,13 +232,25 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 
 		// output answers
 		// extract planning problem answers from LP
-		
 
-		// for (auto i = grbVars.begin(); i != grbVars.end(); ++i)
-		// {
-		// 	cout << (*i).get(GRB_StringAttr_VarName) << ": " << 
-		// 	        (*i).get(GRB_DoubleAttr_X) << endl;
-		// }
+		// plan の抽出
+		// サンプルが goal == start なのでまだ動くか確認できていない。
+		// また，今はとりあえず見てわかるように抽出しているが，VALに渡せるようにpddlで出力したいので
+		// フォーマットの確認が必要
+		int level = 0;
+		for (auto t = level_Actions.begin(); t != level_Actions.end(); ++t)
+		{
+			for (auto i = t->begin(); i != t->end(); ++i)
+			{
+				if (i->get(GRB_DoubleAttr_X) == 1)
+				{
+					cout << "in " << level << ": " <<
+				    	  i->get(GRB_StringAttr_VarName) << endl;
+				}
+			}
+
+			++level;
+		}
 
 		cout << "Obj: " << model.get(GRB_DoubleAttr_ObjVal) << endl;
 	}

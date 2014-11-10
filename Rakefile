@@ -10,7 +10,12 @@ BIN_DISTDIR = "./bin"
 CLEAN.include()
 CLOBBER.include(BINS)
 
-task :default => [:clobber, :sas_generator] do
+task :default => [:clobber, :sas_generator, :gripper01] do
+	sh "bin/sas_generator output.sas"
+end
+
+task :gripper01 do 
+	sh "~/fastdownward/src/translate/translate.py domain/gripper/domain.pddl domain/gripper/prob01.pddl"
 end
 
 directory BIN_DISTDIR
