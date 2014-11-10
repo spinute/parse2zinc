@@ -10,8 +10,8 @@ BIN_DISTDIR = "./bin"
 CLEAN.include()
 CLOBBER.include(BINS)
 
-task :default => [:clobber, :sas_generator, :gripper01] do
-	sh "bin/sas_generator output.sas"
+task :default => [:clobber, :sas_generator] do
+	# sh "bin/sas_generator output.sas"
 end
 
 task :gripper01 do 
