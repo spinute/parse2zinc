@@ -3,8 +3,9 @@
 
 #include <string>
 #include <vector>
-
-using namespace std;
+#include <utility>
+#include <fstream>
+#include <sstream>
 
 // mainly for value, val pair
 typedef pair<int, int> int_pair;

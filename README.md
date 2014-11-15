@@ -1,6 +1,6 @@
 parse2zinc
+parse2gurobi
 ==========
-
  * optiplanモデル -> gurobi をまずは生成する(minizincは非商用なので怪しいバグがある可能性は否定できず，まずはgurobiでモデルが動くことを確認する)
  
  * 続いて同じモデルをminizincで生成する
@@ -17,18 +17,27 @@ parse2zinc
 
  * コメントつけよう(特にoperator sectionあたりがかなりカオス)
 
- * capを閉じた式で計算
-
  * 今はrakeで決め打ちだけど自動化する
  ** translate domain.pddl prob#.pddl
  ** sas_generator output.sas
- ** validate domain.pddl prob#.pddl sas_plan
+ ** validate domain.pddl prob#.pddl sas_plan | check_valid
 
  * fastdownwardの結果と一致するかを確かめる
  * バージョンごとに実行ファイルを裂く性しておき，新ファイル，fastdowndaridとひかくして性能の変化を確認
 
- * planning graph の実装
-
  * 簡単な問題で確認
  * fdでテストセットのデータベースとそれらの実行時間を測定する
  * (fdはadlなども使えるのでそのようなドメインは避ける)
+
+===========
+## gurobi_solver.cc
+
+ * capを閉じた式で計算
+
+ * planning graph の実装
+ ** operation 間のmutex制約を入れるといける?
+
+============
+## sas_parser.cc
+
+ * axiom sectionをパースしていない。(STRIPSでは常に0なので，それを確認しているだけ。ADL拡張などを試みるならば対応の必要あり。)

@@ -3,8 +3,6 @@
 
 #include "/Library/gurobi563/mac64/include/gurobi_c++.h"
 
-#include "sas_generator.h"
-
 using namespace std;
 
 typedef GRBVar Value;
@@ -202,7 +200,7 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 				
 				// if action then target == cap
 				// !action or (target == cap)
-				model.addConstr( (*i) * cap + target <= cap );
+				model.addConstr( (*i) * (-cap) + target <= cap );
 
 				++op_itr;
 			}
@@ -233,11 +231,9 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 		// output answers
 		// extract planning problem answers from LP
 
-		// plan の抽出
-		// サンプルが goal == start なのでまだ動くか確認できていない。
 		// また，今はとりあえず見てわかるように抽出しているが，VALに渡せるようにpddlで出力したいので
-		// フォーマットの確認が必要
-		int level = 0;
+		// フォーマットの確認が必要(sas_planを参照)
+		int this_level = 0;
 		for (auto t = level_Actions.begin(); t != level_Actions.end(); ++t)
 		{
 			for (auto i = t->begin(); i != t->end(); ++i)
@@ -249,7 +245,24 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 				}
 			}
 
-			++level;
+			++this_level;
+		}
+
+		for (auto t = level_env.begin(); t != level_env.end(); ++t)
+		{
+			for (auto i = t->begin(); i != t->end(); ++i)
+			{
+				for (auto j = i->begin(); j != i->end(); ++j)
+				{
+					if (j->get(GRB_DoubleAttr_X) == 1)
+					{
+						cout << "in " << level << ": " <<
+					    	  j->get(GRB_StringAttr_VarName) << endl;
+					}
+				}
+
+			}
+			
 		}
 
 		cout << "Obj: " << model.get(GRB_DoubleAttr_ObjVal) << endl;
