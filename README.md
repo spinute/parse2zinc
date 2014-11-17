@@ -1,13 +1,20 @@
 parse2zinc
 parse2gurobi
 ==========
+ * いろんな問題でテスト
+ ** VALテスト
+
+ * planning graph の実装
+
+ * action costも取り込む
+
  * optiplanモデル -> gurobi をまずは生成する(minizincは非商用なので怪しいバグがある可能性は否定できず，まずはgurobiでモデルが動くことを確認する)
  
  * 続いて同じモデルをminizincで生成する
  
  * lab(labに渡せるようにAPIは generate hoge.pddl hoge.problemとする)
 
- * assoc state constraint の実装
+ * assoc state constraint の実装(STRIPSの範囲では不要)
 
  * testing frameworkをなににするか（Google C++ testing framework, cppUnit, Boost, unittest++など）
   -> フレームワークは別に使う必要は今のところはない，どうテストすべきかをまずは洗い出す

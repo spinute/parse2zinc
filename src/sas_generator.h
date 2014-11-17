@@ -16,7 +16,7 @@ struct variable
 	string name;
 	bool axiom_layer;
 	int range;
-	vector<string> atoms;
+	vector<string> atoms;robe
 };
 
 // sasフォーマットのmutex sectionに対応する構造体
