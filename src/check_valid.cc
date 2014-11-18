@@ -6,7 +6,7 @@
 using namespace std;
 
 bool checkValid(string fname){
-	ifstream ifs("tmp");
+	ifstream ifs("/Users/spinute/Dropbox/program/parse2zinc/tmp/validate_result");
 	if (ifs.fail())
 	{
 		cerr << "failure: ifstream open" << endl;

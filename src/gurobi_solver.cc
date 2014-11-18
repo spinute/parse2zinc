@@ -379,14 +379,14 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 		model.setObjective(obj, GRB_MINIMIZE);
 
 		model.update();
-		model.write("output.lp");
+		model.write("/Users/spinute/Dropbox/program/parse2zinc/log/output.lp");
 		model.optimize();
 
 		// output answers
 		// extract planning problem answers from LP
 
 		// for VAL
-		ofstream plan_ofs("/Users/spinute/Dropbox/program/parse2zinc/ans_plan");
+		ofstream plan_ofs("/Users/spinute/Dropbox/program/parse2zinc/tmp/ans_plan");
 		int this_level = 0;
 		for (auto t = level_Actions.begin(); t != level_Actions.end(); ++t)
 		{

@@ -1,12 +1,18 @@
 parse2zinc
 parse2gurobi
 ==========
+high priority
+
  * いろんな問題でテスト
  ** VALテスト
+ ** fastdownward と経路長の最適値が一致するかを確認する
 
  * planning graph の実装
 
  * action costも取り込む
+
+ * minizinc での実装
+ -------
 
  * optiplanモデル -> gurobi をまずは生成する(minizincは非商用なので怪しいバグがある可能性は否定できず，まずはgurobiでモデルが動くことを確認する)
  
@@ -34,17 +40,10 @@ parse2gurobi
 
  * 簡単な問題で確認
  * fdでテストセットのデータベースとそれらの実行時間を測定する
- * (fdはadlなども使えるのでそのようなドメインは避ける)
+ * (fdはadlなども扱えるため，テストセットには入っているがひとまずそのようなドメインは避ける)
 
 ===========
-## gurobi_solver.cc
 
- * capを閉じた式で計算
-
- * planning graph の実装
- ** operation 間のmutex制約を入れるといける?
-
-============
 ## sas_parser.cc
 
  * axiom sectionをパースしていない。(STRIPSでは常に0なので，それを確認しているだけ。ADL拡張などを試みるならば対応の必要あり。)
