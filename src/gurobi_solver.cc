@@ -20,6 +20,11 @@ typedef GRBVar ActionVar;                // 最小単位, あるlevelでのあ�
 typedef vector<ActionVar> Actions;       // あるlevelでの全てのactionの真偽変数を保持する
 typedef vector<Actions> LevelActions;    // あるlevelまでの全てのaction variableを保持する
 
+// state changeを保持する
+// poyo[var][val]という形でVar->Valに対応する状態変数に関連するactionのベクトルを取り出せる
+typedef vector<int> Action_index; 
+typedef map<int, map<int, Action_index > > Related_actions_mapper;
+
 enum SolverType {Gurobi, Minizinc};
 
 inline void double_vloop(vector<Env>){}
@@ -44,7 +49,7 @@ void solve(const Problem* problem_ptr){ //rapper function for solver
 				break;
 
 			case Minizinc:
-				// minizinc solver function
+				// minizinc solver function will be there
 
 			default:
 				break;			
@@ -57,26 +62,30 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 {
 	Problem problem = *problem_ptr;
 
+    // gurobiは求解失敗をエラーで返すのでcatchする
 	try
 	{
+		// initialization for gurobi environment
 		GRBEnv env = GRBEnv();
 		GRBModel model = GRBModel(env);
 
+		// model:addVar
 		// addVar(upper bound, lower bound, coefficient, type, name(optional))
 
 		// add vars in sas format Var section
 		// sasの値一つひとつにbool値を割り当てることにした
 		// (multi valueそのままだとmutexが不等式でうまく書けない)
 
+		// parseされたデータを持つ構造体(sas_generator.hにある)から
+		// 状態変数の作成
 		LevelEnv  level_env;
 		for (int t = 0; t < level; ++t)
 		{
 			Env tmp_env;
 			for (int i = 0; i < problem.n_vars; ++i)
 			{
-				variable this_var = problem.vars.at(i);
 				Var tmp_var;
-				for (int j = 0; j < this_var.range; ++j)
+				for (int j = 0; j < problem.vars.at(i).range; ++j)
 				{
 					tmp_var.push_back(model.addVar(0.0, 1.0, 0.0, GRB_BINARY,
 					                problem.vars.at(i).atoms.at(j) ));
@@ -88,47 +97,46 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 
 		model.update();
 		
-		GRBLinExpr target = 0.0;
+		// 不等式制約の左辺用の変数の一次結合を保持する変数
+		GRBLinExpr lhs = 0.0;
 
 		// constraint:
-		// 同じvariableに属するvalueは同時にtrueになれない
-
+		// 同じVarに属するValは同時にtrueになれない
 		for (auto t = level_env.begin(); t < level_env.end(); ++t)
 		{
 			for (auto i = t->begin(); i != t->end(); ++i)
 			{
-				target = 0.0;
+				lhs = 0.0;
 				for (auto j = i->begin(); j != i->end(); ++j)
 				{
-					target += *j;
+					lhs += *j;
 				}
 
-				model.addConstr(target <= 1);
+				model.addConstr(lhs <= 1);
 			}
 		}
 
 		// constraint:
-		// sas format mutex section
-
-		auto mutexes = problem.mtxs;
+		// sas format mutex sectionにある相互排他を入れておく
+		auto mutexes = problem.mtxs; //mutexの複数形はなんですか
 		for (auto t = level_env.begin(); t < level_env.end(); ++t)
 		{
 			for (auto mutex = mutexes.begin(); mutex != mutexes.end(); ++mutex)
 			{
-				target = 0.0;
+				lhs = 0.0;
 				
 				for (auto i = mutex->list.begin(); i != mutex->list.end(); ++i)
 				{
-					target += t->at(i->first).at(i->second);
+					lhs += t->at(i->first).at(i->second);
 				}
 
-				model.addConstr(target <= 1);
+				model.addConstr(lhs <= 1);
 			}
 		}
 
 		// constraint:
 		// sas format initial section
-
+		// 全てのVarのValが順に指定されている
 		auto startEnv = level_env.at(0);
 		auto var_itr = startEnv.begin();
 		for (auto i = problem.init.begin(); i != problem.init.end(); ++i)
@@ -140,8 +148,9 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 
 		// constraint
 		// sas format goal section
-
-		int goal = level-1;
+		// initと違って全てのVarに対して制約があるわけではないのでVar,Valのペアで指定する
+		// このプログラムでのpairはだいたい<Var, Val>
+		int goal = level-1; //for文とかの t<level が書きやすいのでgoalはlevel-1とする
 		auto goalEnv = level_env.at(goal);
 		for (auto i = problem.goal.begin(); i != problem.goal.end(); ++i)
 		{
@@ -151,7 +160,7 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 
 		// addVar
 		// sas format operator section
-		
+		// 全てのlevelでのactionの真偽はこのベクトルがまとめる
 		LevelActions level_Actions;
 
 		for (int t = 0; t < level; ++t)
@@ -168,12 +177,17 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 		model.update();
 		
 		// generate addf, delf( state change model使うならpredel, preaddなども入れる)
-		map<int, map<int, vector<int> > > addf;
-		map<int, map<int, vector<int> > > delf;
-		// map<int, map<int, vector<int> > > predelf;
-		// map<int, map<int, vector<int> > > preaddf;
-		map<int, map<int, vector<int> > > maintainf;
+		// ある変数に対して働きかけるactionを列挙する
+		// successor state axiomの記述に利用する
 
+		Related_actions_mapper addf; //あるstateをaddするようなactionのベクトルを取り出せる
+		Related_actions_mapper delf; //あるstateをdelするようなactionのベクトルを取り出せる
+		// Related_actions_mapper predelf;
+		// Related_actions_mapper preaddf;
+		Related_actions_mapper maintainf; //あるstateをmaintainするようなactionのベクトルを取り出せる
+
+		// けっこう重いが，全てのlevelについて作る必要はないぶんまだまし
+		// しかしボトルネックになっているようなら工夫する
 		for (int var = 0; var < problem.n_vars; ++var)
 		{
 			for (int val = 0; val < problem.vars.at(var).range; ++val)
@@ -182,58 +196,68 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 				{
 					bool addflag = false;
 					bool delflag = false;
+
+					// 以下の処理はsasファイルで preval!=postval となっていることを前提としている
+					// fastdownwardのtranslatorにその旨の仕様があるかはわかっていないが，
+					// prevail=postval ということは変化しないということで，閉世界仮説を採用しているならばこれは
+					// 記述する必要のない制約となってしまうため，妥当である気はする
 					for (auto ef = problem.operators.at(op).effects.begin(); ef != problem.operators.at(op).effects.end(); ++ef)
 					{
-						if (addflag && delflag)
+						if (addflag && delflag) //別にbreakしなくても健全だが，もう後ろにはない
 						{
 							break;
 						}
-						else if (ef->var == var && ef->postval == val)
+
+						if (ef->var == var && ef->postval == val)
 						{
 							addf[var][val].push_back(op);
 							addflag = true;
 						}
-						else if (ef->var == var && ef->preval == val)
+						
+						if (ef->var == var && ef->preval == val)
 						{
 							delf[var][val].push_back(op);
 							delflag = true;
 						}
-						else
-						{
-							maintainf[var][val].push_back(op);
-						}
-					}	
+					}
+
+					//addでもdelでもないならvar,val共に変化していないのでmaintain
+					if(!addflag || !delflag)
+					{
+						maintainf[var][val].push_back(op);
+					}
 				}
 			}
 		}
 		
 		// constraint
 		// sas format operator section
-		
+
 		auto level_env_itr = level_env.begin();
 
 		//最終ステップではアクションを取らないのでendの一個前で止める
 		auto stop_level = --(level_Actions.end());
+		
 		for (auto t = level_Actions.begin(); t != stop_level; ++t)
 		{
 			auto op_itr = problem.operators.begin();
 			for (auto i = t->begin(); i != t->end(); ++i)
 			{
-				target = 0.0;
+				lhs = 0.0;
 
 				// this is counter for objective function
-				// todo: targetを増やすときには必ずインクリメントするので，関数にまとめた方がよい
+				// todo: lhsを増やすときには必ずインクリメントするので，関数にまとめた方がよい
 				int cap = 0;
 
 				// prevailcondition variables hold in t and t+1
 				for(auto pc = op_itr->prevailConditions.begin(); pc != op_itr->prevailConditions.end(); ++pc)
 				{
-					target += level_env_itr->at(pc->first).at(pc->second);
+					lhs += level_env_itr->at(pc->first).at(pc->second);
 					++cap;
 					
 					// // at next step also hold
 					++level_env_itr;
-					target += level_env_itr->at(pc->first).at(pc->second);
+					lhs += level_env_itr->at(pc->first).at(pc->second);
 					++cap;
 					--level_env_itr;
 				}
@@ -245,12 +269,12 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 					{
 						if (ef->preval != -1)
 						{
-							target += level_env_itr->at(ef->var).at(ef->preval);
+							lhs += level_env_itr->at(ef->var).at(ef->preval);
 							++cap;
 						}
 
 						++level_env_itr;
-						target += level_env_itr->at(ef->var).at(ef->postval);
+						lhs += level_env_itr->at(ef->var).at(ef->postval);
 						++cap;
 						--level_env_itr;
 					}
@@ -259,9 +283,9 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 				// capはできれば問題から閉じた式でに計算したい，が，-1の検出などが面倒
 				// int cap = (op_itr->n_prevailCond + op_itr->n_effects)*2;
 				
-				// if action then target == cap
-				// !action or (target == cap)
-				model.addConstr( (*i) * cap - target <= 0 );
+				// if action then lhs == cap
+				// !action or (lhs == cap)
+				model.addConstr( (*i) * cap - lhs <= 0 );
 
 				++op_itr;
 			}
@@ -278,28 +302,28 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 			{
 				for (int val = 0; val < problem.vars.at(var).range; ++val)
 				{
-					target = 0.0;
+					lhs = 0.0;
 					int cap = 0;
 					
 					for (auto i = addf[var][val].begin(); i != addf[var][val].end(); ++i)
 					{
-						target += level_Actions.at(t).at(*i);
+						lhs += level_Actions.at(t).at(*i);
 						++cap;
 					}
 					
 					for (auto i = delf[var][val].begin(); i != delf[var][val].end(); ++i)
 					{
-						target -= level_Actions.at(t).at(*i);
+						lhs -= level_Actions.at(t).at(*i);
 					}
 
-					target += level_env.at(t).at(var).at(val);
+					lhs += level_env.at(t).at(var).at(val);
 
-					target -= model.addVar(0, (double) cap, 0, GRB_INTEGER, "slack"); //slack
+					lhs -= model.addVar(0, (double) cap, 0, GRB_INTEGER, "slack"); //slack
 					model.update();
 
-					target -= level_env.at(t+1).at(var).at(val);
+					lhs -= level_env.at(t+1).at(var).at(val);
 
-					model.addConstr(target, GRB_EQUAL, 0.0); 
+					model.addConstr(lhs, GRB_EQUAL, 0.0); 
 				}
 			}
 		}
@@ -311,17 +335,17 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 		// 	{
 		// 		for (int val = 0; val < problem.vars.at(var).range; ++val)
 		// 		{
-		// 			target = 0.0;
+		// 			lhs = 0.0;
 		// 			int cap1 = 1;
 		// 			for (auto op = maintainf[var][val].begin(); op != maintainf[var][val].end(); ++op)
 		// 			{
-		// 				target += 1 - level_Actions.at(t).at(*op);
+		// 				lhs += 1 - level_Actions.at(t).at(*op);
 		// 			}
 		// 			const int cap2 = 2;
 
 		// 			auto pre = level_env.at(t).at(var).at(val);
 		// 			auto post = level_env.at(t+1).at(var).at(val);
-		// 			model.addConstr(target * cap2 + 
+		// 			model.addConstr(lhs * cap2 + 
 		// 				(pre + post) * cap1 >= cap1*cap2);
 		// 		}
 		// 	}
@@ -331,12 +355,12 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 		// action exclusion axiom(入れると整列集合になるので一長一短)
 		// for (auto t = level_Actions.begin(); t < level_Actions.end(); ++t)
 		// {
-		// 	target = 0.0;
+		// 	lhs = 0.0;
 		// 	for (auto i = t->begin(); i != t->end(); ++i)
 		// 	{
-		// 		target += *i;
+		// 		lhs += *i;
 		// 	}
-		// 	model.addConstr(target <= 1.0);
+		// 	model.addConstr(lhs <= 1.0);
 		// }
 
 
@@ -361,8 +385,8 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 		// output answers
 		// extract planning problem answers from LP
 
-		// また，今はとりあえず見てわかるように抽出しているが，VALに渡せるようにpddlで出力したいので
-		// フォーマットの確認が必要(sas_planを参照)
+		// for VAL
+		ofstream plan_ofs("/Users/spinute/Dropbox/program/parse2zinc/ans_plan");
 		int this_level = 0;
 		for (auto t = level_Actions.begin(); t != level_Actions.end(); ++t)
 		{
@@ -370,33 +394,56 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 			{
 				if (i->get(GRB_DoubleAttr_X) == 1)
 				{
-					cout << "action: in " << this_level << ": " <<
-				    	  i->get(GRB_StringAttr_VarName) << endl;
+					plan_ofs << "(" << i->get(GRB_StringAttr_VarName) << ")"<< endl;
 				}
 			}
 
 			++this_level;
 		}
 
-		this_level = 0;
-		for (auto t = level_env.begin(); t != level_env.end(); ++t)
-		{
-			for (auto i = t->begin(); i != t->end(); ++i)
-			{
-				for (auto j = i->begin(); j != i->end(); ++j)
-				{
-					if (j->get(GRB_DoubleAttr_X) == 1)
-					{
-						cout << "env: in " << this_level << ": " <<
-					    	  j->get(GRB_StringAttr_VarName) << endl;
-					}
-				}
+		//action output
+		
+		// this_level = 0;
+		// for (auto t = level_Actions.begin(); t != level_Actions.end(); ++t)
+		// {
+		// 	for (auto i = t->begin(); i != t->end(); ++i)
+		// 	{
+		// 		if (i->get(GRB_DoubleAttr_X) == 1)
+		// 		{
+		// 			cout << "action: in " << this_level << ": " <<
+		// 		    	  i->get(GRB_StringAttr_VarName) << endl;
+		// 		}
+		// 	}
+		
+		// 	++this_level;
+		// }
 
-			}
-			++this_level;
-		}
+		//state output
+		
+		// this_level = 0;
+		// for (auto t = level_env.begin(); t != level_env.end(); ++t)
+		// {
+		// 	for (auto i = t->begin(); i != t->end(); ++i)
+		// 	{
+		// 		for (auto j = i->begin(); j != i->end(); ++j)
+		// 		{
+		// 			if (j->get(GRB_DoubleAttr_X) == 1)
+		// 			{
+		// 				cout << "env: in " << this_level << ": " <<
+		// 			    	  j->get(GRB_StringAttr_VarName) << endl;
+		// 			}
+		// 		}
+		
+		// 	}
+		// 	++this_level;
+		// }
 
-		cout << "Obj: " << model.get(GRB_DoubleAttr_ObjVal) << endl;
+		//obj value output
+		//cout << "Obj: " << model.get(GRB_DoubleAttr_ObjVal) << endl;
+		
+		// validate optimality, comparing with fastdownward
+		ofstream objective_ofs("objval");
+		objective_ofs << model.get(GRB_DoubleAttr_ObjVal) << endl;
 	}
 	catch(GRBException e) 
 	{

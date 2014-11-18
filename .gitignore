@@ -33,3 +33,7 @@ bin
 *.lp
 sas_plan
 domain
+ans_plan
+check_valid
+objval
+tmp
