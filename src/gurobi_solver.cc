@@ -6,31 +6,48 @@
 
 using namespace std;
 
-typedef GRBVar Value;
-typedef vector<Value> Var;
-typedef vector<Var> Env;
+// stateに対応する変数
+// LevelEnv -> Env -> Var -> Valという階層構造になっている
+// translatorが多値変数を利用して相互排他な命題をまとめているので，それを利用できるようにこのような階層構造を取る
+typedef GRBVar Value;           // 最小単位, あるlevelでのあるstateの真偽値を保持する
+typedef vector<Value> Var;      // 相互排他なValの集合をVarと呼びまとめる
+typedef vector<Var> Env;        // あるlevelにおけるVarの集合を保持する
+typedef vector<Env> LevelEnv;   // あるlevelまでの全てのstate variableを保持する
 
-typedef GRBVar ActionVar;
-typedef vector<ActionVar> Actions;
+// actionに対応する変数
+// LevelActions -> Actions -> ActionVarという階層構造になっている
+typedef GRBVar ActionVar;                // 最小単位, あるlevelでのあるactionの実行の真偽を保持する
+typedef vector<ActionVar> Actions;       // あるlevelでの全てのactionの真偽変数を保持する
+typedef vector<Actions> LevelActions;    // あるlevelまでの全てのaction variableを保持する
+
+enum SolverType {Gurobi, Minizinc};
 
 inline void double_vloop(vector<Env>){}
-//関数ポインタ使えば書けるのでは
+//ループが多くやや見難いのでループ用のinlineを作ると見やすくなるかも
 
 void solve(const Problem* problem_ptr){ //rapper function for solver
 
-	//
-	// there will be solver switch
-	//
-
 	const int MAX_DEPTH = 20;
+	SolverType solver = Gurobi;
 
 	// iterative deepening
 	for (int level = 1; level <= MAX_DEPTH; ++level)
 	{
 		cout << "***** level: " <<  level << " start ****" << endl << endl;
-		if(gurobi_solve(level, problem_ptr))
-		{
-			break;
+
+		switch(solver){
+			case Gurobi:
+				if(gurobi_solve(level, problem_ptr))
+				{
+					return; // return with getting plan
+				}
+				break;
+
+			case Minizinc:
+				// minizinc solver function
+
+			default:
+				break;			
 		}
 	}
 }
@@ -51,7 +68,7 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 		// sasの値一つひとつにbool値を割り当てることにした
 		// (multi valueそのままだとmutexが不等式でうまく書けない)
 
-		vector<Env>  level_env;
+		LevelEnv  level_env;
 		for (int t = 0; t < level; ++t)
 		{
 			Env tmp_env;
@@ -135,7 +152,7 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 		// addVar
 		// sas format operator section
 		
-		vector<Actions> level_Actions;
+		LevelActions level_Actions;
 
 		for (int t = 0; t < level; ++t)
 		{
