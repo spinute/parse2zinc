@@ -5,8 +5,11 @@
 
 using namespace std;
 
-bool checkValid(string fname){
-	ifstream ifs("/Users/spinute/Dropbox/program/parse2zinc/tmp/validate_result");
+bool checkValid(){
+	string str;
+
+	cin >> str;
+	ifstream ifs(str.c_str());
 	if (ifs.fail())
 	{
 		cerr << "failure: ifstream open" << endl;
@@ -19,7 +22,6 @@ bool checkValid(string fname){
 	getline(ifs, tmp);
 
 	getline(ifs, tmp);
-	cout << tmp << endl;
 	if (tmp != "Plan executed successfully - checking goal")
 	{
 		return false;
@@ -37,7 +39,7 @@ bool checkValid(string fname){
 
 int main(int argc, char const *argv[])
 {
-	if(checkValid("out_validator")){
+	if(checkValid()){
 		cout << "\n**** validator test: ok ****" << endl;
 	}else{
 		cout << "\n!!!! wrong plan generated !!!!" << endl; 

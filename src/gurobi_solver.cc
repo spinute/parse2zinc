@@ -32,7 +32,7 @@ inline void double_vloop(vector<Env>){}
 
 void solve(const Problem* problem_ptr){ //rapper function for solver
 
-	const int MAX_DEPTH = 20;
+	const int MAX_DEPTH = 50; // 探索の打ち切り，恣意的(30分以上の実験をするなら伸ばす)
 	SolverType solver = Gurobi;
 
 	// iterative deepening
@@ -296,6 +296,9 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 		assert( level_env_itr == --(level_env.end()) );		
 
 		// succcessor state axiom
+		// ある状態でstateがtrueであるのは
+		// そのlevelでそのstateをtrueにするようなaction(addfに入っている)が実行される時
+		// または直前のlevelでstateがtrueでかつそれをfalseにするようなaction(delfに入っている)が実行されない時
 		for (int t = 0; t < level-1; ++t)
 		{
 			for (int var = 0; var < problem.n_vars; ++var)
@@ -329,6 +332,8 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 		}
 
 		// // fluent maintain constraint
+		// なぜなくても動くのかよくわかっていない(mutexなどのsas頼りの部分に含まれている？)
+		//（入れても今のところ完全，入れなくても健全かは不明）
 		// for (int t = 0; t < level-1; ++t)
 		// {
 		// 	for (int var = 0; var < problem.n_vars; ++var)
@@ -342,7 +347,7 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 		// 				lhs += 1 - level_Actions.at(t).at(*op);
 		// 			}
 		// 			const int cap2 = 2;
-
+		//
 		// 			auto pre = level_env.at(t).at(var).at(val);
 		// 			auto post = level_env.at(t+1).at(var).at(val);
 		// 			model.addConstr(lhs * cap2 + 
@@ -365,7 +370,9 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 
 
 		// objective function
-		// action variable のtrue 最小化
+		// action variable のtrue 最小化(最短プラン)
+		// 
+		// ** action cost対応の必要あり **
 
 		GRBLinExpr obj = 0.0;
 
@@ -379,13 +386,13 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 		model.setObjective(obj, GRB_MINIMIZE);
 
 		model.update();
+
+		//gurobiに解かせている線形計画問題の出力
 		model.write("/Users/spinute/Dropbox/program/parse2zinc/log/output.lp");
+		
 		model.optimize();
 
-		// output answers
-		// extract planning problem answers from LP
-
-		// for VAL
+		// plan output file in pddl format for VAL
 		ofstream plan_ofs("/Users/spinute/Dropbox/program/parse2zinc/tmp/ans_plan");
 		int this_level = 0;
 		for (auto t = level_Actions.begin(); t != level_Actions.end(); ++t)
@@ -401,7 +408,7 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 			++this_level;
 		}
 
-		//action output
+		//action output(for human or log)
 		
 		// this_level = 0;
 		// for (auto t = level_Actions.begin(); t != level_Actions.end(); ++t)
@@ -418,7 +425,7 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 		// 	++this_level;
 		// }
 
-		//state output
+		//state output(for human or log)
 		
 		// this_level = 0;
 		// for (auto t = level_env.begin(); t != level_env.end(); ++t)
@@ -433,7 +440,7 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 		// 			    	  j->get(GRB_StringAttr_VarName) << endl;
 		// 			}
 		// 		}
-		
+		//
 		// 	}
 		// 	++this_level;
 		// }
@@ -444,17 +451,19 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 		// validate optimality, comparing with fastdownward
 		ofstream objective_ofs("objval");
 		objective_ofs << model.get(GRB_DoubleAttr_ObjVal) << endl;
+
 	}
+	// gurobiの最適化失敗はここに引っかかる
 	catch(GRBException e) 
 	{
-		cout << "Error code: " << e.getErrorCode() << endl;
-		cout << e.getMessage() << endl;
+		cout << "Error code: " << e.getErrorCode() <<", "<< e.getMessage() << endl;
 		cout << "------------------" << endl;
 		return false;
 	}
+	//その他
 	catch(...) 
 	{
-		cout << "Exeption during optimization." << endl;
+		cout << "*special* Exeption during optimization." << endl;
 	}
 
 	return true;

@@ -1,0 +1,34 @@
+#!/bin/bash
+
+ZINC=~/Dropbox/program/parse2zinc
+DOM=$ZINC/domain
+ANS=$ZINC/tmp/ans_plan
+GENERATE=$ZINC/bin/sas_generator
+
+FD=~/fastdownward
+BENCH=$FD/benchmarks
+TRANSRATE=$FD/src/translate/translate.py 
+VALIDATE=$FD/src/VAL/validate
+
+##############
+THISDOM=gripper
+THISTEST=prob03
+
+DOMAIN=$BENCH/$THISDOM/domain.pddl
+PROBLEM=$BENCH/$THISDOM/$THISTEST.pddl
+
+VALIDATE_RESULT=$ZINC/result/validate_${THISDOM}_${THISTEST}
+##############
+
+
+$TRANSRATE $DOMAIN $PROBLEM
+mv output.sas $ZINC/tmp
+
+$GENERATE $ZINC/tmp/output.sas
+
+$VALIDATE $DOMAIN $PROBLEM $ANS > $VALIDATE_RESULT
+
+echo $VALIDATE_RESULT | $ZINC/bin/check_valid >> $ZINC/result/testlog
+echo "$THISDOM: $THISTEST" >> $ZINC/result/testlog
+
+exit 0
