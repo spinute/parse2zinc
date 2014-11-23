@@ -20,8 +20,8 @@ high priority
 * 加えて実験デザインのコメントをcommit messageにつける
 
 20141122 test
-ok: gripper, logistics98, blocks, depot, grid
-bad format : assembly(resource constriont), trucks, 
+ok: gripper, logistics98, blocks, depot, grid, mprime
+bad format : assembly(resource), trucks, 
 too long: movie, trucks-strips
 ------
 

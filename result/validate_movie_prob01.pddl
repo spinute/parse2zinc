@@ -1,8 +1,6 @@
-Checking plan: /Users/spinute/Dropbox/program/parse2zinc/tmp/ans_plan
-Plan executed successfully - checking goal
-Goal not satisfied
-Plan invalid
+Checking plan: /Users/spinute/Dropbox/program/parse2zinc/tmp/myanswer
+Bad plan file!
 
 
 Failed plans:
- /Users/spinute/Dropbox/program/parse2zinc/tmp/ans_plan 
+ /Users/spinute/Dropbox/program/parse2zinc/tmp/myanswer 

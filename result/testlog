@@ -85,3 +85,45 @@ trucks-strips: p01.pddl
 
 **** validator test: ok ****
 gripper: prob01.pddl
+
+!!!! wrong plan generated !!!!
+movie: prob01.pddl
+
+**** validator test: ok ****
+mprime: prob01.pddl
+
+!!!! wrong plan generated !!!!
+movie: prob01.pddl
+
+**** validator test: ok ****
+gripper: prob01.pddl
+
+**** validator test: ok ****
+gripper: prob01.pddl
+
+!!!! wrong plan generated !!!!
+gripper: prob01.pddl
+
+!!!! wrong plan generated !!!!
+gripper: prob01.pddl
+
+!!!! wrong plan generated !!!!
+movie: prob01.pddl
+
+!!!! wrong plan generated !!!!
+movie: prob01.pddl
+
+!!!! wrong plan generated !!!!
+movie: prob01.pddl
+
+!!!! wrong plan generated !!!!
+movie: prob01.pddl
+
+!!!! wrong plan generated !!!!
+movie: prob01.pddl
+
+!!!! wrong plan generated !!!!
+movie: prob01.pddl
+
+!!!! wrong plan generated !!!!
+movie: prob01.pddl

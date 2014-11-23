@@ -32,7 +32,7 @@ inline void double_vloop(vector<Env>){}
 
 void solve(const Problem* problem_ptr){ //rapper function for solver
 
-	const int MAX_DEPTH = 100; // 探索の打ち切り，恣意的(30分以上の実験をするなら伸ばす)
+	const int MAX_DEPTH = 2; // 探索の打ち切り，恣意的(30分以上の実験をするなら伸ばす)
 	SolverType solver = Gurobi;
 
 	// iterative deepening
@@ -320,7 +320,9 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 
 					this_lhs += level_env.at(t).at(var).at(val);
 
-					this_lhs -= model.addVar(0, (double) cap, 0, GRB_INTEGER, "slack"); //slack
+					ostringstream oss;
+					oss << "slack_" << t << "_" << var << "_" << val;
+					this_lhs -= model.addVar(0, (double) cap, 0, GRB_INTEGER, oss.str());
 
 					this_lhs -= level_env.at(t+1).at(var).at(val);
 					alllhs.push_back(this_lhs);
@@ -393,7 +395,7 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 		model.update();
 
 		//gurobiに解かせている線形計画問題の出力
-		model.write("/Users/spinute/Dropbox/program/parse2zinc/log/output.lp");
+		model.write("/Users/spinute/Dropbox/program/parse2zinc/tmp/output.lp");
 		
 		model.optimize();
 
