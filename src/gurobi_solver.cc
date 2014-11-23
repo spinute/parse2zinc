@@ -32,7 +32,7 @@ inline void double_vloop(vector<Env>){}
 
 void solve(const Problem* problem_ptr){ //rapper function for solver
 
-	const int MAX_DEPTH = 50; // 探索の打ち切り，恣意的(30分以上の実験をするなら伸ばす)
+	const int MAX_DEPTH = 100; // 探索の打ち切り，恣意的(30分以上の実験をするなら伸ばす)
 	SolverType solver = Gurobi;
 
 	// iterative deepening
@@ -93,6 +93,22 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 				tmp_env.push_back(tmp_var);
 			}
 			level_env.push_back(tmp_env);
+		}
+
+		// addVar
+		// sas format operator section
+		// 全てのlevelでのactionの真偽はこのベクトルがまとめる
+		LevelActions level_Actions;
+
+		for (int t = 0; t < level; ++t)
+		{
+			Actions tmp_acts;
+			for (int i = 0; i < problem.n_ops; ++i)
+			{
+				tmp_acts.push_back(model.addVar(0.0, 1.0, 0.0, GRB_BINARY,
+												problem.operators.at(i).name ));
+			}
+			level_Actions.push_back(tmp_acts);
 		}
 
 		model.update();
@@ -156,25 +172,6 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 		{
 			model.addConstr( goalEnv.at(i->first).at(i->second) == 1.0);
 		}
-
-
-		// addVar
-		// sas format operator section
-		// 全てのlevelでのactionの真偽はこのベクトルがまとめる
-		LevelActions level_Actions;
-
-		for (int t = 0; t < level; ++t)
-		{
-			Actions tmp_acts;
-			for (int i = 0; i < problem.n_ops; ++i)
-			{
-				tmp_acts.push_back(model.addVar(0.0, 1.0, 0.0, GRB_BINARY,
-												problem.operators.at(i).name ));
-			}
-			level_Actions.push_back(tmp_acts);
-		}
-
-		model.update();
 		
 		// generate addf, delf( state change model使うならpredel, preaddなども入れる)
 		// ある変数に対して働きかけるactionを列挙する
@@ -299,41 +296,48 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 		// ある状態でstateがtrueであるのは
 		// そのlevelでそのstateをtrueにするようなaction(addfに入っている)が実行される時
 		// または直前のlevelでstateがtrueでかつそれをfalseにするようなaction(delfに入っている)が実行されない時
+		std::vector<GRBLinExpr>  alllhs;
+
 		for (int t = 0; t < level-1; ++t)
 		{
 			for (int var = 0; var < problem.n_vars; ++var)
 			{
 				for (int val = 0; val < problem.vars.at(var).range; ++val)
 				{
-					lhs = 0.0;
+					GRBLinExpr this_lhs = 0.0;
 					int cap = 0;
 					
 					for (auto i = addf[var][val].begin(); i != addf[var][val].end(); ++i)
 					{
-						lhs += level_Actions.at(t).at(*i);
+						this_lhs += level_Actions.at(t).at(*i);
 						++cap;
 					}
 					
 					for (auto i = delf[var][val].begin(); i != delf[var][val].end(); ++i)
 					{
-						lhs -= level_Actions.at(t).at(*i);
+						this_lhs -= level_Actions.at(t).at(*i);
 					}
 
-					lhs += level_env.at(t).at(var).at(val);
+					this_lhs += level_env.at(t).at(var).at(val);
 
-					lhs -= model.addVar(0, (double) cap, 0, GRB_INTEGER, "slack"); //slack
-					model.update();
+					this_lhs -= model.addVar(0, (double) cap, 0, GRB_INTEGER, "slack"); //slack
 
-					lhs -= level_env.at(t+1).at(var).at(val);
-
-					model.addConstr(lhs, GRB_EQUAL, 0.0); 
+					this_lhs -= level_env.at(t+1).at(var).at(val);
+					alllhs.push_back(this_lhs);
 				}
 			}
 		}
 
-		// // fluent maintain constraint
+		model.update(); //model.update()をたくさん呼ぶと警告がでたのでaddConstrを切り出した
+		for (auto i = alllhs.begin(); i != alllhs.end(); ++i)
+		{
+			model.addConstr(*i, GRB_EQUAL, 0.0); 
+		}
+
+
+		// fluent maintain constraint
 		// なぜなくても動くのかよくわかっていない(mutexなどのsas頼りの部分に含まれている？)
-		//（入れても今のところ完全，入れなくても健全かは不明）
+		// （入れても今のところ完全，入れなくても健全かは不明）<- operatorに含有されている
 		// for (int t = 0; t < level-1; ++t)
 		// {
 		// 	for (int var = 0; var < problem.n_vars; ++var)
@@ -347,7 +351,7 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 		// 				lhs += 1 - level_Actions.at(t).at(*op);
 		// 			}
 		// 			const int cap2 = 2;
-		//
+		
 		// 			auto pre = level_env.at(t).at(var).at(val);
 		// 			auto post = level_env.at(t+1).at(var).at(val);
 		// 			model.addConstr(lhs * cap2 + 
@@ -358,6 +362,7 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 
 
 		// action exclusion axiom(入れると整列集合になるので一長一短)
+		// (しかし，sasのmutexとmultivalに含有されているので不要)
 		// for (auto t = level_Actions.begin(); t < level_Actions.end(); ++t)
 		// {
 		// 	lhs = 0.0;

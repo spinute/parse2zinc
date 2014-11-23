@@ -10,3 +10,78 @@ gripper: prob02
 
 **** validator test: ok ****
 gripper: prob03
+
+**** validator test: ok ****
+blocks: probBLOCKS-10-0
+
+!!!! wrong plan generated !!!!
+assembly: prob01
+
+!!!! wrong plan generated !!!!
+depot: pfile1
+
+!!!! wrong plan generated !!!!
+grid: prob1
+
+!!!! wrong plan generated !!!!
+logistics98: prob1
+
+**** validator test: ok ****
+logistics98: prob01
+
+!!!! wrong plan generated !!!!
+movie: prob01
+
+!!!! wrong plan generated !!!!
+movie: prob01
+
+!!!! wrong plan generated !!!!
+movie: prob01
+
+!!!! wrong plan generated !!!!
+movie: prob01
+
+!!!! wrong plan generated !!!!
+trucks: p01
+
+!!!! wrong plan generated !!!!
+zerotravel: pfile1
+
+!!!! wrong plan generated !!!!
+zerotravel: pfile1
+
+!!!! wrong plan generated !!!!
+zerotravel: pfile1
+
+**** validator test: ok ****
+gripper: prob01
+
+**** validator test: ok ****
+gripper: prob03
+
+**** validator test: ok ****
+depot: pfile1
+
+**** validator test: ok ****
+grid: prob01.pddl
+
+!!!! wrong plan generated !!!!
+movie: prob01.pddl
+
+!!!! wrong plan generated !!!!
+trucks: p01.pddl
+
+!!!! wrong plan generated !!!!
+trucks: p01.pddl
+
+!!!! wrong plan generated !!!!
+trucks-strips: p01.pddl
+
+!!!! wrong plan generated !!!!
+trucks-strips: p01.pddl
+
+!!!! wrong plan generated !!!!
+trucks-strips: p01.pddl
+
+**** validator test: ok ****
+gripper: prob01.pddl

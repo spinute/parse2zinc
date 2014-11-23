@@ -1,24 +1,23 @@
 #!/bin/bash
 
 ZINC=~/Dropbox/program/parse2zinc
-DOM=$ZINC/domain
 ANS=$ZINC/tmp/ans_plan
 GENERATE=$ZINC/bin/sas_generator
+BENCH=$ZINC/benchmarks
 
-FD=~/fastdownward
-BENCH=$FD/benchmarks
+FD=~/1123fast
 TRANSRATE=$FD/src/translate/translate.py 
 VALIDATE=$FD/src/VAL/validate
 
 ##############
+#change these variable for change domain and problem
 THISDOM=gripper
-THISTEST=prob03
-
+THISTEST=prob01.pddl
 DOMAIN=$BENCH/$THISDOM/domain.pddl
-PROBLEM=$BENCH/$THISDOM/$THISTEST.pddl
-
-VALIDATE_RESULT=$ZINC/result/validate_${THISDOM}_${THISTEST}
 ##############
+
+PROBLEM=$BENCH/$THISDOM/$THISTEST
+VALIDATE_RESULT=$ZINC/result/validate_${THISDOM}_${THISTEST}
 
 
 $TRANSRATE $DOMAIN $PROBLEM
@@ -30,5 +29,8 @@ $VALIDATE $DOMAIN $PROBLEM $ANS > $VALIDATE_RESULT
 
 echo $VALIDATE_RESULT | $ZINC/bin/check_valid >> $ZINC/result/testlog
 echo "$THISDOM: $THISTEST" >> $ZINC/result/testlog
+
+$FD/src/preprocess/preprocess < $ZINC/tmp/output.sas
+$FD/src/fast-downward.py --alias seq-sat-lama-2011 output
 
 exit 0

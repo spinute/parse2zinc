@@ -19,6 +19,10 @@ high priority
 * 実験のためのスクリプト，readmeを付ければ，実験の実行時オプションや内容をロギングできる
 * 加えて実験デザインのコメントをcommit messageにつける
 
+20141122 test
+ok: gripper, logistics98, blocks, depot, grid
+bad format : assembly(resource constriont), trucks, 
+too long: movie, trucks-strips
 ------
 
  * optiplanモデル -> gurobi をまずは生成する(minizincは非商用なので怪しいバグがある可能性は否定できず，まずはgurobiでモデルが動くことを確認する)
