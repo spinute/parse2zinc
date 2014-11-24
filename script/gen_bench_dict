@@ -1,0 +1,7 @@
+#!/usr/bin/ruby
+dest = File.open("/Users/spinute/Dropbox/program/parse2zinc/benchDict", File::WRONLY|File::CREAT)
+File.open "/Users/spinute/Dropbox/program/parse2zinc/bench_dict", "r" do|file|
+	file.each_line do |line|
+		dest.write line if line.include?(":")
+	end
+end

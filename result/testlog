@@ -127,3 +127,99 @@ movie: prob01.pddl
 
 !!!! wrong plan generated !!!!
 movie: prob01.pddl
+
+!!!! wrong plan generated !!!!
+movie: prob01.pddl
+
+!!!! wrong plan generated !!!!
+gripper: prob01.pddl
+
+!!!! wrong plan generated !!!!
+trucks-strips: p01.pddl
+
+!!!! wrong plan generated !!!!
+mystery: prob01.pddl
+
+!!!! wrong plan generated !!!!
+mystery: prob01.pddl
+
+!!!! wrong plan generated !!!!
+mystery: prob01.pddl
+
+**** validator test: ok ****
+mystery: prob01.pddl
+
+!!!! wrong plan generated !!!!
+driverlog: pfile1.pddl
+
+!!!! wrong plan generated !!!!
+driverlog: pfile1.pddl
+
+!!!! wrong plan generated !!!!
+driverlog: pfile1.pddl
+
+**** validator test: ok ****
+driverlog: pfile1
+
+**** validator test: ok ****
+zenotravel: pfile1
+
+!!!! wrong plan generated !!!!
+satellite: p01-pfile01.pddl
+
+!!!! wrong plan generated !!!!
+satellite: p01-pfile.pddl
+
+!!!! wrong plan generated !!!!
+satellite: p01-pfile1.pddl
+
+!!!! wrong plan generated !!!!
+rovers: p01.pddl
+
+!!!! wrong plan generated !!!!
+freecell: pfile1
+
+**** validator test: ok ****
+airport: p01-airport1-p1.pddl
+
+!!!! wrong plan generated !!!!
+pipesworld-notankage: p01-net1-b6-g2.pddl
+
+**** validator test: ok ****
+pipesworld-tankage: p01-net1-b6-g2-t50.pddl
+
+**** validator test: ok ****
+pipesworld-tankage: p01-net1-b6-g2-t50.pddl
+
+**** validator test: ok ****
+psr-small: p01-s2-n1-l2-f50.pddl
+
+!!!! wrong plan generated !!!!
+psr-middle: p01-s17-n2-l2-f30.pddl
+
+!!!! wrong plan generated !!!!
+psr-large: p01-s29-n2-l5-f30.pddl
+
+!!!! wrong plan generated !!!!
+openstacks-strips: p01.pddl
+
+**** validator test: ok ****
+tpp: p01.pddl
+
+**** validator test: ok ****
+storage: p01.pddl
+
+!!!! wrong plan generated !!!!
+pathways: p01.pddl
+
+!!!! wrong plan generated !!!!
+miconic: s1-0.pddl
+
+**** validator test: ok ****
+elevators-sat08-strips: p01.pddl
+
+!!!! wrong plan generated !!!!
+parcprinter-08-strips: p01.pddl
+
+!!!! wrong plan generated !!!!
+assembly: prob01.pddl

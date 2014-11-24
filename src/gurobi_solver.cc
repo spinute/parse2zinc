@@ -32,7 +32,7 @@ inline void double_vloop(vector<Env>){}
 
 void solve(const Problem* problem_ptr){ //rapper function for solver
 
-	const int MAX_DEPTH = 2; // 探索の打ち切り，恣意的(30分以上の実験をするなら伸ばす)
+	const int MAX_DEPTH = 50; // 探索の打ち切り，恣意的(30分以上の実験をするなら伸ばす)
 	SolverType solver = Gurobi;
 
 	// iterative deepening
@@ -400,7 +400,7 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 		model.optimize();
 
 		// plan output file in pddl format for VAL
-		ofstream plan_ofs("/Users/spinute/Dropbox/program/parse2zinc/tmp/ans_plan");
+		ofstream plan_ofs("/Users/spinute/Dropbox/program/parse2zinc/tmp/answer");
 		int this_level = 0;
 		for (auto t = level_Actions.begin(); t != level_Actions.end(); ++t)
 		{

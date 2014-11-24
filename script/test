@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ZINC=~/Dropbox/program/parse2zinc
-ANS=$ZINC/tmp/myanswer
+ANS=$ZINC/tmp/answer
 GENERATE=$ZINC/bin/sas_generator
 BENCH=$ZINC/benchmarks
 
@@ -9,29 +9,34 @@ FD=~/1123fast
 TRANSRATE=$FD/src/translate/translate.py 
 VALIDATE=$FD/src/VAL/validate
 
-##############
+# !!!!
 #change these variable for change domain and problem
-THISDOM=movie
-THISTEST=prob01.pddl
+
+THISDOM=assembly
+THISPROB=prob01.pddl
 DOMAIN=$BENCH/$THISDOM/domain.pddl
-##############
+# !!!!
 
-PROBLEM=$BENCH/$THISDOM/$THISTEST
-VALIDATE_RESULT=$ZINC/result/validate_${THISDOM}_${THISTEST}
-
+###### do
+PROBLEM=$BENCH/$THISDOM/$THISPROB
+VALIDATE_RESULT=$ZINC/result/validate_${THISDOM}_${THISPROB}
 
 $TRANSRATE $DOMAIN $PROBLEM
 mv output.sas $ZINC/tmp
 
 $GENERATE $ZINC/tmp/output.sas
 
+###### VAL
 $VALIDATE $DOMAIN $PROBLEM $ANS > $VALIDATE_RESULT
 
 echo $VALIDATE_RESULT | $ZINC/bin/check_valid >> $ZINC/result/testlog
-echo "$THISDOM: $THISTEST" >> $ZINC/result/testlog
+echo "$THISDOM: $THISPROB" >> $ZINC/result/testlog
 
+###### compare with fastdownward result
 $FD/src/preprocess/preprocess < $ZINC/tmp/output.sas
 $FD/src/fast-downward.py --alias seq-sat-lama-2011 output
+
+# < $ZINC/script/get_planValue THISDOM THISPROB
 
 mv $ZINC/sas_plan $ZINC/output $ZINC/tmp
 if [ -f $ZINC/sas_plan.1 ]; then

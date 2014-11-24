@@ -20,9 +20,26 @@ high priority
 * 加えて実験デザインのコメントをcommit messageにつける
 
 20141122 test
-ok: gripper, logistics98, blocks, depot, grid, mprime
-bad format : assembly(resource), trucks, 
-too long: movie, trucks-strips
+ok: 16
+ ipc98: gripper, logistics98, blocks, grid, mprime, mystery
+ ipc02: depot, driverslog, zenotravel
+ ipc04: airport, psr-small, pipesworld-tankage(split, nosplitu)
+ ipc06: tpp, storage
+ ipc08: elevators-sat08-strips(but not implement optimize)
+
+bad format : 2
+ ipc98: assembly(resource, ADL)
+ ipc06: trucks
+
+bad solution: 3
+ ipc04: psr-middle, psr-large, pipesworld-notankage
+
+too long: 9
+ ipc98: movie(?)
+ ipc00: miconic
+ ipc02: satellite(equality), rovers(typing), freecell(typing)
+ ipc06: openstack-strips, pathways, trucks-strips
+ ipc08: parcprinter-08-strips
 ------
 
  * optiplanモデル -> gurobi をまずは生成する(minizincは非商用なので怪しいバグがある可能性は否定できず，まずはgurobiでモデルが動くことを確認する)
