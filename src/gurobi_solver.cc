@@ -89,11 +89,17 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 				{
 					tmp_var.push_back(model.addVar(0.0, 1.0, 0.0, GRB_BINARY,
 					                problem.vars.at(i).atoms.at(j) ));
+
+
 				}
 				tmp_env.push_back(tmp_var);
 			}
 			level_env.push_back(tmp_env);
 		}
+
+		// objective function
+		// action cost を最小化する
+		GRBLinExpr obj = 0.0;
 
 		// addVar
 		// sas format operator section
@@ -105,13 +111,24 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 			Actions tmp_acts;
 			for (int i = 0; i < problem.n_ops; ++i)
 			{
-				tmp_acts.push_back(model.addVar(0.0, 1.0, 0.0, GRB_BINARY,
-												problem.operators.at(i).name ));
+				auto opeVar = model.addVar(0.0, 1.0, 0.0, GRB_BINARY,problem.operators.at(i).name );
+				tmp_acts.push_back(opeVar);
+
+				if (problem.operators.at(i).cost>=0)
+				{
+					obj += problem.operators.at(i).cost * opeVar;
+				}
+				else // no action cost -> shortest plan
+				{
+				  obj += opeVar;
+				}
 			}
 			level_Actions.push_back(tmp_acts);
 		}
 
 		model.update();
+		model.setObjective(obj, GRB_MINIMIZE);
+
 		
 		// 不等式制約の左辺用の変数の一次結合を保持する変数
 		GRBLinExpr lhs = 0.0;
@@ -374,23 +391,6 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 		// 	}
 		// 	model.addConstr(lhs <= 1.0);
 		// }
-
-
-		// objective function
-		// action variable のtrue 最小化(最短プラン)
-		// 
-		// ** action cost対応の必要あり **
-
-		GRBLinExpr obj = 0.0;
-
-		for (auto t = level_Actions.begin(); t < level_Actions.end(); ++t)
-		{
-			for (auto i = t->begin(); i != t->end(); ++i)
-			{
-				obj += *i;
-			}
-		}
-		model.setObjective(obj, GRB_MINIMIZE);
 
 		model.update();
 

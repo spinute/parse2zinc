@@ -349,3 +349,8 @@ movie: prob01.pddl
 movie: prob01.pddl
 !BAD VALUE: gurobi_value!=validator_value
 2014年 11月24日 月曜日 12時41分14秒 JST
+
+!!!! wrong plan generated !!!!
+movie: prob01.pddl
+!BAD VALUE: gurobi_value!=validator_value
+2014年 11月24日 月曜日 12時54分07秒 JST

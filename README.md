@@ -6,9 +6,9 @@ high priority
  * いろんな問題でテスト
  ** VALテスト
  ** fastdownward と経路長の最適値が一致するかを確認する
+ * action costも取り込む
 
  * planning graph の実装
- * action costも取り込む
  * minizinc での実装
 
 -------
