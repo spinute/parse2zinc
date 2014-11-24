@@ -41,9 +41,7 @@ $ZINC/script/get_planValue $THISDOM $THISPROB >> $ZINC/result/testlog
 date >> $ZINC/result/testlog
 
 ###### 実験はmasterからやろう
-git co experiment
-git commit -m 'autocommit for test'
-git co mester
+git commit -am 'autocommit for test'
 
 mv $ZINC/sas_plan $ZINC/output $ZINC/objval $ZINC/tmp
 if [ -f $ZINC/sas_plan.* ]; then
