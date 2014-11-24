@@ -32,7 +32,7 @@ File.open("#{HOME}/tmp/sas_plan", "r") do |f|
 			$fd_value = ary[3].to_i
 		end
 	end
-	puts $fd_value
+	
 	unless $gurobi_value==$fd_value
 	    puts "!BAD VALUE: gurobi_value!=fd_value" 
 	    abort "!BAD VALUE: gurobi_value!=fd_value"

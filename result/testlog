@@ -379,3 +379,8 @@ gripper: prob01.pddl
 11
 GOOD OBJECTIVE VALUE: 11
 2014年 11月24日 月曜日 15時20分53秒 JST
+
+**** validator test: ok ****
+gripper: prob01.pddl
+GOOD OBJECTIVE VALUE: 11
+2014年 11月24日 月曜日 15時21分19秒 JST
