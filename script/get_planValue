@@ -18,7 +18,8 @@ end
 
 File.open("#{HOME}/tmp/objval", "r") do |f|
 	$gurobi_value = f.gets.to_i
-	abort "!BAD VALUE: gurobi_value!=validator_value" unless $gurobi_value==$validator_value
+	puts "!BAD VALUE: gurobi_value!=validator_value" unless $gurobi_value==$validator_value
+	abort "!BAD VALUE: gurobi_value!=validator_value"
 end
 
 File.open("#{HOME}/tmp/sas_plan", "r") do |f|
@@ -29,7 +30,8 @@ File.open("#{HOME}/tmp/sas_plan", "r") do |f|
 		end
 	end
 
-	abort "!BAD VALUE: gurobi_value!=fd_value" unless $gurobi_value==$fd_value
+    puts "!BAD VALUE: gurobi_value!=fd_value" unless $gurobi_value==$fd_value
+    abort "!BAD VALUE: gurobi_value!=fd_value"
 end
 
 puts "GOOD OBJECTIVE VALUE: #{$gurobi_value}"
