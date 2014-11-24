@@ -354,3 +354,7 @@ movie: prob01.pddl
 movie: prob01.pddl
 !BAD VALUE: gurobi_value!=validator_value
 2014年 11月24日 月曜日 12時54分07秒 JST
+
+**** validator test: ok ****
+gripper: prob01.pddl
+2014年 11月24日 月曜日 12時54分20秒 JST
