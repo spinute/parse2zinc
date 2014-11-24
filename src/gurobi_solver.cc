@@ -102,8 +102,7 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 		// 全てのlevelでのactionの真偽はこのベクトルがまとめる
 		LevelActions level_Actions;
 
-		map<int_pair, int> opeVarsDict;
-		std::map<int_pair, GRBVar> GRBVarsDict;
+		map<int, int> opCostDict;
 		std::vector<GRBVar> v;
 		for (int t = 0; t < level; ++t)
 		{
@@ -111,37 +110,31 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 			for (int i = 0; i < problem.n_ops; ++i)
 			{
 				auto var = model.addVar(0.0, 1.0, 0.0, GRB_BINARY,problem.operators.at(i).name );
-				int_pair this_ope;
-				this_ope.first = t; this_ope.second = i;
-				opeVarsDict[this_ope] = problem.operators.at(i).cost;
-				GRBVarsDict[this_ope] = var;
-				tmp_acts.push_back(var);
+				opCostDict[i] = problem.operators.at(i).cost;
 
+				tmp_acts.push_back(var);
 			}
 			level_Actions.push_back(tmp_acts);
 		}
 
-		model.update();
+		model.update(); //bugggggggggggggggggg!!!!!!!!!!!!!
 
 		// objective function
 		// action cost を最小化する
 		GRBLinExpr obj = 0.0;
+
 		for (int t = 0; t < level; ++t)
 		{
 			for (int i = 0; i < problem.n_ops; ++i)
 			{
-				int_pair this_ope;
-				this_ope.first = t; this_ope.second = i;
-				auto opeVar = GRBVarsDict[this_ope];
-
-				int cost =  opeVarsDict[this_ope];
+				int cost = opCostDict[i];
 				if (cost >= 0)
 				{
-					obj += cost * opeVar;
+					obj += cost * level_Actions.at(t).at(i);
 				}
 				else // no action cost -> shortest plan
 				{
-				  obj += opeVar;
+				   obj += level_Actions.at(t).at(i);
 				}
 			}
 		}
