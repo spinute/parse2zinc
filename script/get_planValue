@@ -3,16 +3,33 @@ if ARGV.length !=2
 	abort "Usage: get_planValue DOMAIN PROBLEM"
 end
 
-HOME    = "/Users/spinute/Dropbox/program/parse2zinc/"
+HOME    = "/Users/spinute/Dropbox/program/parse2zinc"
 DOMAIN  = ARGV[0]
 PROBLEM = ARGV[1]
 
-file = File.open(HOME+"result/validate_#{DOMAIN}_#{PROBLEM}", "r") do |f|
+file = File.open("#{HOME}/result/validate_#{DOMAIN}_#{PROBLEM}", "r") do |f|
 	f.each_line do |line|
 		ary = line.split(/\s+/)
 		if ary[0] == "Value:"
-			print ary[1]
-			exit
+			$validator_value = ary[1].to_i
 		end
 	end
 end
+
+File.open("#{HOME}/tmp/objval", "r") do |f|
+	$gurobi_value = f.gets.to_i
+	abort "!BAD VALUE: gurobi_value!=validator_value" unless $gurobi_value==$validator_value
+end
+
+File.open("#{HOME}/tmp/sas_plan", "r") do |f|
+	f.each_line do |line|
+		ary = line.split(/\s+/)
+		if ary[0] == ";"
+			$fd_value = ary[3].to_i
+		end
+	end
+
+	abort "!BAD VALUE: gurobi_value!=fd_value" unless $gurobi_value==$fd_value
+end
+
+puts "GOOD OBJECTIVE VALUE: #{$gurobi_value}"

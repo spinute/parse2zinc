@@ -8,9 +8,7 @@ high priority
  ** fastdownward と経路長の最適値が一致するかを確認する
 
  * planning graph の実装
-
  * action costも取り込む
-
  * minizinc での実装
 
 -------
