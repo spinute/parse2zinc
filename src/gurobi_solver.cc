@@ -89,8 +89,6 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 				{
 					tmp_var.push_back(model.addVar(0.0, 1.0, 0.0, GRB_BINARY,
 					                problem.vars.at(i).atoms.at(j) ));
-
-
 				}
 				tmp_env.push_back(tmp_var);
 			}
@@ -117,7 +115,7 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 			level_Actions.push_back(tmp_acts);
 		}
 
-		model.update(); //bugggggggggggggggggg!!!!!!!!!!!!!
+		model.update();
 
 		// objective function
 		// action cost を最小化する
@@ -128,7 +126,7 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 			for (int i = 0; i < problem.n_ops; ++i)
 			{
 				int cost = opCostDict[i];
-				if (cost >= 0)
+				if (cost > 0)
 				{
 					obj += cost * level_Actions.at(t).at(i);
 				}
@@ -155,7 +153,6 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 				{
 					lhs += *j;
 				}
-
 				model.addConstr(lhs <= 1);
 			}
 		}
