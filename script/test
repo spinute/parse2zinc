@@ -45,7 +45,7 @@ date >> $ZINC/result/testlog
 echo "" >> $ZINC/result/testlog
 
 ###### 実験はmasterからやろう
-# git commit -am 'autocommit for test'
+git commit -am 'autocommit for test'
 
 if [ -f $ZINC/sas_plan.* ]; then
 	mv $ZINC/sas_plan.* $ZINC/tmp
