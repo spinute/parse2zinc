@@ -40,9 +40,9 @@ bool checkValid(){
 int main(int argc, char const *argv[])
 {
 	if(checkValid()){
-		cout << "\n**** validator test: ok ****" << endl;
+		cout << "**** validator test: ok ****" << endl;
 	}else{
-		cout << "\n!!!! wrong plan generated !!!!" << endl; 
+		cout << "!!!! wrong plan generated !!!!" << endl; 
 	}
 	return 0;
 }

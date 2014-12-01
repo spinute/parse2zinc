@@ -6,12 +6,24 @@ high priority
  * いろんな問題でテスト
  ** VALテスト
  ** fastdownward と経路長の最適値が一致するかを確認する
- * action costも取り込む
 
  * planning graph の実装
  * minizinc での実装
 
+sas_planが複数出てくる
+ -> lmcutならば最適解が出てくる(lamaはそうではない)
+
+* 線形計画のモデルならば多値変数を２値変数に変換可能? -> slackを入れる
+* sasをそのまま扱える
+* 等式制約にslackを入れるとある数かそうでないか，の論理和を表現することができる
+
+次状態公理を線形不等式で表現できる？
+
+* 順次tを大きくしていく定式化だと，uniform costでないとき，はじめにみつかるプランが最適でない事がある（後ろにより小さいaction costの列から成るplanが存在しないことの保証は一般には困難 -> やるとしたら素朴にはplanning graphが展開に対して停留したことを検出する，もう少し工夫することもできそうだがどんなに頑張っても結局asterと同じ展開順序になると思う)
+
+movie no debug
 -------
+* action costも取り込む
 
 * 実験をするたびにgit commitして実験した瞬間のスナップショットを残す
 * 実験のためのスクリプト，readmeを付ければ，実験の実行時オプションや内容をロギングできる
@@ -23,14 +35,14 @@ ok: 16
  ipc02: depot, driverslog, zenotravel
  ipc04: airport, psr-small, pipesworld-tankage(split, nosplitu)
  ipc06: tpp, storage
- ipc08: elevators-sat08-strips(but not implement optimize)
+ ipc08: elevators-sat08-strips, elevators-opt08-strips(but not best)
 
 bad format : 2
  ipc98: assembly(resource, ADL)
  ipc06: trucks
 
 bad solution: 3
- ipc04: psr-middle, psr-large, pipesworld-notankage
+ ipc04: psr-middle, psr-large, pipesworld-notankage(axiom <- stripsでない?)
 
 too long: 9
  ipc98: movie(?)

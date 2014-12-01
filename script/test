@@ -12,9 +12,9 @@ VALIDATE=$FD/src/VAL/validate
 # !!!!
 #change these variable for change domain and problem
 
-THISDOM=gripper
-THISPROB=prob01.pddl
-DOMAIN=$BENCH/$THISDOM/domain.pddl
+THISDOM=movie
+THISPROB=probeasy.pddl
+DOMAIN=$BENCH/$THISDOM/domain_easy.pddl
 # !!!!
 
 ###### do
@@ -36,14 +36,17 @@ echo "$THISDOM: $THISPROB" >> $ZINC/result/testlog
 $FD/src/preprocess/preprocess < $ZINC/tmp/output.sas
 $FD/src/fast-downward.py --alias seq-sat-lama-2011 output
 
-$ZINC/script/get_planValue $THISDOM $THISPROB >> $ZINC/result/testlog
+if [ -f $ZINC/objval ]; then
+	$ZINC/script/get_planValue $THISDOM $THISPROB >> $ZINC/result/testlog
+	mv $ZINC/sas_plan $ZINC/output $ZINC/objval $ZINC/tmp
+fi
 
 date >> $ZINC/result/testlog
+echo "" >> $ZINC/result/testlog
 
 ###### 実験はmasterからやろう
-git commit -am 'autocommit for test'
+# git commit -am 'autocommit for test'
 
-mv $ZINC/sas_plan $ZINC/output $ZINC/objval $ZINC/tmp
 if [ -f $ZINC/sas_plan.* ]; then
 	mv $ZINC/sas_plan.* $ZINC/tmp
 fi

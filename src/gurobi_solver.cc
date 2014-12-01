@@ -32,7 +32,7 @@ inline void double_vloop(vector<Env>){}
 
 void solve(const Problem* problem_ptr){ //rapper function for solver
 
-	const int MAX_DEPTH = 50; // 探索の打ち切り，恣意的(30分以上の実験をするなら伸ばす)
+	const int MAX_DEPTH = 2; // 探索の打ち切り，恣意的(30分以上の実験をするなら伸ばす)
 	SolverType solver = Gurobi;
 
 	// iterative deepening
@@ -50,11 +50,15 @@ void solve(const Problem* problem_ptr){ //rapper function for solver
 
 			case Minizinc:
 				// minizinc solver function will be there
+				break;
 
 			default:
 				break;			
 		}
 	}
+
+	ofstream ofs("/Users/spinute/Dropbox/program/parse2zinc/result/testlog", ios::app);
+	ofs << "can't solve under constraint MAX_DEPTH: " << MAX_DEPTH << endl;
 }
 
 
@@ -87,8 +91,9 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 				Var tmp_var;
 				for (int j = 0; j < problem.vars.at(i).range; ++j)
 				{
-					tmp_var.push_back(model.addVar(0.0, 1.0, 0.0, GRB_BINARY,
-					                problem.vars.at(i).atoms.at(j) ));
+					ostringstream oss;
+					oss << problem.vars.at(i).atoms.at(j) << "_t_" << t;
+					tmp_var.push_back(model.addVar(0.0, 1.0, 0.0, GRB_BINARY, oss.str()));
 				}
 				tmp_env.push_back(tmp_var);
 			}
@@ -107,7 +112,9 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 			Actions tmp_acts;
 			for (int i = 0; i < problem.n_ops; ++i)
 			{
-				auto var = model.addVar(0.0, 1.0, 0.0, GRB_BINARY,problem.operators.at(i).name );
+				ostringstream oss;
+				oss << problem.operators.at(i).name << "_t_" << t;
+				auto var = model.addVar(0.0, 1.0, 0.0, GRB_BINARY, oss.str());
 				opCostDict[i] = problem.operators.at(i).cost;
 
 				tmp_acts.push_back(var);
@@ -236,10 +243,21 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 							addflag = true;
 						}
 						
-						if (ef->var == var && ef->preval == val)
+						if (ef->var == var && ef->preval == val && ef->preval != ef->postval) //valは０から回しているので preval==-1は入っていない
 						{
 							delf[var][val].push_back(op);
 							delflag = true;
+						}
+
+						if (ef->var == var && ef->preval == -1)
+						{
+							for(int this_val = 0; this_val < problem.vars.at(var).range; ++this_val){
+								if (this_val != val)
+								{
+								  delf[var][this_val].push_back(op);
+									delflag = true;
+								}
+							}
 						}
 					}
 
@@ -317,11 +335,16 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 		}
 		assert( level_env_itr == --(level_env.end()) );		
 
+
 		// succcessor state axiom
 		// ある状態でstateがtrueであるのは
 		// そのlevelでそのstateをtrueにするようなaction(addfに入っている)が実行される時
 		// または直前のlevelでstateがtrueでかつそれをfalseにするようなaction(delfに入っている)が実行されない時
-		std::vector<GRBLinExpr>  alllhs;
+		std::vector<GRBLinExpr>  alllhs1;
+		std::vector<GRBLinExpr>  alllhs2;
+		vector<vector<GRBLinExpr> > sameValGroups;
+		vector<int> alladdcaps;
+		// vector<int> alldelcaps;
 
 		for (int t = 0; t < level-1; ++t)
 		{
@@ -329,38 +352,67 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 			{
 				for (int val = 0; val < problem.vars.at(var).range; ++val)
 				{
-					GRBLinExpr this_lhs = 0.0;
-					int cap = 0;
+					GRBLinExpr this_lhs1 = 0.0;
+					GRBLinExpr this_lhs2 = 0.0;
+					vector<GRBLinExpr> sameValGroup;
+					int addcap = 0;
+					int delcap = 0;
 					
 					for (auto i = addf[var][val].begin(); i != addf[var][val].end(); ++i)
 					{
-						this_lhs += level_Actions.at(t).at(*i);
-						++cap;
+						this_lhs1 -= level_Actions.at(t).at(*i);
+						this_lhs2 -= level_Actions.at(t).at(*i);
+						++addcap;
 					}
 					
 					for (auto i = delf[var][val].begin(); i != delf[var][val].end(); ++i)
 					{
-						this_lhs -= level_Actions.at(t).at(*i);
+						this_lhs1 += level_Actions.at(t).at(*i);
+						this_lhs2 += level_Actions.at(t).at(*i);
+						++delcap;
+
+						sameValGroup.push_back(level_Actions.at(t).at(*i) + level_env.at(t).at(var).at(val));
 					}
 
-					this_lhs += level_env.at(t).at(var).at(val);
+					this_lhs1 -= level_env.at(t).at(var).at(val) - delcap;
+					this_lhs2 -= level_env.at(t).at(var).at(val) - delcap;
 
-					ostringstream oss;
-					oss << "slack_" << t << "_" << var << "_" << val;
-					this_lhs -= model.addVar(0, (double) cap, 0, GRB_INTEGER, oss.str());
+					// ostringstream oss;
+					// oss << "slack_" << t << "_" << var << "_" << val;
+					// if (addcap>0)
+					// {
+					// 	this_lhs1 += model.addVar(1, addcap, 0, GRB_INTEGER, oss.str());
+					// 	this_lhs2 += model.addVar(1, addcap, 0, GRB_INTEGER, oss.str());
+					// }
 
-					this_lhs -= level_env.at(t+1).at(var).at(val);
-					alllhs.push_back(this_lhs);
+					this_lhs1 += level_env.at(t+1).at(var).at(val);
+					this_lhs2 += (addcap+delcap+1) * level_env.at(t+1).at(var).at(val);
+
+					alladdcaps.push_back(addcap);
+					alllhs1.push_back(this_lhs1);
+					alllhs2.push_back(this_lhs2);
+					sameValGroups.push_back(sameValGroup);
 				}
 			}
 		}
 
 		model.update(); //model.update()をたくさん呼ぶと警告がでたのでaddConstrを切り出した
-		for (auto i = alllhs.begin(); i != alllhs.end(); ++i)
-		{
-			model.addConstr(*i, GRB_EQUAL, 0.0); 
-		}
 
+		// auto allcap_it = allcaps.begin();
+		for (auto i = alllhs1.begin(); i != alllhs1.end(); ++i)
+		{
+			model.addConstr(*i <= 0);
+		}
+		for (auto i = alllhs2.begin(); i != alllhs2.end(); ++i)
+		{
+			model.addConstr(*i >= 0);
+		}
+		for (auto i = sameValGroups.begin(); i != sameValGroups.end(); ++i){
+			for (auto j = i->begin(); j != i->end(); ++j)
+			{
+				model.addConstr(*j == 1);
+			}
+		}
 
 		// fluent maintain constraint
 		// なぜなくても動くのかよくわかっていない(mutexなどのsas頼りの部分に含まれている？)
