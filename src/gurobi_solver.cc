@@ -249,16 +249,16 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 							delflag = true;
 						}
 
-						if (ef->var == var && ef->preval == -1)
-						{
-							for(int this_val = 0; this_val < problem.vars.at(var).range; ++this_val){
-								if (this_val != val)
-								{
-								  delf[var][this_val].push_back(op);
-									delflag = true;
-								}
-							}
-						}
+						// if (ef->var == var && ef->preval == -1)
+						// {
+						// 	for(int this_val = 0; this_val < problem.vars.at(var).range; ++this_val){
+						// 		if (this_val != val)
+						// 		{
+						// 		  delf[var][this_val].push_back(op);
+						// 			delflag = true;
+						// 		}
+						// 	}
+						// }
 					}
 
 					//addでもdelでもないならvar,val共に変化していないのでmaintain
