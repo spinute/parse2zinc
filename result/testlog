@@ -1122,3 +1122,8 @@ can't solve under constraint MAX_DEPTH: 2
 movie: probeasy.pddl
 2014年 12月 1日 月曜日 16時40分44秒 JST
 
+can't solve under constraint MAX_DEPTH: 2
+!!!! wrong plan generated !!!!
+movie: probeasy.pddl
+2014年 12月 1日 月曜日 16時42分23秒 JST
+
