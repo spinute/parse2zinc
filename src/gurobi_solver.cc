@@ -442,15 +442,15 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 
 		// action exclusion axiom(入れると整列集合になるので一長一短)
 		// (しかし，sasのmutexとmultivalに含有されているので不要)
-		// for (auto t = level_Actions.begin(); t < level_Actions.end(); ++t)
-		// {
-		// 	lhs = 0.0;
-		// 	for (auto i = t->begin(); i != t->end(); ++i)
-		// 	{
-		// 		lhs += *i;
-		// 	}
-		// 	model.addConstr(lhs <= 1.0);
-		// }
+		for (auto t = level_Actions.begin(); t < level_Actions.end(); ++t)
+		{
+			lhs = 0.0;
+			for (auto i = t->begin(); i != t->end(); ++i)
+			{
+				lhs += *i;
+			}
+			model.addConstr(lhs <= 1.0);
+		}
 
 		model.update();
 
