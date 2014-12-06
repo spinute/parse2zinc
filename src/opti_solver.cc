@@ -4,12 +4,15 @@
 #include <utility>
 
 #include "/Library/gurobi563/mac64/include/gurobi_c++.h"
-
-inline GRBVar addGRBBINARY(string name) {
-	addVar(0.0, 1.0, 0.0, GRB_BINARY, name));
-}
+#include "opti_generator.h"
 
 using namespace std;
+GRBVar 
+addGRBBINARY(string name) 
+{
+	GRBModel::addVar(0.0, 1.0, 0.0, GRB_BINARY, name));
+}
+
 
 
 enum Type
@@ -22,7 +25,7 @@ typedef int Val;
 // state-change-variableの集合
 typedef map<Type, GRBVar> SCVs;   // 最小単位, あるlevelでのあるstateの真偽値を保持する
 typedef pair<Var, Val> Prop;      // ある命題
-typedef map<Prop, SCs> Env;       // あるlevelにおけるStateChangeVariableの辞書
+typedef map<Prop, SCVs> Env;       // あるlevelにおけるStateChangeVariableの辞書
 typedef vector<Env> LevelEnv;     // あるlevelまでの全てのstate variableを保持する
 
 // actionに対応する変数
@@ -48,9 +51,9 @@ init_prop(const int var, const int val)
 }
 
 SCVs *
-gen_SCVs(const string& prop_name)
+gen_SCVs(const string& prop_name, GRBModel &model)
 {
-	SCVs this_SCVs;
+	static SCVs this_SCVs;
 
 	this_SCVs[MAINTAIN] = model.addGRBBINARY(prop_name + "_maintain");
 	this_SCVs[ADD] = model.addGRBBINARY(prop_name + "_add");
@@ -58,12 +61,13 @@ gen_SCVs(const string& prop_name)
 	this_SCVs[DEL]= model.addGRBBINARY(prop_name + "_del");
 	this_SCVs[PREDEL]= model.addGRBBINARY(prop_name + "predel");
 
-	return this_SCVs;
+	return &this_SCVs;
 }
 
 GRBLinExpr *
-init_objfunc(const LevelActions &level_Actions, const OpCostDict &op_cost_dict, const int level, const Problem &problem)
+init_objfunc(const LevelActions &level_Actions, OpCostDict &op_cost_dict, const int level, const Problem &problem)
 {
+	GRBLinExpr obj = 0.0;
 	for (int t = 0; t < level; ++t)
 	{
 		for (int i = 0; i < problem.n_ops; ++i)
@@ -82,7 +86,7 @@ init_objfunc(const LevelActions &level_Actions, const OpCostDict &op_cost_dict, 
 }
 
 bool
-optiplan_solve(const int level, const Problem& problem)
+optiplan_solve(const int level, const Problem &problem)
 {
 	try
 	{
@@ -99,7 +103,7 @@ optiplan_solve(const int level, const Problem& problem)
 				{
 					Prop p = init_prop(i,j);
 					string prop_name = problem.vars.at(i).atoms.at(j);
-					SCVs *this_SCVs_ptr = gen_SCVs(prop_name);
+					SCVs *this_SCVs_ptr = gen_SCVs(prop_name, model);
 					tmp_env[p] = *this_SCVs_ptr;
 				}
 			}
@@ -125,9 +129,9 @@ optiplan_solve(const int level, const Problem& problem)
 
 		model.update();
 
-		GRBLinExpr obj = init_objfunc(level_Actions, op_cost_dict, level, problem);
+		GRBLinExpr *obj_ptr = init_objfunc(level_Actions, op_cost_dict, level, problem);
 
-		model.setObjective(obj, GRB_MINIMIZE);
+		model.setObjective(*obj_ptr, GRB_MINIMIZE);
 
 		
 		// // 不等式制約の左辺用の変数の一次結合を保持する変数
@@ -457,7 +461,7 @@ optiplan_solve(const int level, const Problem& problem)
 		// // validate optimality, comparing with fastdownward
 		// ofstream objective_ofs("objval");
 		// objective_ofs << model.get(GRB_DoubleAttr_ObjVal) << endl;
-		
+
 	}
 	// gurobiの最適化失敗はここに引っかかる
 	catch(GRBException e) 
