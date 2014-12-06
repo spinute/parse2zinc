@@ -6,14 +6,9 @@
 #include "/Library/gurobi563/mac64/include/gurobi_c++.h"
 #include "opti_generator.h"
 
+#define ADDBINARY(name) model.addVar(0.0, 1.0, 0.0, GRB_BINARY, (name))
+
 using namespace std;
-GRBVar 
-addGRBBINARY(string name) 
-{
-	GRBModel::addVar(0.0, 1.0, 0.0, GRB_BINARY, name));
-}
-
-
 
 enum Type
 {
@@ -55,11 +50,11 @@ gen_SCVs(const string& prop_name, GRBModel &model)
 {
 	static SCVs this_SCVs;
 
-	this_SCVs[MAINTAIN] = model.addGRBBINARY(prop_name + "_maintain");
-	this_SCVs[ADD] = model.addGRBBINARY(prop_name + "_add");
-	this_SCVs[PREADD]= model.addGRBBINARY(prop_name + "_preadd");
-	this_SCVs[DEL]= model.addGRBBINARY(prop_name + "_del");
-	this_SCVs[PREDEL]= model.addGRBBINARY(prop_name + "predel");
+	this_SCVs[MAINTAIN] = ADDBINARY(prop_name + "_maintain");
+	this_SCVs[ADD] = ADDBINARY(prop_name + "_add");
+	this_SCVs[PREADD]= ADDBINARY(prop_name + "_preadd");
+	this_SCVs[DEL]= ADDBINARY(prop_name + "_del");
+	this_SCVs[PREDEL]= ADDBINARY(prop_name + "predel");
 
 	return &this_SCVs;
 }
@@ -67,7 +62,7 @@ gen_SCVs(const string& prop_name, GRBModel &model)
 GRBLinExpr *
 init_objfunc(const LevelActions &level_Actions, OpCostDict &op_cost_dict, const int level, const Problem &problem)
 {
-	GRBLinExpr obj = 0.0;
+	static GRBLinExpr obj = 0.0;
 	for (int t = 0; t < level; ++t)
 	{
 		for (int i = 0; i < problem.n_ops; ++i)
@@ -83,6 +78,8 @@ init_objfunc(const LevelActions &level_Actions, OpCostDict &op_cost_dict, const 
 			}
 		}	
 	}
+
+	return &obj;
 }
 
 bool

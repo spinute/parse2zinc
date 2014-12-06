@@ -4,6 +4,7 @@ using namespace std;
 
 #include "sas_parser.cc"
 #include "gurobi_solver.cc"
+#include "opti_solver.cc"
 
 int main(int argc, char const *argv[])
 {

@@ -69,11 +69,7 @@ typedef struct Problem
 	// vector<axiom> axioms;
 }Problem;
 
-// rapper for switching solver and iterative deepening
-void solve(const Problem* problem_ptr);
 
-// solve gurobi
-bool gurobi_solve(const int level, const Problem* problem_ptr);
 
 // parse .sas file
 Problem* parse2gurobi(const char* filename);
