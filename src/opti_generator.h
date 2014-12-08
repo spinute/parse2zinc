@@ -1,5 +1,5 @@
-#ifndef GENERATOR
-#define GENERATOR
+#ifndef OPTI_GENERATOR
+#define OPTI_GENERATOR
 
 #include <string>
 #include <vector>
@@ -9,69 +9,35 @@
 
 using namespace std;
 
-// mainly for value, val pair
-typedef pair<int, int> int_pair;
-
-// sasフォーマットのvariable sectionに対応する構造体
-struct variable
+enum Type
 {
-	string name;
-	bool axiom_layer;
-	int range;
-	vector<string> atoms;
+	MAINTAIN, ADD, PREADD, DEL, PREDEL
 };
 
-// sasフォーマットのmutex sectionに対応する構造体
-struct mutex_group
-{
-	int n;
-	vector<int_pair> list;
-};
+typedef int Var;
+typedef int Val;
+// state-change-variableの集合
+typedef map<Type, GRBVar> SCVs;   // 最小単位, あるlevelでのあるstateの真偽値を保持する
+typedef pair<Var, Val> Prop;      // ある命題
+typedef map<Prop, SCVs> Env;       // あるlevelにおけるStateChangeVariableの辞書
+typedef vector<Env> LevelEnv;     // あるlevelまでの全てのstate variableを保持する
 
-struct effect
-{
-	int n_assoc_conditions;
-	std::vector<int_pair> assoc_condition;
-	int var;
-	int preval;
-	int postval;
-};
+// actionに対応する変数
+// LevelActions -> Actions -> ActionVarという階層構造になっている
+typedef GRBVar ActionVar;                // 最小単位, あるlevelでのあるactionの実行の真偽を保持する
+typedef vector<ActionVar> Actions;       // あるlevelでの全てのactionの真偽変数を保持する
+typedef vector<Actions> LevelActions;    // あるlevelまでの全てのaction variableを保持する
 
-// corresponding to operator section
-struct op
-{
-	string name;
-	int n_prevailCond;
-	vector<int_pair> prevailConditions;
-	int n_effects;
-	vector<effect> effects;
-	int cost; // optional <- metric is 1
-};
+typedef set<int> Action_index; 
+typedef map<Prop, Action_index> OpSet;
 
-// corresponding to axiom section
-struct axiom
-{
-	int n_axioms;
-	int n_conditions;
-	vector<int_pair> conditions;
-	pair<int, int_pair> axiom;
-};
+typedef map<int, int> OpCostDict;
 
-// this is main class for parse destination
-typedef struct Problem
-{
-	int version, metric, n_vars, n_ops, n_mtxs;
-	vector<variable> vars;
-	vector<mutex_group> mtxs;
-	vector<int> init;
-	vector<int_pair> goal;
-	vector<op> operators;
-	// vector<axiom> axioms;
-}Problem;
+static Prop gen_prop(const int var, const int val);
+static SCVs *gen_SCVs(const string& prop_name, GRBModel &model);
+static GRBLinExpr *init_objfunc(const LevelActions &level_Actions, 
+	OpCostDict &op_cost_dict, const int level, const Problem &problem);
 
-
-
-// parse .sas file
-Problem* parse2gurobi(const char* filename);
+bool optiplan_solve(const int level, const Problem &problem);
 
 #endif

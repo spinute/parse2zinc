@@ -3,7 +3,7 @@
 using namespace std;
 
 #include "sas_parser.cc"
-#include "opti_solver.cc"
+#include "opti_generator.cc"
 
 int main(int argc, char const *argv[])
 {
