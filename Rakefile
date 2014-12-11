@@ -6,6 +6,7 @@ FD   = "/Users/spinute/fastdownward"
 
 CC = "clang++"
 OPT = "-m64 -Wall -Wextra -lpthread -lm -lgurobi_c++ -lgurobi56 -stdlib=libstdc++ -std=c++11"
+DOPT = "-g -O0"
 LIB = "/Library/gurobi563/mac64/lib/"
 INC = "/Library/gurobi563/mac64/include/"
 BINS = FileList["**/bin/*"]
@@ -45,7 +46,7 @@ end
 # default compilation
 directory BIN_DISTDIR
 rule /.*/ => BIN_DISTDIR do |t,args|
-  sh "#{CC} #{HOME+'/src/'+t.name+'.cc'} -o #{t.name} #{OPT} -I#{INC} -L#{LIB}"
+  sh "#{CC} #{HOME+'/src/'+t.name+'.cc'} -o #{t.name} #{OPT} #{DOPT} -I#{INC} -L#{LIB}"
   sh "mv #{t.name} bin"
 end
 
