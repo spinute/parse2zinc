@@ -12,8 +12,8 @@ VALIDATE=$FD/src/VAL/validate
 # !!!!
 #change these variable for change domain and problem
 
-THISDOM=gripper
-THISPROB=probeasy.pddl
+THISDOM=miconic
+THISPROB=s1-0.pddl
 DOMAIN=$BENCH/$THISDOM/domain.pddl
 # !!!!
 
