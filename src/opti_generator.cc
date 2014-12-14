@@ -136,7 +136,7 @@ optiplan_solve(const int level, const Problem &problem)
 					ActionIndex add_sub_pref = create_substitution(addf[p], pref[p]);
 					ActionIndex del_sub_pref = create_substitution(delf[p], pref[p]);
 					ActionIndex pre_sub_delf = create_substitution(pref[p], delf[p]);
-					ActionIndex pre_prod_delf = create_product(addf[p], pref[p]);
+					ActionIndex pre_prod_delf = create_product(delf[p], pref[p]);
 
 					for (auto op_itr = add_sub_pref.begin(); op_itr != add_sub_pref.end(); ++op_itr)
 					{
