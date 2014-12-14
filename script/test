@@ -12,8 +12,8 @@ VALIDATE=$FD/src/VAL/validate
 # !!!!
 #change these variable for change domain and problem
 
-THISDOM=movie
-THISPROB=prob30.pddl
+THISDOM=gripper
+THISPROB=probeasy.pddl
 DOMAIN=$BENCH/$THISDOM/domain.pddl
 # !!!!
 
