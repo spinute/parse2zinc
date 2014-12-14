@@ -22,7 +22,7 @@ PROBLEM=$BENCH/$THISDOM/$THISPROB
 RESULT=opti_result
 VALIDATE_RESULT=$ZINC/${RESULT}/validate_${THISDOM}_${THISPROB}
 
-$TRANSRATE --relaxed $DOMAIN $PROBLEM
+$TRANSRATE $DOMAIN $PROBLEM ## --relaxed -> remove negative effect
 mv output.sas $ZINC/tmp
 
 $GENERATE $ZINC/tmp/output.sas
