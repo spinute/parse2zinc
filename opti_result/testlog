@@ -166,3 +166,7 @@ gripper: prob01.pddl
 gripper: prob02.pddl
 2014年 12月14日 日曜日 19時01分42秒 JST
 
+**** validator test: ok ****
+gripper: prob02.pddl
+2014年 12月14日 日曜日 19時04分31秒 JST
+
