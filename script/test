@@ -12,7 +12,7 @@ VALIDATE=$FD/src/VAL/validate
 # !!!!
 #change these variable for change domain and problem
 
-THISDOM=movie
+THISDOM=gripper
 THISPROB=prob01.pddl
 DOMAIN=$BENCH/$THISDOM/domain.pddl
 # !!!!
@@ -30,7 +30,7 @@ $GENERATE $ZINC/tmp/output.sas
 ###### VAL
 $VALIDATE $DOMAIN $PROBLEM $ANS > $VALIDATE_RESULT
 
-TESTLOG=$ZINC/$RESULT/opti_testlog
+TESTLOG=$ZINC/$RESULT/testlog
 echo $VALIDATE_RESULT | $ZINC/bin/check_valid >> $TESTLOG
 echo "$THISDOM: $THISPROB" >> $TESTLOG
 
