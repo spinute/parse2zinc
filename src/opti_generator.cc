@@ -232,7 +232,7 @@ create_product(const set<int> &lset, const set<int> &rset)
 };
 
 ActionIndex &
-create_substitution(const set<int>& lset, const set<int>& rset)
+create_substitution(const set<int> &lset, const set<int> &rset)
 {
 	set<int> *ans  = new set<int>(lset);
 	for (auto itr = rset.begin(); itr != rset.end(); ++itr)
@@ -241,7 +241,7 @@ create_substitution(const set<int>& lset, const set<int>& rset)
 };
 
 static SCVs &
-create_SCVs(const string& prop_name, GRBModel &model)
+create_SCVs(const string &prop_name, GRBModel &model)
 {
 	SCVs *this_SCVs = new SCVs();
 	(*this_SCVs)[MAINTAIN] = ADDBINARY(prop_name + "_maintain");
