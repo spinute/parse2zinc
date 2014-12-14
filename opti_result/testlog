@@ -162,3 +162,7 @@ gripper: prob01.pddl
 !BAD VALUE: gurobi_value < validator_value
 2014年 12月14日 日曜日 18時59分40秒 JST
 
+!!!! wrong plan generated !!!!
+gripper: prob02.pddl
+2014年 12月14日 日曜日 19時01分42秒 JST
+
