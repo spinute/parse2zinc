@@ -19,7 +19,8 @@ DOMAIN=$BENCH/$THISDOM/domain.pddl
 
 ###### do
 PROBLEM=$BENCH/$THISDOM/$THISPROB
-VALIDATE_RESULT=$ZINC/result/validate_${THISDOM}_${THISPROB}
+RESULT=opti_result
+VALIDATE_RESULT=$ZINC/${RESULT}/validate_${THISDOM}_${THISPROB}
 
 $TRANSRATE $DOMAIN $PROBLEM
 mv output.sas $ZINC/tmp
@@ -29,7 +30,7 @@ $GENERATE $ZINC/tmp/output.sas
 ###### VAL
 $VALIDATE $DOMAIN $PROBLEM $ANS > $VALIDATE_RESULT
 
-TESTLOG=$ZINC/resurt/opti_testlog
+TESTLOG=$ZINC/$RESULT/opti_testlog
 echo $VALIDATE_RESULT | $ZINC/bin/check_valid >> $TESTLOG
 echo "$THISDOM: $THISPROB" >> $TESTLOG
 
