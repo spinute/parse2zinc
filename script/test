@@ -2,7 +2,7 @@
 
 ZINC=~/Dropbox/program/parse2zinc
 ANS=$ZINC/tmp/answer
-GENERATE=$ZINC/bin/sas_generator
+GENERATE=$ZINC/bin/opti_main
 BENCH=$ZINC/benchmarks
 
 FD=~/1123fast
@@ -29,20 +29,21 @@ $GENERATE $ZINC/tmp/output.sas
 ###### VAL
 $VALIDATE $DOMAIN $PROBLEM $ANS > $VALIDATE_RESULT
 
-echo $VALIDATE_RESULT | $ZINC/bin/check_valid >> $ZINC/result/testlog
-echo "$THISDOM: $THISPROB" >> $ZINC/result/testlog
+TESTLOG=$ZINC/resurt/opti_testlog
+echo $VALIDATE_RESULT | $ZINC/bin/check_valid >> $TESTLOG
+echo "$THISDOM: $THISPROB" >> $TESTLOG
 
 ###### compare with fastdownward result
 $FD/src/preprocess/preprocess < $ZINC/tmp/output.sas
 $FD/src/fast-downward.py --alias seq-sat-lama-2011 output
 
 if [ -f $ZINC/objval ]; then
-	$ZINC/script/get_planValue $THISDOM $THISPROB >> $ZINC/result/testlog
+	$ZINC/script/get_planValue $THISDOM $THISPROB >> $TESTLOG
 	mv $ZINC/sas_plan $ZINC/output $ZINC/objval $ZINC/tmp
 fi
 
-date >> $ZINC/result/testlog
-echo "" >> $ZINC/result/testlog
+date >> $TESTLOG
+echo "" >> $TESTLOG
 
 ###### 実験はmasterからやろう
 git commit -am 'autocommit for test'
