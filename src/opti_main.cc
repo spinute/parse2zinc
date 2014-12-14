@@ -16,7 +16,7 @@ int main(int argc, char const *argv[])
 	}
 	
 	Problem *problem_ptr = parse2gurobi(argv[1]);
-	for (int i = 1; i < 10; ++i)
+	for (int i = 1; i < 15; ++i)
 	{
 		cout << "level: " << i << endl;
 		optiplan_solve(i, *problem_ptr);
