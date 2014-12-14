@@ -7,7 +7,7 @@ HOME    = "/Users/spinute/Dropbox/program/parse2zinc"
 DOMAIN  = ARGV[0]
 PROBLEM = ARGV[1]
 
-file = File.open("#{HOME}/result/validate_#{DOMAIN}_#{PROBLEM}", "r") do |f|
+file = File.open("#{HOME}/opti_result/validate_#{DOMAIN}_#{PROBLEM}", "r") do |f|
 	f.each_line do |line|
 		ary = line.split(/\s+/)
 		if ary[0] == "Value:"
