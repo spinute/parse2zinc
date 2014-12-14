@@ -65,24 +65,23 @@ optiplan_solve(const int level, const Problem &problem)
 		{
 			for (auto ef_itr = problem.operators.at(op).effects.begin(); ef_itr != problem.operators.at(op).effects.end(); ++ef_itr)
 			{
-				assert(ef_itr->preval != ef_itr->postval); //こんなものは無意味なので無いと仮定
-
 				if (ef_itr->preval == -1)
 				{
 					Prop p(ef_itr->var, ef_itr->postval);
 					addf[p].insert(op);
-					for (int i = 0; i < problem.vars.at(ef_itr->var).range; ++i)
-						if (ef_itr->postval != i)
+					for (int val = 0; val < problem.vars.at(ef_itr->var).range; ++val)
+						if (ef_itr->postval != val)
 						{
-							Prop p(ef_itr->var, i);
+							Prop p(ef_itr->var, val);
 							delf[p].insert(op);
 						}
 				}
 				else
 				{
 					Prop p1(ef_itr->var, ef_itr->preval);
-					delf[p1].insert(op);
 					pref[p1].insert(op);
+					if (ef_itr->preval != ef_itr->postval)
+						delf[p1].insert(op);
 					Prop p2(ef_itr->var, ef_itr->postval);
 					addf[p2].insert(op);
 				}
