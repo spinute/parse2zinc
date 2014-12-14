@@ -184,3 +184,9 @@ gripper: prob02.pddl
 !BAD VALUE: gurobi_value > validator_value
 2014年 12月14日 日曜日 19時20分01秒 JST
 
+**** validator test: ok ****
+gripper: prob04.pddl
+29
+!BAD VALUE: gurobi_value < validator_value
+2014年 12月14日 日曜日 20時53分13秒 JST
+
