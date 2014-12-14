@@ -33,13 +33,12 @@ typedef map<Prop, ActionIndex> OpSetMap;
 
 typedef map<int, int> OpCostDict;
 
-static Prop gen_prop(const int var, const int val);
-static SCVs *gen_SCVs(const string& prop_name, GRBModel &model);
-static GRBLinExpr *init_objfunc(const LevelActions &level_Actions, 
+static SCVs &create_SCVs(const string& prop_name, GRBModel &model);
+static GRBLinExpr &create_objfunc(const LevelActions &level_Actions, 
 	OpCostDict &op_cost_dict, const int level, const Problem &problem);
 
-ActionIndex capify(const set<int> &lset, const set<int> &rset);
-ActionIndex substitute(const set<int> &lset, const set<int> &rset);
+ActionIndex &create_product(const set<int> &lset, const set<int> &rset);
+ActionIndex &create_substitution(const set<int> &lset, const set<int> &rset);
 
 bool optiplan_solve(const int level, const Problem &problem);
 

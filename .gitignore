@@ -31,6 +31,7 @@ bin
 *.log
 *.sas
 *.lp
+*.dSYM
 sas_plan
 domain
 ans_plan
