@@ -87,9 +87,9 @@ optiplan_solve(const int level, const Problem &problem)
 					addf[p2].insert(op);
 				}
 			}
-			for (auto itr = 0; itr < problem.operators.at(op).n_prevailCond ; ++itr)
+			for (int i = 0; i < problem.operators.at(op).n_prevailCond ; ++i)
 			{
-				int_pair pair = problem.operators.at(op).prevailConditions.at(itr);
+				int_pair pair = problem.operators.at(op).prevailConditions.at(i);
 				Prop p(pair.first, pair.second);
 				pref[p].insert(op);
 				addf[p].insert(op);
