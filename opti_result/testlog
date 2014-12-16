@@ -233,3 +233,10 @@ fd    : 10
 !BAD VALUE: gurobi_value > fd_value
 2014年 12月16日 火曜日 17時05分30秒 JST
 
+**** validator test: ok ****
+driverlog: pfile1
+gurobi: 8
+fd    : 7
+!BAD VALUE: gurobi_value > fd_value
+2014年 12月16日 火曜日 17時05分31秒 JST
+
