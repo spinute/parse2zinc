@@ -1460,3 +1460,10 @@ fd    : 8
 openstack-strips: p01.pddl
 2014年 12月16日 火曜日 12時04分43秒 JST
 
+**** validator test: ok ****
+pathways: p01.pddl
+gurobi: 6
+fd    : 6
+GOOD OBJECTIVE VALUE: 6
+2014年 12月16日 火曜日 12時04分43秒 JST
+
