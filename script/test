@@ -12,9 +12,9 @@ VALIDATE=$FD_HOME/src/VAL/validate
 # !!!!
 #change these variable for change domain and problem
 
-THISDOM=driverlog
-THISPROB=pfile1
-DOMAIN=$BENCH/$THISDOM/domain.pddl
+THISDOM=openstacks-strips
+THISPROB=p01.pddl
+DOMAIN=$BENCH/$THISDOM/demain_p01.pddl
 # !!!!
 
 ###### do
