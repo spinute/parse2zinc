@@ -1304,3 +1304,10 @@ fd    : 13
 GOOD OBJECTIVE VALUE: 13
 2014年 12月16日 火曜日 11時56分47秒 JST
 
+**** validator test: ok ****
+gripper: prob01.pddl
+gurobi: 11
+fd    : 11
+GOOD OBJECTIVE VALUE: 11
+2014年 12月16日 火曜日 12時02分45秒 JST
+
