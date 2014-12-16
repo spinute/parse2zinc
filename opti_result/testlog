@@ -1058,3 +1058,9 @@ pipeworld-tankage: p01-net1-b6-g2-t50.pddl
 
 2014年 12月16日 火曜日 11時38分40秒 JST
 
+**** validator test: ok ****
+tpp: p01.pddl
+5
+GOOD OBJECTIVE VALUE: 5
+2014年 12月16日 火曜日 11時38分40秒 JST
+
