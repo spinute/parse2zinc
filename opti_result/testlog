@@ -1232,3 +1232,10 @@ GOOD OBJECTIVE VALUE: 5
 strage: p01.pddl
 2014年 12月16日 火曜日 11時56分06秒 JST
 
+**** validator test: ok ****
+elevators-sat08-strips: p01.pddl
+gurobi: 81
+fd    : 52
+!BAD VALUE: gurobi_value > fd_value
+2014年 12月16日 火曜日 11時56分18秒 JST
+
