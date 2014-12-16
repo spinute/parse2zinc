@@ -40,8 +40,8 @@ $FD_HOME/src/fast-downward.py output --search "astar(lmcut())"
 # $FD_HOME/src/fast-downward.py --alias seq-sat-lama-2011 output
 
 if [ -f $ZINC/objval ]; then
-	$ZINC/script/get_planValue $THISDOM $THISPROB >> $TESTLOG
 	mv $ZINC/sas_plan $ZINC/output $ZINC/objval $ZINC/tmp
+	$ZINC/script/get_planValue $THISDOM $THISPROB >> $TESTLOG
 fi
 
 date >> $TESTLOG
