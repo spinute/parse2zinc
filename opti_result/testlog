@@ -881,3 +881,9 @@ blocks: probBLOCKS-4-0.pddl
 GOOD OBJECTIVE VALUE: 6
 2014年 12月16日 火曜日 11時34分01秒 JST
 
+**** validator test: ok ****
+grid: prob01.pddl
+14
+GOOD OBJECTIVE VALUE: 14
+2014年 12月16日 火曜日 11時35分10秒 JST
+
