@@ -12,8 +12,8 @@ VALIDATE=$FD_HOME/src/VAL/validate
 # !!!!
 #change these variable for change domain and problem
 
-THISDOM=gripper
-THISPROB=prob01.pddl
+THISDOM=driverlog
+THISPROB=pfile1
 DOMAIN=$BENCH/$THISDOM/domain.pddl
 # !!!!
 

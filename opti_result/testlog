@@ -1137,3 +1137,12 @@ trucks-strips: p01.pddl
 GOOD OBJECTIVE VALUE: 13
 2014年 12月16日 火曜日 11時39分21秒 JST
 
+**** validator test: ok ****
+driverlog: pfile1
+gurobi: 
+8
+fd    : 
+7
+!BAD VALUE: gurobi_value > fd_value
+2014年 12月16日 火曜日 11時52分19秒 JST
+
