@@ -663,3 +663,7 @@ blocks: probBLOCKS-4-0.pddl
 grid: prob01.pddl
 2014年 12月16日 火曜日 11時10分54秒 JST
 
+**** validator test: ok ****
+mprime: prob01.pddl
+2014年 12月16日 火曜日 11時10分54秒 JST
+
