@@ -37,8 +37,8 @@ File.open("#{HOME}/tmp/sas_plan", "r") do |f|
 		end
 	end
 	
-	puts "gurobi: ", $gurobi_value
-	puts "fd    : ", $fd_value
+	puts "gurobi: #{$gurobi_value}"
+	puts "fd    : #{$fd_value}"
 	if $gurobi_value > $fd_value
 	    puts "!BAD VALUE: gurobi_value > fd_value" 
 	    abort "!BAD VALUE: gurobi_value > fd_value"
