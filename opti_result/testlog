@@ -1424,3 +1424,10 @@ psr-large: p01-s29-n2-l5-f30.pddl
 pipeworld-notankage: p01-net1-b6-g2.pddl
 2014年 12月16日 火曜日 12時04分35秒 JST
 
+**** validator test: ok ****
+movie: prob01.pddl
+gurobi: 7
+fd    : 7
+GOOD OBJECTIVE VALUE: 7
+2014年 12月16日 火曜日 12時04分36秒 JST
+
