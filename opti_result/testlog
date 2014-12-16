@@ -1282,3 +1282,7 @@ satellite: p01.pddl
 rovers: pfile1
 2014年 12月16日 火曜日 11時56分24秒 JST
 
+!!!! wrong plan generated !!!!
+freecell: p01.pddl
+2014年 12月16日 火曜日 11時56分24秒 JST
+
