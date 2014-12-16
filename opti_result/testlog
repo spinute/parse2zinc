@@ -801,3 +801,7 @@ miconic: p01-file1.pddl
 satellite: p01.pddl
 2014年 12月16日 火曜日 11時13分23秒 JST
 
+!!!! wrong plan generated !!!!
+rovers: pfile1
+2014年 12月16日 火曜日 11時13分24秒 JST
+
