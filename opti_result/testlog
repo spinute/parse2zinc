@@ -623,3 +623,9 @@ gripper: prob01.pddl
 GOOD OBJECTIVE VALUE: 11
 2014年 12月16日 火曜日 10時32分04秒 JST
 
+**** validator test: ok ****
+logistics98: prob01.pddl
+27
+!BAD VALUE: gurobi_value > fd_value
+2014年 12月16日 火曜日 10時32分21秒 JST
+
