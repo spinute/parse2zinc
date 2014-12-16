@@ -456,3 +456,9 @@ gripper: prob01.pddl
 
 2014年 12月16日 火曜日 09時26分56秒 JST
 
+**** validator test: ok ****
+logistics98: prob01.pddl
+27
+!BAD VALUE: gurobi_value < validator_value
+2014年 12月16日 火曜日 09時28分59秒 JST
+
