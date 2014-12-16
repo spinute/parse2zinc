@@ -675,3 +675,9 @@ gripper: prob01.pddl
 logistics98: prob01.pddl
 2014年 12月16日 火曜日 11時11分32秒 JST
 
+**** validator test: ok ****
+blocks: probBLOCKS-4-0.pddl
+6
+GOOD OBJECTIVE VALUE: 6
+2014年 12月16日 火曜日 11時11分33秒 JST
+
