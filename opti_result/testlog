@@ -1093,3 +1093,7 @@ trucks: p01.pddlp01-s17-n2-l2-f30.pddl
 psr-middle: p01-s29-n2-l5-f30.pddl
 2014年 12月16日 火曜日 11時38分56秒 JST
 
+!!!! wrong plan generated !!!!
+psr-large: p01-net1-b6-g2.pddl
+2014年 12月16日 火曜日 11時38分57秒 JST
+
