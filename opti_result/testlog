@@ -1368,3 +1368,10 @@ GOOD OBJECTIVE VALUE: 1
 airport: p01-domain.pddl
 2014年 12月16日 火曜日 12時04分17秒 JST
 
+**** validator test: ok ****
+psr-small: p01-s2-n1-l2-f50.pddl
+gurobi: 8
+fd    : 8
+GOOD OBJECTIVE VALUE: 8
+2014年 12月16日 火曜日 12時04分17秒 JST
+
