@@ -12,8 +12,8 @@ VALIDATE=$FD_HOME/src/VAL/validate
 # !!!!
 #change these variable for change domain and problem
 
-THISDOM=parcprinter-08-strips
-THISPROB=p01.pddl
+THISDOM=airport
+THISPROB=p01-airport-p1.pddl
 DOMAIN=$BENCH/$THISDOM/p01-domain.pddl
 # !!!!
 

@@ -176,3 +176,7 @@ fd    : 169009
 !BAD VALUE: gurobi_value > fd_value
 2014年 12月16日 火曜日 13時01分40秒 JST
 
+!!!! wrong plan generated !!!!
+airport: p01-airport-p1.pddl
+2014年 12月16日 火曜日 13時50分29秒 JST
+
