@@ -739,3 +739,9 @@ airport: p01-domain.pddl
 
 2014年 12月16日 火曜日 11時13分15秒 JST
 
+**** validator test: ok ****
+psr-small: p01-s2-n1-l2-f50.pddl
+8
+GOOD OBJECTIVE VALUE: 8
+2014年 12月16日 火曜日 11時13分16秒 JST
+
