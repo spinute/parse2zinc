@@ -36,7 +36,8 @@ echo "$THISDOM: $THISPROB" >> $TESTLOG
 
 ###### compare with fastdownward result
 $FD/src/preprocess/preprocess < $ZINC/tmp/output.sas
-$FD/src/fast-downward.py --alias seq-sat-lama-2011 output
+$FD_HOME/src/fast-downward.py output --search "aster(lmcut())"
+# $FD/src/fast-downward.py --alias seq-sat-lama-2011 output
 
 if [ -f $ZINC/objval ]; then
 	$ZINC/script/get_planValue $THISDOM $THISPROB >> $TESTLOG
