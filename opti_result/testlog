@@ -26,3 +26,10 @@ fd    : 14
 GOOD OBJECTIVE VALUE: 14
 2014年 12月16日 火曜日 12時47分58秒 JST
 
+**** validator test: ok ****
+mprime: prob01.pddl
+gurobi: 5
+fd    : 5
+GOOD OBJECTIVE VALUE: 5
+2014年 12月16日 火曜日 12時48分01秒 JST
+
