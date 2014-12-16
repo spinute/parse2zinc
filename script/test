@@ -12,9 +12,9 @@ VALIDATE=$FD_HOME/src/VAL/validate
 # !!!!
 #change these variable for change domain and problem
 
-THISDOM=pipesworld-tankage
-THISPROB=p01-net1-b6-g2-t50.pddl
-DOMAIN=$BENCH/$THISDOM/domain.pddl
+THISDOM=airport
+THISPROB=p01-airport1-p1.pddl
+DOMAIN=$BENCH/$THISDOM/p01-domain.pddl
 # !!!!
 
 ###### do

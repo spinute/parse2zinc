@@ -162,3 +162,10 @@ fd    : 8
 !BAD VALUE: gurobi_value > fd_value
 2014年 12月16日 火曜日 12時48分28秒 JST
 
+**** validator test: ok ****
+airport: p01-airport1-p1.pddl
+gurobi: 8
+fd    : 8
+GOOD OBJECTIVE VALUE: 8
+2014年 12月16日 火曜日 12時58分54秒 JST
+
