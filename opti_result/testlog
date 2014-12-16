@@ -611,3 +611,9 @@ grid: prob01.pddl
 !BAD VALUE: gurobi_value < validator_value
 2014年 12月16日 火曜日 10時26分39秒 JST
 
+**** validator test: ok ****
+mprime: prob01.pddl
+5
+!BAD VALUE: gurobi_value > validator_value
+2014年 12月16日 火曜日 10時26分43秒 JST
+
