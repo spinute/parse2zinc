@@ -1456,3 +1456,7 @@ fd    : 8
 !BAD VALUE: gurobi_value > fd_value
 2014年 12月16日 火曜日 12時04分40秒 JST
 
+!!!! wrong plan generated !!!!
+openstack-strips: p01.pddl
+2014年 12月16日 火曜日 12時04分43秒 JST
+
