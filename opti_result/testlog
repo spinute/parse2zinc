@@ -1290,3 +1290,10 @@ freecell: p01.pddl
 openstack-strips: p01.pddl
 2014年 12月16日 火曜日 11時56分24秒 JST
 
+**** validator test: ok ****
+pathways: p01.pddl
+gurobi: 6
+fd    : 6
+GOOD OBJECTIVE VALUE: 6
+2014年 12月16日 火曜日 11時56分25秒 JST
+
