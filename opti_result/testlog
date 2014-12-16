@@ -5,3 +5,10 @@ fd    : 11
 GOOD OBJECTIVE VALUE: 11
 2014年 12月16日 火曜日 12時46分33秒 JST
 
+**** validator test: ok ****
+logistics98: prob01.pddl
+gurobi: 27
+fd    : 26
+!BAD VALUE: gurobi_value > fd_value
+2014年 12月16日 火曜日 12時46分49秒 JST
+
