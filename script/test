@@ -12,9 +12,9 @@ VALIDATE=$FD_HOME/src/VAL/validate
 # !!!!
 #change these variable for change domain and problem
 
-THISDOM=openstacks-strips
-THISPROB=p01.pddl
-DOMAIN=$BENCH/$THISDOM/demain_p01.pddl
+THISDOM=satellite
+THISPROB=p01-pfile1.pddl
+DOMAIN=$BENCH/$THISDOM/domain.pddl
 # !!!!
 
 ###### do

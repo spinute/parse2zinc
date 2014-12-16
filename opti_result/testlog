@@ -1478,3 +1478,10 @@ GOOD OBJECTIVE VALUE: 13
 openstacks-strips: p01.pddl
 2014年 12月16日 火曜日 12時16分50秒 JST
 
+**** validator test: ok ****
+satellite: p01-pfile1.pddl
+gurobi: 9
+fd    : 9
+GOOD OBJECTIVE VALUE: 9
+2014年 12月16日 火曜日 12時40分14秒 JST
+
