@@ -111,3 +111,7 @@ fd    : 42
 assembly: prob01.pddl
 2014年 12月16日 火曜日 12時48分21秒 JST
 
+!!!! wrong plan generated !!!!
+trucks: p01.pddl
+2014年 12月16日 火曜日 12時48分22秒 JST
+
