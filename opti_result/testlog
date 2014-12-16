@@ -317,3 +317,10 @@ fd    : 10
 GOOD OBJECTIVE VALUE: 10
 2014年 12月16日 火曜日 17時05分50秒 JST
 
+**** validator test: ok ****
+freecell: pfile1
+gurobi: 9
+fd    : 8
+!BAD VALUE: gurobi_value > fd_value
+2014年 12月16日 火曜日 17時05分53秒 JST
+
