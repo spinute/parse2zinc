@@ -1492,3 +1492,10 @@ fd    : 3
 GOOD OBJECTIVE VALUE: 3
 2014年 12月16日 火曜日 12時42分27秒 JST
 
+**** validator test: ok ****
+pipesworld-tankage: p01-net1-b6-g2-t50.pddl
+gurobi: 5
+fd    : 5
+GOOD OBJECTIVE VALUE: 5
+2014年 12月16日 火曜日 12時44分40秒 JST
+
