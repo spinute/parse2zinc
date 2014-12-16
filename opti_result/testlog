@@ -1069,3 +1069,9 @@ strage: p01.pddl
 
 2014年 12月16日 火曜日 11時38分40秒 JST
 
+**** validator test: ok ****
+elevators-sat08-strips: p01.pddl
+81
+!BAD VALUE: gurobi_value > fd_value
+2014年 12月16日 火曜日 11時38分52秒 JST
+
