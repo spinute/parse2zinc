@@ -1,14 +1,39 @@
 parse2zinc
 parse2gurobi
 ==========
-high priority
+issue
+ * 最適性の保証
+ * planning graph の実装
+ * minizinc での実装 -> minizincのAPIはまだ不安定なのでgecodeにしました
 
- * いろんな問題でテスト
+ 
+
+* 順次tを大きくしていく定式化だと，uniform costでないとき，はじめにみつかるプランが最適でない事がある（後ろにより小さいaction costの列から成るplanが存在しないことの保証は一般には困難 -> やるとしたら素朴にはplanning graphが展開に対して停留したことを検出する，もう少し工夫することもできそうだがどんなに頑張っても結局asterと同じ展開順序になると思う)
+
+-------
+
+20141216 test
+ok: 23(ただし現状最適性は保証していない)
+ ipc98: gripper, logistics98, blocks, grid, mprime, mystery, movie
+ ipc00: miconic
+ ipc02: depot, driverslog, zenotravel, satellite, rovers, freecell
+ ipc04: airport, psr-small, pipesworld-tankage
+ ipc06: tpp, storage, pathways, srucks-strips
+ ipc08: elevators-sat08-strips, elevators-opt08-strips, parcprinter-08-strips
+
+bad format : 2
+ ipc98: assembly(resource, ADL)
+ ipc04: airport(なぜかVALがうまく動作しない，fdの出力を入れてもダメなので非対応？)
+ ipc04: psr-middle, psr-large, pipesworld-notankage(axiom <- stripsでない?)
+ ipc06: trucks
+
+
+
+------ old issues
+
+* いろんな問題でテスト
  ** VALテスト
  ** fastdownward と経路長の最適値が一致するかを確認する
-
- * planning graph の実装
- * minizinc での実装
 
 sas_planが複数出てくる
  -> lmcutならば最適解が出てくる(lamaはそうではない)
@@ -17,40 +42,13 @@ sas_planが複数出てくる
 * sasをそのまま扱える
 * 等式制約にslackを入れるとある数かそうでないか，の論理和を表現することができる
 
-* 次状態公理を線形不等式で表現できる？ -> help
+* 次状態公理を線形不等式で表現できる？
 
-* 順次tを大きくしていく定式化だと，uniform costでないとき，はじめにみつかるプランが最適でない事がある（後ろにより小さいaction costの列から成るplanが存在しないことの保証は一般には困難 -> やるとしたら素朴にはplanning graphが展開に対して停留したことを検出する，もう少し工夫することもできそうだがどんなに頑張っても結局asterと同じ展開順序になると思う)
-
-movie no debug
--------
 * action costも取り込む
 
 * 実験をするたびにgit commitして実験した瞬間のスナップショットを残す
 * 実験のためのスクリプト，readmeを付ければ，実験の実行時オプションや内容をロギングできる
 * 加えて実験デザインのコメントをcommit messageにつける
-
-20141122 test
-ok: 16
- ipc98: gripper, logistics98, blocks, grid, mprime, mystery
- ipc02: depot, driverslog, zenotravel
- ipc04: airport, psr-small, pipesworld-tankage(split, nosplitu)
- ipc06: tpp, storage
- ipc08: elevators-sat08-strips, elevators-opt08-strips(but not best)
-
-bad format : 2
- ipc98: assembly(resource, ADL)
- ipc06: trucks
-
-bad solution: 3
- ipc04: psr-middle, psr-large, pipesworld-notankage(axiom <- stripsでない?)
-
-too long: 9
- ipc98: movie(?)
- ipc00: miconic
- ipc02: satellite(equality), rovers(typing), freecell(typing)
- ipc06: openstack-strips, pathways, trucks-strips
- ipc08: parcprinter-08-strips
-------
 
  * optiplanモデル -> gurobi をまずは生成する(minizincは非商用なので怪しいバグがある可能性は否定できず，まずはgurobiでモデルが動くことを確認する)
  
@@ -79,9 +77,5 @@ too long: 9
  * 簡単な問題で確認
  * fdでテストセットのデータベースとそれらの実行時間を測定する
  * (fdはadlなども扱えるため，テストセットには入っているがひとまずそのようなドメインは避ける)
-
-===========
-
-## sas_parser.cc
 
  * axiom sectionをパースしていない。(STRIPSでは常に0なので，それを確認しているだけ。ADL拡張などを試みるならば対応の必要あり。)
