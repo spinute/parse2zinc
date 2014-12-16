@@ -769,3 +769,7 @@ elevators-sat08-strips: p01.pddl
 elevators-opt08-strips: p01.pddl
 2014年 12月16日 火曜日 11時13分21秒 JST
 
+!!!! wrong plan generated !!!!
+assembly: prob01.pddl
+2014年 12月16日 火曜日 11時13分22秒 JST
+
