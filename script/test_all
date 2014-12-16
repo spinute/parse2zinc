@@ -13,17 +13,18 @@ VALIDATE=$FD_HOME/src/VAL/validate
 # !!!!
 #change these variable for change domain and problem
 SMALLDOMAINS=(gripper logistics98 blocks grid mprime)
-DOMAINS=(gripper    logistics98 blocks              grid           mprime      mystery     depot       driverlog   zenotravel  airport              psr-small             pipesworld-tankage      tpp         storage     elevators-sat08-strips elevators-opt08-strips assembly    trucks      psr-middle             psr-large              pipeworld-notankage movie       miconic     satellite       rovers      freecell    pathways        trucks-strips   parcprinter-08-strips)
-PROBS=(domain.pddl  domain.pddl domain.pddl         domain.pddl    domain.pddl domain.pddl domain.pddl domain.pddl domain.pddl p01-airport1-p1.pddl p01-domain.pddl       domain.pddl             domain.pddl domain.pddl p01-domain.pddl        p01-domain.pddl        domain.pddl domain.pddl domain.pddl            domain.pddl            domain.pddl         domain.pddl domain.pddl domain.pddl     domain.pddl domain.pddl domain_p01.pddl domain_p01.pddl p01-domain.pddl)
-PROBXS=(prob01.pddl prob01.pddl probBLOCKS-4-0.pddl prob01.pddl    prob01.pddl prob01.pddl pfile1      pfile1      pfile1      p01-domain.pddl      p01-s2-n1-l2-f50.pddl p01-net1-b6-g2-t50.pddl p01.pddl    p01.pddl    p01.pddl               p01.pddl               prob01.pddl p01.pddl    p01-s17-n2-l2-f30.pddl p01-s29-n2-l5-f30.pddl p01-net1-b6-g2.pddl prob01.pddl s1-0.pddl   p01-pfile1.pddl p01.pddl    pfile1      p01.pddl        p01.pddl        p01.pddl)
-# airport, openstacks-strips
-#openstacks-strips 
-#domain_p01.pddl
-#p01.pddl          
+DOMAINS=(gripper    logistics98 blocks              grid           mprime      mystery     depot       driverlog   zenotravel  psr-small             pipesworld-tankage      tpp         storage     elevators-sat08-strips elevators-opt08-strips movie       miconic     satellite       rovers      freecell    pathways        trucks-strips   parcprinter-08-strips)
+PROBS=(domain.pddl  domain.pddl domain.pddl         domain.pddl    domain.pddl domain.pddl domain.pddl domain.pddl domain.pddl p01-domain.pddl       domain.pddl             domain.pddl domain.pddl p01-domain.pddl        p01-domain.pddl        domain.pddl domain.pddl domain.pddl     domain.pddl domain.pddl domain_p01.pddl domain_p01.pddl p01-domain.pddl)
+PROBXS=(prob01.pddl prob01.pddl probBLOCKS-4-0.pddl prob01.pddl    prob01.pddl prob01.pddl pfile1      pfile1      pfile1      p01-s2-n1-l2-f50.pddl p01-net1-b6-g2-t50.pddl p01.pddl    p01.pddl    p01.pddl               p01.pddl               prob01.pddl s1-0.pddl   p01-pfile1.pddl p01.pddl    pfile1      p01.pddl        p01.pddl        p01.pddl)
 
-for ((i=0; i<29; i++)) 
-do
+# airport <- VALがエラーを吐く（fastdownwardのプランにも）
+# openstacks-strips <- 終わらない
 
+# openstacks-strips assembly    trucks      psr-middle             psr-large              pipeworld-notankage airport              
+# domain_p01.pddl   domain.pddl domain.pddl domain.pddl            domain.pddl            domain.pddl         p01-airport1-p1.pddl 
+# p01.pddl          prob01.pddl p01.pddl    p01-s17-n2-l2-f30.pddl p01-s29-n2-l5-f30.pddl p01-net1-b6-g2.pddl p01-domain.pddl      
+
+for (( i = 0; i < 23; i++ )); do
 THISDOM=${DOMAINS[$i]}
 PROB=$BENCH/$THISDOM/${PROBS[$i]}
 PROBX=${PROBXS[$i]}

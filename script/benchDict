@@ -17,7 +17,7 @@ grid: domain.pddl, prob01.pddl
 gripper: domain.pddl, prob01.pddl
 logistics00: domain.pddl, probLOGISTICS-10-0.pddl
 logistics98: domain.pddl, prob01.pddl
-miconic: domain.pddl,
+miconic: domain.pddl, s1-0.pddl
 miconic-fulladl: domain.pddl, f1-0.pddl
 miconic-simpleadl: domain.pddl, s1-0.pddl
 movie: domain.pddl, prob01.pddl

@@ -184,3 +184,10 @@ airport: p01-airport-p1.pddl
 airport: p01-airport-p1.pddl
 2014年 12月16日 火曜日 13時55分40秒 JST
 
+**** validator test: ok ****
+gripper: prob01.pddl
+gurobi: 11
+fd    : 11
+GOOD OBJECTIVE VALUE: 11
+2014年 12月16日 火曜日 17時04分02秒 JST
+
