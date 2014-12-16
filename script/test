@@ -36,7 +36,7 @@ echo "$THISDOM: $THISPROB" >> $TESTLOG
 
 ###### compare with fastdownward result
 $FD_HOME/src/preprocess/preprocess < $ZINC/tmp/output.sas
-$FD_HOME/src/fast-downward.py output --search "aster(lmcut())"
+$FD_HOME/src/fast-downward.py output --search "astar(lmcut())"
 # $FD_HOME/src/fast-downward.py --alias seq-sat-lama-2011 output
 
 if [ -f $ZINC/objval ]; then
