@@ -1485,3 +1485,10 @@ fd    : 9
 GOOD OBJECTIVE VALUE: 9
 2014年 12月16日 火曜日 12時40分14秒 JST
 
+**** validator test: ok ****
+storage: p01.pddl
+gurobi: 3
+fd    : 3
+GOOD OBJECTIVE VALUE: 3
+2014年 12月16日 火曜日 12時42分27秒 JST
+

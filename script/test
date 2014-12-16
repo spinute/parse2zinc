@@ -12,8 +12,8 @@ VALIDATE=$FD_HOME/src/VAL/validate
 # !!!!
 #change these variable for change domain and problem
 
-THISDOM=satellite
-THISPROB=p01-pfile1.pddl
+THISDOM=storage
+THISPROB=p01.pddl
 DOMAIN=$BENCH/$THISDOM/domain.pddl
 # !!!!
 
