@@ -19,3 +19,10 @@ fd    : 6
 GOOD OBJECTIVE VALUE: 6
 2014年 12月16日 火曜日 12時46分49秒 JST
 
+**** validator test: ok ****
+grid: prob01.pddl
+gurobi: 14
+fd    : 14
+GOOD OBJECTIVE VALUE: 14
+2014年 12月16日 火曜日 12時47分58秒 JST
+
