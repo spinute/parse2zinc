@@ -240,3 +240,10 @@ fd    : 7
 !BAD VALUE: gurobi_value > fd_value
 2014年 12月16日 火曜日 17時05分31秒 JST
 
+**** validator test: ok ****
+zenotravel: pfile1
+gurobi: 1
+fd    : 1
+GOOD OBJECTIVE VALUE: 1
+2014年 12月16日 火曜日 17時05分31秒 JST
+
