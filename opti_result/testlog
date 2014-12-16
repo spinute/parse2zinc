@@ -599,3 +599,9 @@ logistics98: prob01.pddl
 !BAD VALUE: gurobi_value < validator_value
 2014年 12月16日 火曜日 10時25分29秒 JST
 
+**** validator test: ok ****
+blocks: probBLOCKS-4-0.pddl
+6
+!BAD VALUE: gurobi_value > validator_value
+2014年 12月16日 火曜日 10時25分29秒 JST
+
