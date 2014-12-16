@@ -659,3 +659,7 @@ logistics98: prob01.pddl
 blocks: probBLOCKS-4-0.pddl
 2014年 12月16日 火曜日 11時10分52秒 JST
 
+!!!! wrong plan generated !!!!
+grid: prob01.pddl
+2014年 12月16日 火曜日 11時10分54秒 JST
+
