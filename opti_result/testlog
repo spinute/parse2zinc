@@ -1019,3 +1019,9 @@ mprime: prob01.pddl
 GOOD OBJECTIVE VALUE: 5
 2014年 12月16日 火曜日 11時38分36秒 JST
 
+**** validator test: ok ****
+mystery: prob01.pddl
+5
+GOOD OBJECTIVE VALUE: 5
+2014年 12月16日 火曜日 11時38分37秒 JST
+
