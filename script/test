@@ -5,9 +5,9 @@ ANS=$ZINC/tmp/answer
 GENERATE=$ZINC/bin/opti_main
 BENCH=$ZINC/benchmarks
 
-FD=~/1123fast
-TRANSRATE=$FD/src/translate/translate.py 
-VALIDATE=$FD/src/VAL/validate
+FD_HOME=~/1123fast
+TRANSRATE=$FD_HOME/src/translate/translate.py 
+VALIDATE=$FD_HOME/src/VAL/validate
 
 # !!!!
 #change these variable for change domain and problem
@@ -35,9 +35,9 @@ echo $VALIDATE_RESULT | $ZINC/bin/check_valid >> $TESTLOG
 echo "$THISDOM: $THISPROB" >> $TESTLOG
 
 ###### compare with fastdownward result
-$FD/src/preprocess/preprocess < $ZINC/tmp/output.sas
-$FD_HOME/src/fast-downward.py output --search "aster(lmcut())"
-# $FD/src/fast-downward.py --alias seq-sat-lama-2011 output
+$FD_HOME/src/preprocess/preprocess < $ZINC/tmp/output.sas
+$FD_HOME/src/fast-downward.py --search "aster(lmcut())" output
+# $FD_HOME/src/fast-downward.py --alias seq-sat-lama-2011 output
 
 if [ -f $ZINC/objval ]; then
 	$ZINC/script/get_planValue $THISDOM $THISPROB >> $TESTLOG
