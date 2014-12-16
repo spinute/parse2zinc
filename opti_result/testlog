@@ -1442,3 +1442,10 @@ GOOD OBJECTIVE VALUE: 4
 satellite: p01-file1.pddl
 2014年 12月16日 火曜日 12時04分36秒 JST
 
+**** validator test: ok ****
+rovers: p01.pddl
+gurobi: 10
+fd    : 10
+GOOD OBJECTIVE VALUE: 10
+2014年 12月16日 火曜日 12時04分37秒 JST
+
