@@ -837,3 +837,7 @@ mystery: prob01.pddl
 GOOD OBJECTIVE VALUE: 5
 2014年 12月16日 火曜日 11時26分05秒 JST
 
+!!!! wrong plan generated !!!!
+gripper: prob01.pddl
+2014年 12月16日 火曜日 11時28分36秒 JST
+
