@@ -605,3 +605,9 @@ blocks: probBLOCKS-4-0.pddl
 !BAD VALUE: gurobi_value > validator_value
 2014年 12月16日 火曜日 10時25分29秒 JST
 
+**** validator test: ok ****
+grid: prob01.pddl
+14
+!BAD VALUE: gurobi_value < validator_value
+2014年 12月16日 火曜日 10時26分39秒 JST
+
