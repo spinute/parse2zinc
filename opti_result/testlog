@@ -180,3 +180,7 @@ fd    : 169009
 airport: p01-airport-p1.pddl
 2014年 12月16日 火曜日 13時50分29秒 JST
 
+!!!! wrong plan generated !!!!
+airport: p01-airport-p1.pddl
+2014年 12月16日 火曜日 13時55分40秒 JST
+
