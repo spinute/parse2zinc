@@ -1081,3 +1081,7 @@ elevators-opt08-strips: p01.pddl
 !BAD VALUE: gurobi_value > fd_value
 2014年 12月16日 火曜日 11時38分55秒 JST
 
+!!!! wrong plan generated !!!!
+assembly: prob01.pddl
+2014年 12月16日 火曜日 11時38分56秒 JST
+
