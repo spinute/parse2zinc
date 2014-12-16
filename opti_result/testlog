@@ -226,3 +226,10 @@ fd    : 5
 GOOD OBJECTIVE VALUE: 5
 2014年 12月16日 火曜日 17時05分30秒 JST
 
+**** validator test: ok ****
+depot: pfile1
+gurobi: 11
+fd    : 10
+!BAD VALUE: gurobi_value > fd_value
+2014年 12月16日 火曜日 17時05分30秒 JST
+
