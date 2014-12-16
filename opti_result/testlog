@@ -1025,3 +1025,9 @@ mystery: prob01.pddl
 GOOD OBJECTIVE VALUE: 5
 2014年 12月16日 火曜日 11時38分37秒 JST
 
+**** validator test: ok ****
+depot: pfile1
+11
+!BAD VALUE: gurobi_value > fd_value
+2014年 12月16日 火曜日 11時38分38秒 JST
+
