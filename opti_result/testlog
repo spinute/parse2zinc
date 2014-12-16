@@ -827,3 +827,7 @@ GOOD OBJECTIVE VALUE: 6
 grid: prob01.pddl
 2014年 12月16日 火曜日 11時26分02秒 JST
 
+!!!! wrong plan generated !!!!
+mprime: prob01.pddl
+2014年 12月16日 火曜日 11時26分04秒 JST
+
