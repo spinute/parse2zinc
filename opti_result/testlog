@@ -1357,3 +1357,10 @@ fd    : 10
 driverslog: pfile1
 2014年 12月16日 火曜日 12時04分16秒 JST
 
+**** validator test: ok ****
+zenotravel: pfile1
+gurobi: 1
+fd    : 1
+GOOD OBJECTIVE VALUE: 1
+2014年 12月16日 火曜日 12時04分16秒 JST
+
