@@ -1031,3 +1031,8 @@ depot: pfile1
 !BAD VALUE: gurobi_value > fd_value
 2014年 12月16日 火曜日 11時38分38秒 JST
 
+!!!! wrong plan generated !!!!
+driverslog: pfile1
+
+2014年 12月16日 火曜日 11時38分38秒 JST
+
