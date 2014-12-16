@@ -813,3 +813,7 @@ freecell: p01.pddl
 gripper: prob01.pddl
 2014年 12月16日 火曜日 11時25分56秒 JST
 
+!!!! wrong plan generated !!!!
+logistics98: prob01.pddl
+2014年 12月16日 火曜日 11時25分58秒 JST
+
