@@ -5,7 +5,7 @@ HOME = "/Users/spinute/Dropbox/program/parse2zinc"
 FD   = "/Users/spinute/fastdownward" 
 
 CC = "clang++"
-OPT = "-m64 -Wall -Wextra -lpthread -lm -lgurobi_c++ -lgurobi56 -stdlib=libstdc++ -std=c++11"
+OPT = "-m64 -O2 -Wall -Wextra -lpthread -lm -lgurobi_c++ -lgurobi56 -stdlib=libstdc++ -std=c++11"
 DOPT = "-g -O0"
 LIB = "/Library/gurobi563/mac64/lib/"
 INC = "/Library/gurobi563/mac64/include/"
