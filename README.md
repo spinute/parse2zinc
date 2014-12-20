@@ -6,8 +6,6 @@ issue
  * planning graph の実装
  * minizinc での実装 -> minizincのAPIはまだ不安定なのでgecodeにしました
 
- 
-
 * 順次tを大きくしていく定式化だと，uniform costでないとき，はじめにみつかるプランが最適でない事がある（後ろにより小さいaction costの列から成るplanが存在しないことの保証は一般には困難 -> やるとしたら素朴にはplanning graphが展開に対して停留したことを検出する，もう少し工夫することもできそうだがどんなに頑張っても結局asterと同じ展開順序になると思う)
 
 -------
