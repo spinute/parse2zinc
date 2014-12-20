@@ -367,3 +367,7 @@ fd    : 26
 !BAD VALUE: gurobi_value > fd_value
 2014年 12月20日 土曜日 15時53分19秒 JST
 
+!!!! wrong plan generated !!!!
+logistics98: prob01.pddl
+2014年 12月20日 土曜日 16時23分07秒 JST
+

@@ -163,6 +163,11 @@ optiplan_solve(const int level, const Problem &problem)
 					for (auto op_itr = pre_prod_delf.begin(); op_itr != pre_prod_delf.end(); ++op_itr)
 						rhs += this_actions.at(*op_itr);
 					model.addConstr(this_env[p][PREDEL] == rhs, "c11");
+
+					delete &add_sub_pref;
+					delete &del_sub_pref;
+					delete &pre_sub_delf;
+					delete &pre_prod_delf;
 				}
 		}
 
