@@ -133,26 +133,26 @@ optiplan_solve(const int level, const Problem &problem)
 					GRBLinExpr rhs = 0.0;
 
 					Prop p(i, j);
-					ActionIndex add_sub_pref = create_substitution(addf[p], pref[p]);
-					ActionIndex del_sub_pref = create_substitution(delf[p], pref[p]);
-					ActionIndex pre_sub_delf = create_substitution(pref[p], delf[p]);
-					ActionIndex pre_prod_delf = create_product(delf[p], pref[p]);
+					ActionIndex *add_sub_pref = create_substitution(addf[p], pref[p]);
+					ActionIndex *del_sub_pref = create_substitution(delf[p], pref[p]);
+					ActionIndex *pre_sub_delf = create_substitution(pref[p], delf[p]);
+					ActionIndex *pre_prod_delf = create_product(delf[p], pref[p]);
 
-					for (auto op_itr = add_sub_pref.begin(); op_itr != add_sub_pref.end(); ++op_itr)
+					for (auto op_itr = add_sub_pref->begin(); op_itr != add_sub_pref->end(); ++op_itr)
 					{
 						rhs += this_actions.at(*op_itr);
 						model.addConstr(this_env[p][ADD] >= this_actions.at(*op_itr), "c6");
 					}
 					model.addConstr(this_env[p][ADD] <= rhs, "c5");
 					rhs = 0.0;
-					for (auto op_itr = del_sub_pref.begin(); op_itr != del_sub_pref.end(); ++op_itr)
+					for (auto op_itr = del_sub_pref->begin(); op_itr != del_sub_pref->end(); ++op_itr)
 					{
 						rhs += this_actions.at(*op_itr);
 						model.addConstr(this_env[p][DEL] >= this_actions.at(*op_itr), "c8");
 					}
 					model.addConstr(this_env[p][DEL] <= rhs, "c7");
 					rhs = 0.0;
-					for (auto op_itr = pre_sub_delf.begin(); op_itr != pre_sub_delf.end(); ++op_itr)
+					for (auto op_itr = pre_sub_delf->begin(); op_itr != pre_sub_delf->end(); ++op_itr)
 					{
 						// c9がない！
 						rhs += this_actions.at(*op_itr);
@@ -160,14 +160,14 @@ optiplan_solve(const int level, const Problem &problem)
 					}
 					model.addConstr(this_env[p][PREADD] <= rhs, "c9");
 					rhs = 0.0;
-					for (auto op_itr = pre_prod_delf.begin(); op_itr != pre_prod_delf.end(); ++op_itr)
+					for (auto op_itr = pre_prod_delf->begin(); op_itr != pre_prod_delf->end(); ++op_itr)
 						rhs += this_actions.at(*op_itr);
 					model.addConstr(this_env[p][PREDEL] == rhs, "c11");
 
-					delete &add_sub_pref;
-					delete &del_sub_pref;
-					delete &pre_sub_delf;
-					delete &pre_prod_delf;
+					delete add_sub_pref;
+					delete del_sub_pref;
+					delete pre_sub_delf;
+					delete pre_prod_delf;
 				}
 		}
 
@@ -226,23 +226,23 @@ optiplan_solve(const int level, const Problem &problem)
 	return true;
 }
 
-ActionIndex &
+ActionIndex *
 create_product(const set<int> &lset, const set<int> &rset)
 {
 	set<int> *ans = new set<int>();
 	for (auto itr = rset.begin(); itr != rset.end(); ++itr)
 		if (lset.find(*itr) != lset.end())
 			ans->insert(*itr); // insertとかしてるけどsetはイテレータ死なないんだっけ？(itr++とかで回避できた気がする)
-	return *ans;
+	return ans;
 };
 
-ActionIndex &
+ActionIndex *
 create_substitution(const set<int> &lset, const set<int> &rset)
 {
 	set<int> *ans  = new set<int>(lset);
 	for (auto itr = rset.begin(); itr != rset.end(); ++itr)
 		ans->erase(*itr);
-	return *ans;
+	return ans;
 };
 
 static SCVs &

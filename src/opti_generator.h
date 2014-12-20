@@ -37,8 +37,8 @@ static SCVs &create_SCVs(const string& prop_name, GRBModel &model);
 static GRBLinExpr &create_objfunc(const LevelActions &level_Actions, 
 	OpCostDict &op_cost_dict, const int level, const Problem &problem);
 
-ActionIndex &create_product(const set<int> &lset, const set<int> &rset);
-ActionIndex &create_substitution(const set<int> &lset, const set<int> &rset);
+ActionIndex *create_product(const set<int> &lset, const set<int> &rset);
+ActionIndex *create_substitution(const set<int> &lset, const set<int> &rset);
 
 bool optiplan_solve(const int level, const Problem &problem);
 
