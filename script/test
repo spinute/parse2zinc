@@ -13,7 +13,7 @@ VALIDATE=$FD_HOME/src/VAL/validate
 #change these variable for change domain and problem
 
 THISDOM=logistics98
-THISPROB=prob01.pddl
+THISPROB=prob02.pddl
 DOMAIN=$BENCH/$THISDOM/domain.pddl
 # !!!!
 
