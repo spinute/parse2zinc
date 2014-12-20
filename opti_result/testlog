@@ -375,3 +375,10 @@ logistics98: prob01.pddl
 logistics98: prob01.pddl
 2014年 12月20日 土曜日 16時40分17秒 JST
 
+**** validator test: ok ****
+logistics98: prob01.pddl
+gurobi: 27
+fd    : 26
+!BAD VALUE: gurobi_value > fd_value
+2014年 12月20日 土曜日 16時41分01秒 JST
+
