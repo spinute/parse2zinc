@@ -16,15 +16,9 @@ BIN_DISTDIR = "./bin"
 CLEAN.include()
 CLOBBER.include()
 
-
 desc 'clobber, compile generator, validator'
 task :default => [:clobber, :sas_generator, :check_valid] do
 	
-end
-
-desc 'do test: domain gripper problem 01'
-task :gripper01 do 
-	sh "~/fastdownward/src/translate/translate.py domain/gripper/domain.pddl domain/gripper/prob01.pddl"
 end
 
 desc 'do experiment'
@@ -32,8 +26,9 @@ task :test do
 	sh "script/test"
 end
 
-task :extract_bench do
-
+desc 'do experiment all domain'
+task :atest do
+	sh "script/test_all"
 end
 
 desc 'cp benchmarks from fastdownward dir'
@@ -46,7 +41,7 @@ end
 # default compilation
 directory BIN_DISTDIR
 rule /.*/ => BIN_DISTDIR do |t,args|
-  sh "#{CC} #{HOME+'/src/'+t.name+'.cc'} -o #{t.name} #{OPT} #{DOPT} -I#{INC} -L#{LIB}"
+  sh "#{CC} #{HOME+'/src/'+t.name+'.cc'} -o #{t.name} #{OPT} -I#{INC} -L#{LIB}"
   sh "mv #{t.name} bin"
 end
 
