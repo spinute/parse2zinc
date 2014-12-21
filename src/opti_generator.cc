@@ -199,15 +199,12 @@ optiplan_solve(const int level, const Problem &problem)
 		model.optimize();
 
 		ofstream ans_ofs("/Users/spinute/Dropbox/program/parse2zinc/tmp/answer");
-		int this_level = 0;
+
 		for (auto t = level_actions.begin(); t != level_actions.end(); ++t)
-		{
 			for (auto i = t->begin(); i != t->end(); ++i)
 				if (i->get(GRB_DoubleAttr_X) == 1)
 					ans_ofs << "(" << i->get(GRB_StringAttr_VarName) << ")"<< endl;
 
-			++this_level;
-		}
 		
 		ofstream objective_ofs("objval");
 		objective_ofs << model.get(GRB_DoubleAttr_ObjVal) << endl;
