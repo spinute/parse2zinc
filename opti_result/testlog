@@ -407,3 +407,10 @@ fd    : 26
 !BAD VALUE: gurobi_value > fd_value
 2014年 12月22日 月曜日 11時01分05秒 JST
 
+**** validator test: ok ****
+gripper: prob03.pddl
+gurobi: 23
+fd    : 23
+GOOD OBJECTIVE VALUE: 23
+2014年 12月22日 月曜日 13時27分07秒 JST
+

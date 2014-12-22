@@ -33,7 +33,6 @@ optiplan_solve(const int level, const Problem &problem)
 					level_env.at(t)[p] = create_SCVs(prop_name, model);
 				}
 
-
 		LevelActions level_actions;
 		level_actions.resize(level);
 
@@ -63,26 +62,26 @@ optiplan_solve(const int level, const Problem &problem)
 		OpSetMap pref;
 		for (int op = 0; op < problem.n_ops; ++op)
 		{
-			for (auto ef_itr = problem.operators.at(op).effects.begin(); ef_itr != problem.operators.at(op).effects.end(); ++ef_itr)
+			for (auto ef = problem.operators.at(op).effects.begin(); ef != problem.operators.at(op).effects.end(); ++ef)
 			{
-				if (ef_itr->preval == -1)
+				if (ef->preval == -1)
 				{
-					Prop p(ef_itr->var, ef_itr->postval);
+					Prop p(ef->var, ef->postval);
 					addf[p].insert(op);
-					for (int val = 0; val < problem.vars.at(ef_itr->var).range; ++val)
-						if (ef_itr->postval != val)
+					for (int val = 0; val < problem.vars.at(ef->var).range; ++val)
+						if (ef->postval != val)
 						{
-							Prop p(ef_itr->var, val);
+							Prop p(ef->var, val);
 							delf[p].insert(op);
 						}
 				}
 				else
 				{
-					Prop p1(ef_itr->var, ef_itr->preval);
+					Prop p1(ef->var, ef->preval);
 					pref[p1].insert(op);
-					if (ef_itr->preval != ef_itr->postval)
+					if (ef->preval != ef->postval)
 						delf[p1].insert(op);
-					Prop p2(ef_itr->var, ef_itr->postval);
+					Prop p2(ef->var, ef->postval);
 					addf[p2].insert(op);
 				}
 			}
@@ -138,30 +137,30 @@ optiplan_solve(const int level, const Problem &problem)
 					ActionIndex *pre_sub_delf = create_substitution(pref[p], delf[p]);
 					ActionIndex *pre_prod_delf = create_product(delf[p], pref[p]);
 
-					for (auto op_itr = add_sub_pref->begin(); op_itr != add_sub_pref->end(); ++op_itr)
+					for (auto op = add_sub_pref->begin(); op != add_sub_pref->end(); ++op)
 					{
-						rhs += this_actions.at(*op_itr);
-						model.addConstr(this_env[p][ADD] >= this_actions.at(*op_itr), "c6");
+						rhs += this_actions.at(*op);
+						model.addConstr(this_env[p][ADD] >= this_actions.at(*op), "c6");
 					}
 					model.addConstr(this_env[p][ADD] <= rhs, "c5");
 					rhs = 0.0;
-					for (auto op_itr = del_sub_pref->begin(); op_itr != del_sub_pref->end(); ++op_itr)
+					for (auto op = del_sub_pref->begin(); op != del_sub_pref->end(); ++op)
 					{
-						rhs += this_actions.at(*op_itr);
-						model.addConstr(this_env[p][DEL] >= this_actions.at(*op_itr), "c8");
+						rhs += this_actions.at(*op);
+						model.addConstr(this_env[p][DEL] >= this_actions.at(*op), "c8");
 					}
 					model.addConstr(this_env[p][DEL] <= rhs, "c7");
 					rhs = 0.0;
-					for (auto op_itr = pre_sub_delf->begin(); op_itr != pre_sub_delf->end(); ++op_itr)
+					for (auto op = pre_sub_delf->begin(); op != pre_sub_delf->end(); ++op)
 					{
 						// c9がない！
-						rhs += this_actions.at(*op_itr);
-						model.addConstr(this_env[p][PREADD] >= this_actions.at(*op_itr), "c10");
+						rhs += this_actions.at(*op);
+						model.addConstr(this_env[p][PREADD] >= this_actions.at(*op), "c10");
 					}
 					model.addConstr(this_env[p][PREADD] <= rhs, "c9");
 					rhs = 0.0;
-					for (auto op_itr = pre_prod_delf->begin(); op_itr != pre_prod_delf->end(); ++op_itr)
-						rhs += this_actions.at(*op_itr);
+					for (auto op = pre_prod_delf->begin(); op != pre_prod_delf->end(); ++op)
+						rhs += this_actions.at(*op);
 					model.addConstr(this_env[p][PREDEL] == rhs, "c11");
 
 					delete add_sub_pref;
