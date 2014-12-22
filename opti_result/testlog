@@ -575,3 +575,10 @@ fd    : 13
 GOOD OBJECTIVE VALUE: 13
 2014年 12月22日 月曜日 16時10分43秒 JST
 
+**** validator test: ok ****
+parcprinter-08-strips: p01.pddl
+gurobi: 269038
+fd    : 169009
+!BAD VALUE: gurobi_value > fd_value
+2014年 12月22日 月曜日 16時10分44秒 JST
+
