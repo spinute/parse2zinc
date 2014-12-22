@@ -484,3 +484,10 @@ fd    : 1
 GOOD OBJECTIVE VALUE: 1
 2014年 12月22日 月曜日 16時09分48秒 JST
 
+**** validator test: ok ****
+psr-small: p01-s2-n1-l2-f50.pddl
+gurobi: 8
+fd    : 8
+GOOD OBJECTIVE VALUE: 8
+2014年 12月22日 月曜日 16時09分49秒 JST
+
