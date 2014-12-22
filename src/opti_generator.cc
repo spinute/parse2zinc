@@ -35,11 +35,11 @@ optiplan_solve(const int level, const Problem &problem)
 
 
 		LevelActions level_actions;
-		level_actions.resize(level + 1);
+		level_actions.resize(level);
 
 		OpCostDict op_cost_dict;
 		std::vector<GRBVar> v;
-		for (int t = 0; t <= level; ++t)
+		for (int t = 0; t < level; ++t)
 		{
 			Actions tmp_acts;
 			tmp_acts.resize(problem.n_ops);
@@ -126,7 +126,7 @@ optiplan_solve(const int level, const Problem &problem)
 		for (int t = 1; t <= level; ++t)
 		{
 			Env this_env = level_env.at(t);
-			Actions this_actions = level_actions.at(t);
+			Actions this_actions = level_actions.at(t-1);
 			for (int i = 0; i < problem.n_vars; ++i)
 				for (int j = 0; j < problem.vars.at(i).range; ++j)
 				{
@@ -259,7 +259,7 @@ create_objfunc(const LevelActions &level_actions, OpCostDict &coefs, const int l
 {
 	GRBLinExpr *obj = new GRBLinExpr();
 
-	for (int t = 0; t <= level; ++t)
+	for (int t = 0; t < level; ++t)
 		if (problem.metric == 1)
 			for (int i = 0; i < problem.n_ops; ++i)
 				*obj += coefs[i] * level_actions.at(t).at(i);
