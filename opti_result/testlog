@@ -547,3 +547,10 @@ fd    : 9
 GOOD OBJECTIVE VALUE: 9
 2014年 12月22日 月曜日 16時10分08秒 JST
 
+**** validator test: ok ****
+rovers: p01.pddl
+gurobi: 10
+fd    : 10
+GOOD OBJECTIVE VALUE: 10
+2014年 12月22日 月曜日 16時10分09秒 JST
+
