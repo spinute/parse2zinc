@@ -435,3 +435,10 @@ fd    : 26
 !BAD VALUE: gurobi_value > fd_value
 2014年 12月22日 月曜日 16時08分24秒 JST
 
+**** validator test: ok ****
+blocks: probBLOCKS-4-0.pddl
+gurobi: 6
+fd    : 6
+GOOD OBJECTIVE VALUE: 6
+2014年 12月22日 月曜日 16時08分25秒 JST
+
