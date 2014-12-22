@@ -568,3 +568,10 @@ fd    : 6
 GOOD OBJECTIVE VALUE: 6
 2014年 12月22日 月曜日 16時10分13秒 JST
 
+**** validator test: ok ****
+trucks-strips: p01.pddl
+gurobi: 13
+fd    : 13
+GOOD OBJECTIVE VALUE: 13
+2014年 12月22日 月曜日 16時10分43秒 JST
+
