@@ -533,3 +533,10 @@ fd    : 7
 GOOD OBJECTIVE VALUE: 7
 2014年 12月22日 月曜日 16時10分07秒 JST
 
+**** validator test: ok ****
+miconic: s1-0.pddl
+gurobi: 4
+fd    : 4
+GOOD OBJECTIVE VALUE: 4
+2014年 12月22日 月曜日 16時10分07秒 JST
+
