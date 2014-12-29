@@ -6,6 +6,11 @@ parse2gurobi
  * VMのubuntuでは動くことを確認した
  * gurobiをubuntu側に入れる？(clangとか動くのか知らないし，環境ができていないのでやや面倒だが，OSX側でSatPlanを動かすよりは簡単そう)
 
+ * SatPlan2006とoptiplanの比較
+ * 並列と逐次の比較 optiplan (2006は並列がまだまだだった)
+ * sat solverの最新のものへの置き換え
+ * 
+
  * 最適性の保証
  * planning graph の実装
  * minizinc での実装 -> minizincのAPIはまだ不安定なのでgecodeにしました
@@ -13,6 +18,8 @@ parse2gurobi
  * 順次tを大きくしていく定式化だと，uniform costでないとき，はじめにみつかるプランが最適でない事がある（後ろにより小さいaction costの列から成るplanが存在しないことの保証は一般には困難 -> やるとしたら素朴にはplanning graphが展開に対して停留したことを検出する，もう少し工夫することもできそうだがどんなに頑張っても結局asterと同じ展開順序になると思う)
 
  * Mpの論文にそのため順次展開することの必然性は特にない，と書いてある
+ * sat ipのformulationの情報量の比較 <- 圧縮
+ * 変換の時間とソルバの時間を分けて計測
 
 -------
 
