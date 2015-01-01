@@ -1,0 +1,13 @@
+\begin{thebibliography}{1}
+
+\bibitem{domain_dependent}
+Henry Kautz and Bart Selman.
+\newblock The role of domain-specific knowledge in the planning as
+  satisfiability framework.
+\newblock {\em AAAI}, 1998.
+
+\bibitem{RN}
+Russel and Norvig.
+\newblock {\em Modern Approach to Artificial Intelligence}.
+
+\end{thebibliography}

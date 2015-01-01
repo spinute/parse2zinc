@@ -9,7 +9,6 @@ parse2gurobi
  * SatPlan2006とoptiplanの比較
  * 並列と逐次の比較 optiplan (2006は並列がまだまだだった)
  * sat solverの最新のものへの置き換え
- * 
 
  * 最適性の保証
  * planning graph の実装
