@@ -1,13 +1,77 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 
-\bibitem{domain_dependent}
-Henry Kautz and Bart Selman.
+\bibitem{SAT}
+Armin Biere, Marijn Heule, and Hans van Maaren.
+\newblock {\em Handbook of satisfiability}, Vol. 185.
+\newblock IOS Press, 2009.
+
+\bibitem{blum1997fast}
+Avrim~L Blum and Merrick~L Furst.
+\newblock Fast planning through planning graph analysis.
+\newblock {\em Artificial intelligence}, Vol.~90, No.~1, pp. 281--300, 1997.
+
+\bibitem{cplex201012}
+IBM~ILOG CPLEX.
+\newblock 12.2 user's manual, 2010.
+
+\bibitem{do2001planning}
+Minh~Binh Do and Subbarao Kambhampati.
+\newblock Planning as constraint satisfaction: Solving the planning graph by
+  compiling it into csp.
+\newblock {\em Artificial Intelligence}, Vol. 132, No.~2, pp. 151--182, 2001.
+
+\bibitem{howey2004val}
+Richard Howey, Derek Long, and Maria Fox.
+\newblock Val: Automatic plan validation, continuous effects and mixed
+  initiative planning using pddl.
+\newblock In {\em Tools with Artificial Intelligence, 2004. ICTAI 2004. 16th
+  IEEE International Conference on}, pp. 294--301. IEEE, 2004.
+
+\bibitem{kautz2006satplan}
+H~Kautz, B~Selman, and J~Hoffmann.
+\newblock Satplan: Planning as satisfiability.
+\newblock {\em Booklet of the 2006 International Planning Competition}, 2006.
+
+\bibitem{kautz1998role}
+Henry Kautz.
 \newblock The role of domain-specific knowledge in the planning as
-  satisfiability framework.
-\newblock {\em AAAI}, 1998.
+  satisfiabuity framework.
+\newblock 1998.
+
+\bibitem{kautz1992planning}
+Henry~A Kautz, Bart Selman, et~al.
+\newblock Planning as satisfiability.
+\newblock In {\em ECAI}, Vol.~92, pp. 359--363, 1992.
+
+\bibitem{meindl2012analysis}
+Bernhard Meindl and Matthias Templ.
+\newblock Analysis of commercial and free and open source solvers for linear
+  optimization problems.
+\newblock {\em Eurostat and Statistics Netherlands within the project ESSnet on
+  common tools and harmonised methodology for SDC in the ESS}, 2012.
+
+\bibitem{optimization2013gurobi}
+Gurobi Optimization.
+\newblock Gurobi optimizer, 2013.
 
 \bibitem{RN}
-Russel and Norvig.
-\newblock {\em Modern Approach to Artificial Intelligence}.
+Stuart~Jonathan Russell, Peter Norvig, 康一, 古川.
+\newblock エージェントアプローチ人工知能.
+\newblock 共立出版, 2008.
+
+\bibitem{van2005optiplan}
+Menkes van~den Briel and Subbarao Kambhampati.
+\newblock Optiplan: Unifying ip-based and graph-based planning.
+\newblock {\em J. Artif. Intell. Res.(JAIR)}, Vol.~24, pp. 919--931, 2005.
+
+\bibitem{vossen1999use}
+Thomas Vossen, Michael~O Ball, Amnon Lotem, and Dana Nau.
+\newblock On the use of integer programming models in ai planning.
+\newblock 1999.
+
+\bibitem{数理計画メモ}
+宮代隆平.
+\newblock 整数計画法メモ.
+\newblock http://www.tuat.ac.jp/\~miya/ipmemo.html.
 
 \end{thebibliography}
