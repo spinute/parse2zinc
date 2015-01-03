@@ -10,6 +10,11 @@ Avrim~L Blum and Merrick~L Furst.
 \newblock Fast planning through planning graph analysis.
 \newblock {\em Artificial intelligence}, Vol.~90, No.~1, pp. 281--300, 1997.
 
+\bibitem{bylander1991complexity}
+Tom Bylander.
+\newblock Complexity results for planning.
+\newblock In {\em IJCAI}, Vol.~10, pp. 274--279, 1991.
+
 \bibitem{cplex201012}
 IBM~ILOG CPLEX.
 \newblock 12.2 user's manual, 2010.
@@ -73,5 +78,10 @@ Thomas Vossen, Michael~O Ball, Amnon Lotem, and Dana Nau.
 宮代隆平.
 \newblock 整数計画法メモ.
 \newblock http://www.tuat.ac.jp/\~miya/ipmemo.html.
+
+\bibitem{ibaraki2011}
+木村俊房, 茨木俊秀.
+\newblock 最適化の数学.
+\newblock 共立出版, 2011.
 
 \end{thebibliography}

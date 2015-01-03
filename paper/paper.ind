@@ -1,50 +1,23 @@
 \begin{theindex}
 
-  \item 最適値, 7
+  \item global constraint, 2
 
   \indexspace
 
-  \item global constraint, 3
-  \item GP-CSP, 10
+  \item エージェント, 2
 
   \indexspace
 
-  \item PDDL, 6
+  \item 古典的プランニング, 4
 
   \indexspace
 
-  \item 古典的プランニング, 5
+  \item ドメイン特化, 2
+  \item ドメイン非依存, 2
 
   \indexspace
 
-  \item 最適解, 7
-
-  \indexspace
-
-  \item 実行可能解, 6
-  \item 実行可能領域, 6
-
-  \indexspace
-
-  \item 数理計画問題, 6
-  \item 制約, 7
-  \item 制約充足問題, 7
-  \item 制約問題, 7
-  \item 制約問題の解, 7
-
-  \indexspace
-
-  \item ドメイン特化, 3
-  \item ドメイン非依存, 3
-
-  \indexspace
-
-  \item 不等式制約, 6
-  \item プラン, 6
-  \item プランニング, 3
-
-  \indexspace
-
-  \item 目的関数, 6
+  \item プランニング, 2
+  \item プランニンググラフ, 3
 
 \end{theindex}
