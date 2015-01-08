@@ -1,44 +1,69 @@
 #!/bin/sh
-for (( i = 0; i < 23; i++ )); do
-for (( j = 0; j < N_PROB[i]; j++ )); do
-THISDOM=${DOMAINS[$i]}
-PROB=$BENCH/$THISDOM/${PROBS[$i]}
-PROBX=${PROBXS[$i]}
+PHOME=~/Dropbox/program/parse2zinc/experiment
 
-PROBLEM=$BENCH/$THISDOM/$PROBX
-RESULT=opti_result
-VALIDATE_RESULT=$ZINC_HOME/${RESULT}/validate_${THISDOM}_${PROBX}
+ANS=$PHOME/tmp/answer
+SOLVE=$PHOME/bin/opti_main
+BENCH=$PHOME/benchmarks
 
-$TRANSRATE $PROB $PROBLEM ## --relaxed -> remove negative effect
-mv output.sas $ZINC_HOME/tmp
+FD_HOME=~/1123fast
 
-$MAIN $ZINC_HOME/tmp/output.sas
+TRANSRATE=$FD_HOME/src/translate/translate.py 
+VAL=$FD_HOME/src/VAL/validate
 
-###### VAL
-$VALIDATE $PROB $PROBLEM $ANS > $VALIDATE_RESULT
+directories=(`cat $PHOME/experiment/all_dirs.txt`)
+domains=(`cat $PHOME/experiment/all_doms.txt`)
+problems=(`cat $PHOME/experiment/all_probs.txt`)
 
-TESTLOG=$ZINC_HOME/$RESULT/testlog
-echo $VALIDATE_RESULT | $ZINC_HOME/bin/check_valid >> $TESTLOG
-echo "$THISDOM: $PROBX" >> $TESTLOG
+RESULT="result-`date '+%y-%m-%d-%H'`"
+mkdir PHOME/$RESULT
 
-###### compare with fastdownward result
-$FD_HOME/src/preprocess/preprocess < $ZINC_HOME/tmp/output.sas
-$FD_HOME/src/fast-downward.py output --search "astar(lmcut())" 
+git commit -am 'experiment: 1s, gurobi, 4core'
+for (( j = 0; j < 868; j++ )); do
+	dir=${directories[$i]}
+	dom=$BENCH/$dir/${domains[$i]}
+	prob=$BENCH/$dir/${problems[$i]}
 
-if [ -f $ZINC_HOME/objval ]; then
-	mv $ZINC_HOME/sas_plan $ZINC_HOME/output $ZINC_HOME/objval $ZINC_HOME/tmp
-	$ZINC_HOME/script/get_planValue $THISDOM $PROBX >> $TESTLOG
-fi
+	VAL_RESULT=$PHOME/${RESULT}/val_${dir}_${domains[$i]}_${problems[$i]}
 
-date >> $TESTLOG
-echo "" >> $TESTLOG
+	$TRANSRATE $dom $prob ## --relaxed -> remove negative effect
+	mv output.sas $PHOME/tmp
+	TESTLOG=$HOME/$RESULT/testlog
 
-###### 実験はmasterからやろう
-git commit -am 'autocommit for test'
+	echo "$THISDOM: $PROBX" >> $TESTLOG
 
-if [ -f $ZINC_HOME/sas_plan.* ]; then
-	mv $ZINC_HOME/sas_plan.* $ZINC_HOME/tmp
-fi
+	timeout -s SIGALRM 1 bash -c'{
+	    trap "echo timeout error >> $TESTLOG; exit 1" SIGALRM
 
-done;
+		$SOLVE $PHOME/tmp/output.sas
+		$VAL $dom $prob $ANS > $VAL_RESULT
+		echo $VAL_RESULT | $PHOME/bin/check_valid >> $TESTLOG
+	}'
+
+	###### VAL
+
+
+	###### compare with fastdownward result
+	$FD_HOME/src/preprocess/preprocess < $PHOME/tmp/output.sas
+	echo "ffffffffffastdownward!!!!!!!!!!" >> $TESTLOG
+
+	timeout -s SIGALRM 1 bash -c'{
+	    trap "echo timeout error >> $TESTLOG; exit 1" SIGALRM
+
+		$FD_HOME/src/fast-downward.py output --search "astar(lmcut())" 
+
+		if [ -f $PHOME/objval ]; then
+			mv $PHOME/sas_plan $PHOME/output $PHOME/objval $PHOME/tmp
+			$PHOME/script/get_planValue $THISDOM $PROBX >> $TESTLOG
+		fi
+	}'
+
+	echo `date`>> $TESTLOG
+
+	###### 実験はmasterからやろう
+	git commit -am 'autocommit for test'
+
+	if [ -f $PHOME/sas_plan.* ]; then
+		mv $PHOME/sas_plan.* $PHOME/tmp
+	fi
+
 done;
