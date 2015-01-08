@@ -1,5 +1,5 @@
 #!/bin/sh
-PHOME=~/Dropbox/program/parse2zinc/experiment
+PHOME=~/Dropbox/program/parse2zinc
 
 ANS=$PHOME/tmp/answer
 SOLVE=$PHOME/bin/opti_main
