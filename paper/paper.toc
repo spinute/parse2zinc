@@ -1,31 +1,33 @@
-\contentsline {section}{\numberline {1}序論}{3}
-\contentsline {subsection}{\numberline {1.1}研究の概要}{3}
-\contentsline {subsection}{\numberline {1.2}背景}{4}
-\contentsline {subsection}{\numberline {1.3}研究の目的}{5}
-\contentsline {subsection}{\numberline {1.4}本論文の構成}{5}
-\contentsline {section}{\numberline {2}プランニング問題}{5}
-\contentsline {subsection}{\numberline {2.1}古典的プランニング問題の定義}{5}
-\contentsline {subsubsection}{\numberline {2.1.1}プランニング問題の例}{8}
-\contentsline {subsection}{\numberline {2.2}PDDL}{8}
-\contentsline {subsubsection}{\numberline {2.2.1}PDDLの例}{8}
-\contentsline {section}{\numberline {3}モデル}{10}
-\contentsline {subsection}{\numberline {3.1}充足可能性問題}{11}
-\contentsline {subsection}{\numberline {3.2}数理計画問題}{11}
-\contentsline {subsection}{\numberline {3.3}制約問題}{11}
-\contentsline {section}{\numberline {4}プランニング問題のモデリング}{12}
-\contentsline {subsection}{\numberline {4.1}制約充足問題によるプランニング問題の表現}{12}
-\contentsline {subsection}{\numberline {4.2}プランニンググラフ}{14}
-\contentsline {subsection}{\numberline {4.3}state change model}{14}
-\contentsline {section}{\numberline {5}実験: optiplanのモデルの再現実装とSATPLAN2006, GP-CSPとの性能比較}{14}
-\contentsline {subsection}{\numberline {5.1}optiplan}{15}
-\contentsline {subsection}{\numberline {5.2}SATPLAN2006}{16}
-\contentsline {subsection}{\numberline {5.3}結果}{16}
-\contentsline {subsection}{\numberline {5.4}考察}{16}
-\contentsline {section}{\numberline {6}制約モデル}{16}
-\contentsline {subsection}{\numberline {6.1}Gecode}{16}
-\contentsline {subsection}{\numberline {6.2}global constraint}{16}
-\contentsline {section}{\numberline {7}実験: global constraintを利用した制約モデルのプランナ実装の検証}{17}
-\contentsline {subsection}{\numberline {7.1}結果}{17}
-\contentsline {subsection}{\numberline {7.2}考察}{17}
-\contentsline {section}{\numberline {8}結論}{17}
-\contentsline {section}{\numberline {9}謝辞}{17}
+\contentsline {section}{\numberline {1}序論}{4}
+\contentsline {subsection}{\numberline {1.1}研究の概要}{4}
+\contentsline {subsection}{\numberline {1.2}背景}{5}
+\contentsline {subsection}{\numberline {1.3}研究の目的}{6}
+\contentsline {subsection}{\numberline {1.4}本論文の構成}{6}
+\contentsline {section}{\numberline {2}プランニング問題}{6}
+\contentsline {subsection}{\numberline {2.1}古典的プランニング問題の定義}{6}
+\contentsline {subsection}{\numberline {2.2}PDDL}{9}
+\contentsline {subsubsection}{\numberline {2.2.1}プランニング問題の例}{9}
+\contentsline {subsubsection}{\numberline {2.2.2}PDDLの例}{9}
+\contentsline {subsection}{\numberline {2.3}生成されるプラン}{12}
+\contentsline {section}{\numberline {3}モデル}{12}
+\contentsline {subsection}{\numberline {3.1}充足可能性問題}{12}
+\contentsline {subsection}{\numberline {3.2}数理計画問題}{12}
+\contentsline {subsection}{\numberline {3.3}制約問題}{13}
+\contentsline {section}{\numberline {4}プランニング問題のモデリング}{14}
+\contentsline {subsection}{\numberline {4.1}制約充足問題によるプランニング問題の表現}{14}
+\contentsline {subsection}{\numberline {4.2}プランニンググラフ}{16}
+\contentsline {subsection}{\numberline {4.3}state change model}{17}
+\contentsline {section}{\numberline {5}実験: optiplanのモデルの再現実装とSATPLAN2006との性能比較}{17}
+\contentsline {subsection}{\numberline {5.1}optiplan}{18}
+\contentsline {subsection}{\numberline {5.2}SATPLAN2006}{19}
+\contentsline {subsection}{\numberline {5.3}結果}{19}
+\contentsline {subsection}{\numberline {5.4}考察}{19}
+\contentsline {section}{\numberline {6}以下，前半の実験が終わってから取り組みます。}{19}
+\contentsline {section}{\numberline {7}制約モデル}{19}
+\contentsline {subsection}{\numberline {7.1}Gecode}{19}
+\contentsline {subsection}{\numberline {7.2}global constraint}{20}
+\contentsline {section}{\numberline {8}実験: global constraintを利用した制約モデルのプランナ実装の検証}{20}
+\contentsline {subsection}{\numberline {8.1}結果}{20}
+\contentsline {subsection}{\numberline {8.2}考察}{20}
+\contentsline {section}{\numberline {9}結論}{20}
+\contentsline {section}{\numberline {10}謝辞}{20}
