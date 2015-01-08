@@ -1,0 +1,44 @@
+#!/bin/sh
+for (( i = 0; i < 23; i++ )); do
+for (( j = 0; j < N_PROB[i]; j++ )); do
+THISDOM=${DOMAINS[$i]}
+PROB=$BENCH/$THISDOM/${PROBS[$i]}
+PROBX=${PROBXS[$i]}
+
+PROBLEM=$BENCH/$THISDOM/$PROBX
+RESULT=opti_result
+VALIDATE_RESULT=$ZINC_HOME/${RESULT}/validate_${THISDOM}_${PROBX}
+
+$TRANSRATE $PROB $PROBLEM ## --relaxed -> remove negative effect
+mv output.sas $ZINC_HOME/tmp
+
+$MAIN $ZINC_HOME/tmp/output.sas
+
+###### VAL
+$VALIDATE $PROB $PROBLEM $ANS > $VALIDATE_RESULT
+
+TESTLOG=$ZINC_HOME/$RESULT/testlog
+echo $VALIDATE_RESULT | $ZINC_HOME/bin/check_valid >> $TESTLOG
+echo "$THISDOM: $PROBX" >> $TESTLOG
+
+###### compare with fastdownward result
+$FD_HOME/src/preprocess/preprocess < $ZINC_HOME/tmp/output.sas
+$FD_HOME/src/fast-downward.py output --search "astar(lmcut())" 
+
+if [ -f $ZINC_HOME/objval ]; then
+	mv $ZINC_HOME/sas_plan $ZINC_HOME/output $ZINC_HOME/objval $ZINC_HOME/tmp
+	$ZINC_HOME/script/get_planValue $THISDOM $PROBX >> $TESTLOG
+fi
+
+date >> $TESTLOG
+echo "" >> $TESTLOG
+
+###### 実験はmasterからやろう
+git commit -am 'autocommit for test'
+
+if [ -f $ZINC_HOME/sas_plan.* ]; then
+	mv $ZINC_HOME/sas_plan.* $ZINC_HOME/tmp
+fi
+
+done;
+done;

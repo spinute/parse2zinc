@@ -1,0 +1,15 @@
+#!/bin/sh
+
+BENCH=~/fastdownward/benchmarks
+HOME=~/Dropbox/program/parse2zinc
+
+DOMAINS=(gripper    logistics98 blocks              grid           mprime      mystery     depot       driverlog   zenotravel  psr-small             pipesworld-tankage      tpp         storage     elevators-sat08-strips elevators-opt08-strips movie       miconic     satellite       rovers      freecell    pathways        trucks-strips   parcprinter-08-strips)
+
+for (( i = 0; i < 23; i++ )); do
+DOM="${DOMAINS[$i]}"
+echo "$DOM" >> "${HOME}/prob.txt"
+echo "$DOM" >> "${HOME}/domain.txt"
+(cd "${BENCH}/${DOM}"; ls | grep prob >> "${HOME}/prob.txt")
+(cd "${BENCH}/${DOM}"; ls >> "${HOME}/bench.txt")
+(cd "${BENCH}/${DOM}"; ls | grep dom >> "${HOME}/domain.txt")
+done;
