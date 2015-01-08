@@ -15,7 +15,7 @@ domains=(`cat $PHOME/experiment/all_doms.txt`)
 problems=(`cat $PHOME/experiment/all_probs.txt`)
 
 RESULT="result-`date '+%y-%m-%d-%H'`"
-mkdir PHOME/$RESULT
+mkdir $PHOME/$RESULT
 
 git commit -am 'experiment: 1s, gurobi, 4core'
 for (( j = 0; j < 868; j++ )); do
