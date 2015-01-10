@@ -1,4 +1,4 @@
-prob01.pddl
+probeasy.pddl
 prob02.pddl
 prob03.pddl
 prob04.pddl
