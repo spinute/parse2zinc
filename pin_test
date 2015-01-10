@@ -30,7 +30,7 @@ for (( i = 0; i < 1; i++ )); do
 	mv output.sas $PHOME/tmp
 	TESTLOG=$PHOME/$RESULT/testlog
 
-	echo "$THISDOM: $PROBX" >> $TESTLOG
+	echo "${directories[$i]}: prob=$BENCH/$dir/${problems[$i]}" >> $TESTLOG
 
 	timeout 1s bash -c "
 		$SOLVE $PHOME/tmp/output.sas
