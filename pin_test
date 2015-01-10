@@ -19,7 +19,7 @@ mkdir -p $PHOME/$RESULT
 git add $RESULT
 
 git commit -m 'experiment: 1s, gurobi, 4core'
-for (( j = 0; j < 868; j++ )); do
+for (( j = 0; j < 10; j++ )); do
 	dir=${directories[$i]}
 	dom=$BENCH/$dir/${domains[$i]}
 	prob=$BENCH/$dir/${problems[$i]}
@@ -61,5 +61,6 @@ for (( j = 0; j < 868; j++ )); do
 		mv $PHOME/sas_plan.* $PHOME/tmp
 	fi
 
+	echo "**************** $VAL_RESULT done ***************"
 done;
 git commit -am 'autocommit for fin test'
