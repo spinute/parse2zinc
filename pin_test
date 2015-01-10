@@ -34,7 +34,7 @@ for (( i = 0; i < 1; i++ )); do
 	echo "${directories[$i]}: ${problems[$i]}" >> $TESTLOG
 
 	timeout 1s bash -c "
-		$SOLVE $PHOME/tmp/output.sas
+		time $SOLVE $PHOME/tmp/output.sas 2>> $TESTLOG
 		$VAL $dom $prob $ANS > $VAL_RESULT
 		echo $VAL_RESULT | $PHOME/bin/check_valid >> $TESTLOG
 	" 2>> $TESTLOG
