@@ -16,8 +16,9 @@ problems=(`cat $PHOME/experiment/all_probs.txt`)
 
 RESULT="result-`date '+%y-%m-%d-%H'`"
 mkdir -p $PHOME/$RESULT
+git add $RESULT
 
-git commit -am 'experiment: 1s, gurobi, 4core'
+git commit -m 'experiment: 1s, gurobi, 4core'
 for (( j = 0; j < 868; j++ )); do
 	dir=${directories[$i]}
 	dom=$BENCH/$dir/${domains[$i]}
@@ -57,10 +58,10 @@ for (( j = 0; j < 868; j++ )); do
 	echo `date`>> $TESTLOG
 
 	###### 実験はmasterからやろう
-	git commit -am 'autocommit for test'
 
 	if [ -f $PHOME/sas_plan.* ]; then
 		mv $PHOME/sas_plan.* $PHOME/tmp
 	fi
 
 done;
+git commit -am 'autocommit for fin test'
