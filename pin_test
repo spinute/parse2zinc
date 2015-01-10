@@ -16,19 +16,22 @@ problems=(`cat $PHOME/experiment/all_probs.txt`)
 
 RESULT="result-`date '+%y-%m-%d-%H'`"
 mkdir -p $PHOME/$RESULT
-git add $RESULT
 
-git commit -am 'experiment: 1s, gurobi, 4core'
+echo 'experiment: 1s, gurobi, 1node, 4core' > $PHOME/$RESULT/memo.txt
+echo `date` > $PHOME/$RESULT/memo.txt
 
 for (( i = 0; i < 1; i++ )); do
 	dir=${directories[$i]}
 	dom=$BENCH/$dir/${domains[$i]}
 	prob=$BENCH/$dir/${problems[$i]}
+	sas=$PHOME/tmp/sas_${dir}_${domains[$i]}_${problems[$i]}
+	lp=$PHOME/tmp/sas_${dir}_${domains[$i]}_${problems[$i]}
+	log=$PHOME/tmp/sas_${dir}_${domains[$i]}_${problems[$i]}
 
 	VAL_RESULT=$PHOME/${RESULT}/val_${dir}_${domains[$i]}_${problems[$i]}
 
 	$TRANSRATE $dom $prob ## --relaxed -> remove negative effect
-	mv output.sas $PHOME/tmp
+	mv output.sas $sas
 	TESTLOG=$PHOME/$RESULT/testlog
 
 	echo "${directories[$i]}: ${problems[$i]}" >> $TESTLOG
@@ -38,27 +41,7 @@ for (( i = 0; i < 1; i++ )); do
 		$VAL $dom $prob $ANS > $VAL_RESULT
 		echo $VAL_RESULT | $PHOME/bin/check_valid >> $TESTLOG
 	" 2>> $TESTLOG
-
-	###### compare with fastdownward result
-	$FD_HOME/src/preprocess/preprocess < $PHOME/tmp/output.sas
-
-	# trap "echo timeout error >> $TESTLOG; exit 1" SIGALRM
-	# timeout 1s bash -c "{
-
-	# 	$FD_HOME/src/fast-downward.py output --search 'astar(lmcut())'
-
-	# 	if [ -f $PHOME/objval ]; then
-	# 		mv $PHOME/sas_plan $PHOME/output $PHOME/objval $PHOME/tmp
-	# 		$PHOME/script/get_planValue $THISDOM $PROBX >> $TESTLOG
-	# 	fi
-	# }"
-
-
-	###### 実験はmasterからやろう
-
-	if [ -f $PHOME/sas_plan.* ]; then
-		mv $PHOME/sas_plan.* $PHOME/tmp
-	fi
+	mv $PHOME/tmp/output.lp $lp
 
 	echo "**************** $VAL_RESULT done ***************"
 done;
