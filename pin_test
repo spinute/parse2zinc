@@ -18,7 +18,8 @@ RESULT="result-`date '+%y-%m-%d-%H'`"
 mkdir -p $PHOME/$RESULT
 git add $RESULT
 
-git commit -m 'experiment: 1s, gurobi, 4core'
+git commit -am 'experiment: 1s, gurobi, 4core'
+
 for (( i = 0; i < 1; i++ )); do
 	dir=${directories[$i]}
 	dom=$BENCH/$dir/${domains[$i]}
@@ -32,7 +33,7 @@ for (( i = 0; i < 1; i++ )); do
 
 	echo "${directories[$i]}: ${problems[$i]}" >> $TESTLOG
 
-	time timeout 1s bash -c "
+	timeout 1s bash -c "
 		$SOLVE $PHOME/tmp/output.sas
 		$VAL $dom $prob $ANS > $VAL_RESULT
 		echo $VAL_RESULT | $PHOME/bin/check_valid >> $TESTLOG
@@ -41,18 +42,17 @@ for (( i = 0; i < 1; i++ )); do
 	###### compare with fastdownward result
 	$FD_HOME/src/preprocess/preprocess < $PHOME/tmp/output.sas
 
-	    # trap "echo timeout error >> $TESTLOG; exit 1" SIGALRM
-	timeout 1s bash -c "{
+	# trap "echo timeout error >> $TESTLOG; exit 1" SIGALRM
+	# timeout 1s bash -c "{
 
-		$FD_HOME/src/fast-downward.py output --search 'astar(lmcut())'
+	# 	$FD_HOME/src/fast-downward.py output --search 'astar(lmcut())'
 
-		if [ -f $PHOME/objval ]; then
-			mv $PHOME/sas_plan $PHOME/output $PHOME/objval $PHOME/tmp
-			$PHOME/script/get_planValue $THISDOM $PROBX >> $TESTLOG
-		fi
-	}"
+	# 	if [ -f $PHOME/objval ]; then
+	# 		mv $PHOME/sas_plan $PHOME/output $PHOME/objval $PHOME/tmp
+	# 		$PHOME/script/get_planValue $THISDOM $PROBX >> $TESTLOG
+	# 	fi
+	# }"
 
-	echo `date`>> $TESTLOG
 
 	###### 実験はmasterからやろう
 
