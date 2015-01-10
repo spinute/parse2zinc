@@ -31,13 +31,13 @@ for (( j = 0; j < 868; j++ )); do
 
 	echo "$THISDOM: $PROBX" >> $TESTLOG
 
-	timeout 1s bash -c "
+	timeout 1s bash -c '
 	    trap "echo timeout error >> $TESTLOG; exit 1" SIGALRM
 
 		$SOLVE $PHOME/tmp/output.sas
 		$VAL $dom $prob $ANS > $VAL_RESULT
 		echo $VAL_RESULT | $PHOME/bin/check_valid >> $TESTLOG
-	"
+	'
 
 	###### compare with fastdownward result
 	$FD_HOME/src/preprocess/preprocess < $PHOME/tmp/output.sas
