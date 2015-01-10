@@ -1,2 +1,8 @@
 gripper: probeasy.pddl
 **** validator test: ok ****
+gripper: probeasy.pddl
+
+real	0m0.079s
+user	0m0.025s
+sys	0m0.018s
+**** validator test: ok ****
