@@ -30,9 +30,9 @@ for (( i = 0; i < 1; i++ )); do
 	mv output.sas $PHOME/tmp
 	TESTLOG=$PHOME/$RESULT/testlog
 
-	echo "${directories[$i]}: prob=$BENCH/$dir/${problems[$i]}" >> $TESTLOG
+	echo "${directories[$i]}: ${problems[$i]}" >> $TESTLOG
 
-	timeout 1s bash -c "
+	time timeout 1s bash -c "
 		$SOLVE $PHOME/tmp/output.sas
 		$VAL $dom $prob $ANS > $VAL_RESULT
 		echo $VAL_RESULT | $PHOME/bin/check_valid >> $TESTLOG
@@ -40,7 +40,6 @@ for (( i = 0; i < 1; i++ )); do
 
 	###### compare with fastdownward result
 	$FD_HOME/src/preprocess/preprocess < $PHOME/tmp/output.sas
-	echo "ffffffffffastdownward!!!!!!!!!!" >> $TESTLOG
 
 	    # trap "echo timeout error >> $TESTLOG; exit 1" SIGALRM
 	timeout 1s bash -c "{
