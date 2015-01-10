@@ -43,7 +43,7 @@ for (( j = 0; j < 868; j++ )); do
 	$FD_HOME/src/preprocess/preprocess < $PHOME/tmp/output.sas
 	echo "ffffffffffastdownward!!!!!!!!!!" >> $TESTLOG
 
-	timeout -s SIGALRM 1 bash -c'{
+	timeout 1s bash -c'{
 	    trap "echo timeout error >> $TESTLOG; exit 1" SIGALRM
 
 		$FD_HOME/src/fast-downward.py output --search "astar(lmcut())" 
