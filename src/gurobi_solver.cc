@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cassert>
 #include <map>
+#include <chrono>
 
 #include "/Library/gurobi563/mac64/include/gurobi_c++.h"
 
@@ -455,9 +456,18 @@ bool gurobi_solve(const int level, const Problem* problem_ptr)
 		model.update();
 
 		//gurobiに解かせている線形計画問題の出力
+		auto startTime = std::chrono::system_clock::now();
 		model.write("/Users/spinute/Dropbox/program/parse2zinc/tmp/output.lp");
+		auto endTime = std::chrono::system_clock::now();
+		auto timeSpan = endTime - startTime;
+		std::cerr << "time(write):" << std::chrono::duration_cast<std::chrono::milliseconds>(timeSpan).count() << "[ms]" << std::endl;
 		
+		startTime = std::chrono::system_clock::now();
 		model.optimize();
+		endTime = std::chrono::system_clock::now();
+		timeSpan = endTime - startTime;
+		std::cerr << "time(optimize):" << std::chrono::duration_cast<std::chrono::milliseconds>(timeSpan).count() << "[ms]" << std::endl;
+		
 
 		// plan output file in pddl format for VAL
 		ofstream plan_ofs("/Users/spinute/Dropbox/program/parse2zinc/tmp/answer");

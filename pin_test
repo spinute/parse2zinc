@@ -6,8 +6,6 @@ SOLVE=$PHOME/bin/opti_main
 BENCH=$PHOME/benchmarks
 
 FD_HOME=~/1123fast
-
-TRANSRATE=$FD_HOME/src/translate/translate.py 
 VAL=$FD_HOME/src/VAL/validate
 
 directories=(`cat $PHOME/experiment/all_dirs.txt`)
@@ -17,32 +15,36 @@ problems=(`cat $PHOME/experiment/all_probs.txt`)
 RESULT="result-`date '+%y-%m-%d-%H'`"
 mkdir -p $PHOME/$RESULT
 
-echo 'experiment: 1s, gurobi, 1node, 4core' > $PHOME/$RESULT/memo.txt
-echo `date` > $PHOME/$RESULT/memo.txt
+timer=10s
+echo 'experiment: $timer, gurobi, 1node, 4core' > $PHOME/$RESULT/memo.txt
+echo `date` >> $PHOME/$RESULT/memo.txt
 
-for (( i = 0; i < 1; i++ )); do
+for (( i = 0; i < 2; i++ )); do
 	dir=${directories[$i]}
 	dom=$BENCH/$dir/${domains[$i]}
 	prob=$BENCH/$dir/${problems[$i]}
-	sas=$PHOME/tmp/sas_${dir}_${domains[$i]}_${problems[$i]}
-	lp=$PHOME/tmp/sas_${dir}_${domains[$i]}_${problems[$i]}
-	log=$PHOME/tmp/sas_${dir}_${domains[$i]}_${problems[$i]}
+	sas=$PHOME/sasbench/sas_${dir}_${domains[$i]}_${problems[$i]}
+	lp=$PHOME/$RESULT/lp_${dir}_${domains[$i]}_${problems[$i]}
+	log=$PHOME/$RESULT/log_${dir}_${domains[$i]}_${problems[$i]}
 
-	VAL_RESULT=$PHOME/${RESULT}/val_${dir}_${domains[$i]}_${problems[$i]}
+	val_=$PHOME/${RESULT}/val_${dir}_${domains[$i]}_${problems[$i]}
 
-	$TRANSRATE $dom $prob ## --relaxed -> remove negative effect
-	mv output.sas $sas
 	TESTLOG=$PHOME/$RESULT/testlog
 
 	echo "${directories[$i]}: ${problems[$i]}" >> $TESTLOG
 
-	timeout 1s bash -c "
-		time $SOLVE $PHOME/tmp/output.sas 2>> $TESTLOG
-		$VAL $dom $prob $ANS > $VAL_RESULT
-		echo $VAL_RESULT | $PHOME/bin/check_valid >> $TESTLOG
+	timeout $timer bash -c "
+		$SOLVE $sas 2>> $TESTLOG
+		$VAL $dom $prob $ANS >> $val_
+		echo $val_ | $PHOME/bin/check_valid >> $TESTLOG
 	" 2>> $TESTLOG
 	mv $PHOME/tmp/output.lp $lp
+	#level1で死んでしまったものはoutput.lpが生成されない
 
-	echo "**************** $VAL_RESULT done ***************"
+	echo "**************** $val_ done ***************"
 done;
-git commit -am 'autocommit for fin test'
+
+mkdir -p $RESULT/lp
+mv $RESULT/lp_* $RESULT/lp
+mkdir -p $RESULT/val
+mv $RESULT/val_* $RESULT/val

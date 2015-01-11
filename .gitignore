@@ -28,6 +28,7 @@
 *.app
 
 bin
+result*
 *.log
 *.sas
 *.lp

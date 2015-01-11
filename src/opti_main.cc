@@ -2,6 +2,7 @@
 
 using namespace std;
 
+#include <chrono>
 #include "sas_parser.cc"
 #include "opti_generator.cc"
 
@@ -14,14 +15,23 @@ int main(int argc, char const *argv[])
 		cout << "usage: opti_main <file>.sas" << endl;
 		return -1;
 	}
-	
+
+	auto startTime = std::chrono::system_clock::now();
 	Problem *problem_ptr = parse2gurobi(argv[1]);
+	auto endTime = std::chrono::system_clock::now();
+	auto timeSpan = endTime - startTime;
+	std::cerr << "time(parse):" << std::chrono::duration_cast<std::chrono::milliseconds>(timeSpan).count() << "[ms]" << std::endl;
+	
+	startTime = std::chrono::system_clock::now();
 	for (int i = 1; i < 30 ; ++i)
 	{
 		cout << "level: " << i << endl;
 		if (optiplan_solve(i, *problem_ptr))
-			return 0;
+			break;
 	}
+	endTime = std::chrono::system_clock::now();
+	timeSpan = endTime - startTime;
+	std::cerr << "time(main):" << std::chrono::duration_cast<std::chrono::milliseconds>(timeSpan).count() << "[ms]" << std::endl;
 
 	return 0;
 }

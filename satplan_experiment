@@ -1,0 +1,49 @@
+#!/bin/sh
+PHOME=~/Dropbox/program/parse2zinc
+
+ANS=$PHOME/answer #generatorのans_ofs
+SOLVE=$PHOME/bin/opti_main
+BENCH=$PHOME/benchmarks
+
+VAL=$FD_HOME/bin/validate
+
+directories=(`cat $PHOME/experiment/all_dirs.txt`)
+domains=(`cat $PHOME/experiment/all_doms.txt`)
+problems=(`cat $PHOME/experiment/all_probs.txt`)
+
+RESULT="SAT-result-`date '+%y-%m-%d-%H'`"
+mkdir -p $PHOME/$RESULT
+
+timer=1s
+echo 'experiment: $timer, SATPLAN2006, 1node, 4core' > $PHOME/$RESULT/memo.txt
+echo `date` >> $PHOME/$RESULT/memo.txt
+
+for (( i = 0; i < 868; i++ )); do
+	dir=${directories[$i]}
+	dom=$BENCH/$dir/${domains[$i]}
+	prob=$BENCH/$dir/${problems[$i]}
+	sas=$PHOME/sasbench/sas_${dir}_${domains[$i]}_${problems[$i]}
+	lp=$PHOME/$RESULT/lp_${dir}_${domains[$i]}_${problems[$i]}
+	log=$PHOME/$RESULT/log_${dir}_${domains[$i]}_${problems[$i]}
+
+	val_=$PHOME/${RESULT}/val_${dir}_${domains[$i]}_${problems[$i]}
+
+	TESTLOG=$PHOME/$RESULT/testlog
+
+	echo "${directories[$i]}: ${problems[$i]}" >> $TESTLOG
+
+	timeout $timer bash -c "
+		$SOLVE $sas 2>> $TESTLOG
+		$VAL $dom $prob $ANS >> $val_
+		echo $val_ | $PHOME/bin/check_valid >> $TESTLOG
+	" 2>> $TESTLOG
+	mv $PHOME/tmp/output.lp $lp
+	#level1で死んでしまったものはoutput.lpが生成されない
+
+	echo "**************** $val_ done ***************"
+done;
+
+mkdir -p $RESULT/lp
+mv $RESULT/lp_* $RESULT/lp
+mkdir -p $RESULT/val
+mv $RESULT/val_* $RESULT/val

@@ -1,0 +1,2 @@
+experiment: 1s, gurobi, 1node, 4core
+2015年 1月10日 土曜日 18時48分58秒 JST
