@@ -1,13 +1,13 @@
 \begin{theindex}
 
-  \item Gecode, 19
+  \item Gecode, 20
   \item global constraint, 4, 20
   \item GP-CSP, 19
-  \item gurobi, 18
+  \item gurobi, 19
 
   \indexspace
 
-  \item IPC, 17
+  \item IPC, 18
 
   \indexspace
 
@@ -28,20 +28,20 @@
 
   \indexspace
 
-  \item 行為, 7
-  \item 効果, 7
-  \item 古典的プランニング, 6
+  \item 行為, 8
+  \item 効果, 8
+  \item 古典的プランニング, 7
 
   \indexspace
 
-  \item 最適解, 12
-  \item 最適値, 12
+  \item 最適解, 13
+  \item 最適値, 13
 
   \indexspace
 
   \item 次状態公理, 15
   \item 実行可能解, 12
-  \item 実行可能な行為, 7
+  \item 実行可能な行為, 8
   \item 実行可能領域, 12
   \item 充足可能性問題, 12
   \item 終了状態, 15
@@ -50,19 +50,16 @@
 
   \indexspace
 
-  \item 数理計画問題, 12
-
-  \indexspace
-
-  \item 正の効果, 7
+  \item 正の効果, 8
   \item 正のリテラル, 7
   \item 制約, 13
   \item 制約充足問題, 13
   \item 制約問題, 13
   \item 制約問題の解, 13
   \item 節, 12
-  \item 前提条件, 7
-  \item 前提条件公理, 15
+  \item 線形計画問題, 12
+  \item 前提条件, 8
+  \item 前提条件公理, 16
 
   \indexspace
 
@@ -75,7 +72,7 @@
 
   \indexspace
 
-  \item 排他行為公理, 15
+  \item 排他行為公理, 16
 
   \indexspace
 
@@ -84,11 +81,11 @@
   \indexspace
 
   \item 不等式制約, 12
-  \item 負の効果, 7
+  \item 負の効果, 8
   \item 負のリテラル, 7
-  \item プラン, 8
+  \item プラン, 9
   \item プランニング, 4
-  \item プランニンググラフ, 5, 16
+  \item プランニンググラフ, 6, 16
   \item プランニング問題, 7
 
   \indexspace

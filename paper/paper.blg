@@ -7,44 +7,44 @@ Warning--empty journal in kautz1998role
 Warning--empty journal in vossen1999use
 You've used 16 entries,
             2620 wiz_defined-function locations,
-            682 strings with 6578 characters,
-and the built_in function-call counts, 6272 in all, are:
-= -- 528
-> -- 232
-< -- 14
-+ -- 97
-- -- 80
-* -- 314
-:= -- 877
-add.period$ -- 47
+            683 strings with 6613 characters,
+and the built_in function-call counts, 6356 in all, are:
+= -- 547
+> -- 217
+< -- 15
++ -- 91
+- -- 74
+* -- 316
+:= -- 878
+add.period$ -- 48
 call.type$ -- 16
-change.case$ -- 83
+change.case$ -- 81
 chr.to.int$ -- 0
 cite$ -- 18
-duplicate$ -- 337
-empty$ -- 537
-format.name$ -- 120
-if$ -- 1432
+duplicate$ -- 347
+empty$ -- 554
+format.name$ -- 111
+if$ -- 1463
 int.to.chr$ -- 0
 int.to.str$ -- 16
-missing$ -- 18
+missing$ -- 17
 newline$ -- 81
 num.names$ -- 32
-pop$ -- 172
+pop$ -- 166
 preamble$ -- 1
-purify$ -- 71
+purify$ -- 68
 quote$ -- 0
-skip$ -- 322
+skip$ -- 332
 stack$ -- 0
-substring$ -- 273
-swap$ -- 76
-text.length$ -- 14
+substring$ -- 300
+swap$ -- 84
+text.length$ -- 15
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 56
+type$ -- 58
 warning$ -- 2
-while$ -- 50
+while$ -- 53
 width$ -- 18
-write$ -- 166
-is.kanji.str$ -- 172
+write$ -- 168
+is.kanji.str$ -- 169
 (There were 2 warnings)

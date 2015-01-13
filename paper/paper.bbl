@@ -59,10 +59,11 @@ Bernhard Meindl and Matthias Templ.
 Gurobi Optimization.
 \newblock Gurobi optimizer, 2013.
 
-\bibitem{RN}
-Stuart~Jonathan Russell, Peter Norvig, 康一, 古川.
-\newblock エージェントアプローチ人工知能.
-\newblock 共立出版, 2008.
+\bibitem{regin2004global}
+Jean-Charles R{\'e}gin.
+\newblock Global constraints and filtering algorithms.
+\newblock In {\em Constraint and Integer Programming}, pp. 89--135. Springer
+  US, 2004.
 
 \bibitem{van2005optiplan}
 Menkes van~den Briel and Subbarao Kambhampati.

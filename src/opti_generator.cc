@@ -194,7 +194,7 @@ optiplan_solve(const int level, const Problem &problem)
 			}
 
 		model.update();
-		
+
 		auto startTime = std::chrono::system_clock::now();
 		model.write("/Users/spinute/Dropbox/program/parse2zinc/tmp/output.lp");
 		auto endTime = std::chrono::system_clock::now();
