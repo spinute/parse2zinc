@@ -6,6 +6,7 @@ FD   = "/Users/spinute/fastdownward"
 
 CC = "g++-4.8"
 OPT = "-m64 -O2 -Wall -Wextra -lpthread -lm -lgurobi_c++ -lgurobi56 -std=gnu++11 -std=c++11"
+MINIOPT = "-O2 -Wall -Wextra -std=c++11"
 DOPT = "-g -O0"
 LIB = "/Library/gurobi563/mac64/lib/"
 INC = "/Library/gurobi563/mac64/include/"

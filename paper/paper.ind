@@ -1,13 +1,30 @@
 \begin{theindex}
 
-  \item Gecode, 20
-  \item global constraint, 4, 20
-  \item GP-CSP, 19
-  \item gurobi, 19
+  \item CP, 14
+  \item CPの解, 14
 
   \indexspace
 
-  \item IPC, 18
+  \item flatzinc, 24
+
+  \indexspace
+
+  \item Gecode, 23
+  \item global constraint, 4, 23
+  \item GP-CSP, 23
+  \item gurobi, 22
+
+  \indexspace
+
+  \item IPC, 21
+
+  \indexspace
+
+  \item local constraint, 4
+
+  \indexspace
+
+  \item minizinc, 24
 
   \indexspace
 
@@ -15,8 +32,9 @@
 
   \indexspace
 
-  \item SATPLAN, 19
-  \item state change model, 17
+  \item SATPLAN, 22
+  \item SCP, 14
+  \item state change model, 18
 
   \indexspace
 
@@ -39,31 +57,32 @@
 
   \indexspace
 
-  \item 次状態公理, 15
-  \item 実行可能解, 12
+  \item 次状態公理, 16
+  \item 実行可能解, 13
   \item 実行可能な行為, 8
-  \item 実行可能領域, 12
+  \item 実行可能領域, 13
   \item 充足可能性問題, 12
-  \item 終了状態, 15
-  \item 状態, 7
+  \item 終了状態, 16
+  \item 状態, 8
   \item 初期状態, 8, 15
 
   \indexspace
 
+  \item 整数計画問題, 13
   \item 正の効果, 8
   \item 正のリテラル, 7
   \item 制約, 13
-  \item 制約充足問題, 13
-  \item 制約問題, 13
-  \item 制約問題の解, 13
   \item 節, 12
-  \item 線形計画問題, 12
   \item 前提条件, 8
   \item 前提条件公理, 16
 
   \indexspace
 
-  \item 相互排他関係, 16
+  \item 相互排他関係, 17
+
+  \indexspace
+
+  \item 直列プランニング, 17
 
   \indexspace
 
@@ -80,7 +99,7 @@
 
   \indexspace
 
-  \item 不等式制約, 12
+  \item 不等式制約, 13
   \item 負の効果, 8
   \item 負のリテラル, 7
   \item プラン, 9
@@ -91,10 +110,11 @@
   \indexspace
 
   \item 閉世界仮説, 7
+  \item 並列プランニング, 17
 
   \indexspace
 
-  \item 目的関数, 12
+  \item 目的関数, 13
   \item 目的状態, 8
 
   \indexspace

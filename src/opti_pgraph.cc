@@ -9,54 +9,102 @@ using namespace std;
 #include "sas_generator.h"
 #include "opti_pgraph.h"
 
-bool
+int
 create_planningGraph(const Problem &problem)
 {
 	const int UNACTIVATED = -1;
-	LevelPGVars level_pgv;
-	level_pgv.resize(1);
+	
+	// int n_props = 0;
+	pg_Props new_ps;
+	// pg_Props old_ps;
 
-	vector<int> accum_props;
 	for (int var = 0; var < problem.n_vars; ++var)
 	{
-		int n_props = 0;
 		for (int val = 0; val < problem.vars.at(var).range; ++val)
 		{
-			++n_props;
+			// ++n_props;
 
+			Prop p(var, val);
 			if (problem.init.at(var) != val)
+				new_ps[p] = UNACTIVATED;
+			else
+				new_ps[p] = 0;
+		}
+	}
+
+	int t = 1;
+	pg_Actions acts;
+	int n_acts = 0;
+	while (true)
+	{
+		int n_acts_old = n_acts;
+		for (int var = 0; var < problem.n_vars; ++var)
+		{
+			for (int val = 0; val < problem.vars.at(var).range; ++val)
 			{
 				Prop p(var, val);
-				level_pgv[0][p].push_back(UNACTIVATED);
+				old_ps[p] = new_ps[p];
 			}
 		}
 
-		accum_props.push_back(n_props);
-	}
-
-	int t = 0;
-	LevelPGOps level_pgop;
-	while (true)
-	{
-		PGOps this_OpMtx;
-		this_OpMtx.resize(problem.n_ops + n_props); // operators and maintains
-
-		vector< vector<Prop> > this_pres;
-		this_pres.resize(problem.n_ops);
-
 		for (int op = 0; op < problem.n_ops; ++op)
-			for (auto ef = problem.operators.at(op).effects.begin(); ef != problem.operators.at(op).effects.end(); ++ef)
+		{
+			bool flg = true;
+			vector<Prop> posts, pres;
+			auto ope = problem.operators.at(op);
+			for (auto ef = ope.effects.begin(); ef != ope.effects.end(); ++ef)
+			{
+				Prop post(ef->var, ef->postval);
+				Prop pre(ef->var, ef->preval);
 				if (ef->preval != -1)
-					this_pres.at(op).push_back(ef->preval);
+					posts.push_back(post);
+				else
+				{
+					if (new_ps[pre] == UNACTIVATED)
+					{
+						flg = false;
+						break;
+					}
 
-		for (int i = problem.n_ops; i < problem.n_ops+problem.n_vars; ++i)
-			this_pres.at()
+					posts.push_back(post);
+				}
+			}
+
+			for (auto p = ope.prevailConditions.begin(); p != ope.prevailConditions.end(); ++p)
+			{
+				if (new_ps[*p] == UNACTIVATED)
+				{
+					flg = false;
+					break;
+				}
+			}
+
+			if (flg)
+			{
+				n_acts++;
+				for (auto p = posts.begin(); p != posts.end(); ++p)
+					new_ps[*p] = t;
+			}
+		}
+
+		if(n_acts == n_acts_old)
+			break;
+
+		bool flg = false;
+		for (auto p = problem.goal.begin(); p != problem.goal.end(); ++p)
+			if (new_ps[*p] == UNACTIVATED)
+			{
+				flg = true;
+				break;
+			}
+			
+		if (flg)
+			++t;
+		else{
+			cout << "i'm here\n";
+			break;
+		}
 	}
 
-	return true; //dummy
-}
-
-int main(void)
-{
-	return 0;
+	return t;
 }

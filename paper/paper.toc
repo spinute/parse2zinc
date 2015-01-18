@@ -22,7 +22,7 @@
 \contentsline {section}{\numberline {5}実験: optiplanのモデルの再現実装とSATPLAN2006との性能比較}{21}
 \contentsline {subsection}{\numberline {5.1}optiplanの実装}{22}
 \contentsline {subsection}{\numberline {5.2}SATPLAN2006}{22}
-\contentsline {subsection}{\numberline {5.3}結果}{23}
+\contentsline {subsection}{\numberline {5.3}結果}{22}
 \contentsline {subsection}{\numberline {5.4}考察}{23}
 \contentsline {section}{\numberline {6}制約モデル}{23}
 \contentsline {subsection}{\numberline {6.1}Gecode}{23}
@@ -30,7 +30,7 @@
 \contentsline {subsection}{\numberline {6.3}global constraintの例: all-different}{24}
 \contentsline {section}{\numberline {7}実験: global constraintを利用した制約モデルのプランナ実装の検証}{24}
 \contentsline {subsection}{\numberline {7.1}minizinc}{24}
-\contentsline {subsection}{\numberline {7.2}結果}{24}
-\contentsline {subsection}{\numberline {7.3}考察}{24}
-\contentsline {section}{\numberline {8}結論}{24}
-\contentsline {section}{\numberline {9}謝辞}{24}
+\contentsline {subsection}{\numberline {7.2}結果}{25}
+\contentsline {subsection}{\numberline {7.3}考察}{25}
+\contentsline {section}{\numberline {8}おわりに}{25}
+\contentsline {section}{\numberline {9}謝辞}{26}
