@@ -5,18 +5,14 @@
 
   \indexspace
 
-  \item flatzinc, 24
+  \item Gecode, 26
+  \item global constraint, 4, 24
+  \item GP-CSP, 24
+  \item gurobi, 23
 
   \indexspace
 
-  \item Gecode, 23
-  \item global constraint, 4, 23
-  \item GP-CSP, 23
-  \item gurobi, 22
-
-  \indexspace
-
-  \item IPC, 21
+  \item IPC, 22
 
   \indexspace
 
@@ -24,15 +20,11 @@
 
   \indexspace
 
-  \item minizinc, 24
-
-  \indexspace
-
   \item PDDL, 9
 
   \indexspace
 
-  \item SATPLAN, 22
+  \item SATPLAN, 23
   \item SCP, 14
   \item state change model, 18
 
@@ -42,7 +34,7 @@
 
   \indexspace
 
-  \item 完全な割り当て, 12
+  \item 完全な割り当て, 13
 
   \indexspace
 
@@ -52,8 +44,8 @@
 
   \indexspace
 
-  \item 最適解, 13
-  \item 最適値, 13
+  \item 最適解, 14
+  \item 最適値, 14
 
   \indexspace
 
@@ -61,20 +53,20 @@
   \item 実行可能解, 13
   \item 実行可能な行為, 8
   \item 実行可能領域, 13
-  \item 充足可能性問題, 12
+  \item 充足可能性問題, 13
   \item 終了状態, 16
   \item 状態, 8
-  \item 初期状態, 8, 15
+  \item 初期状態, 9, 16
 
   \indexspace
 
   \item 整数計画問題, 13
   \item 正の効果, 8
-  \item 正のリテラル, 7
-  \item 制約, 13
-  \item 節, 12
+  \item 正のリテラル, 8
+  \item 制約, 14
+  \item 節, 13
   \item 前提条件, 8
-  \item 前提条件公理, 16
+  \item 前提条件公理, 17
 
   \indexspace
 
@@ -82,7 +74,7 @@
 
   \indexspace
 
-  \item 直列プランニング, 17
+  \item 直列プランニング, 18
 
   \indexspace
 
@@ -91,34 +83,34 @@
 
   \indexspace
 
-  \item 排他行為公理, 16
+  \item 排他行為公理, 17
 
   \indexspace
 
-  \item 否定, 7
+  \item 否定, 8
 
   \indexspace
 
   \item 不等式制約, 13
   \item 負の効果, 8
-  \item 負のリテラル, 7
+  \item 負のリテラル, 8
   \item プラン, 9
   \item プランニング, 4
-  \item プランニンググラフ, 6, 16
-  \item プランニング問題, 7
+  \item プランニンググラフ, 6, 17
+  \item プランニング問題, 8
 
   \indexspace
 
-  \item 閉世界仮説, 7
-  \item 並列プランニング, 17
+  \item 閉世界仮説, 8
+  \item 並列プランニング, 18
 
   \indexspace
 
   \item 目的関数, 13
-  \item 目的状態, 8
+  \item 目的状態, 9
 
   \indexspace
 
-  \item リテラル, 7
+  \item リテラル, 8
 
 \end{theindex}

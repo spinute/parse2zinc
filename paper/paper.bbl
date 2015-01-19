@@ -5,6 +5,11 @@ Armin Biere, Marijn Heule, and Hans van Maaren.
 \newblock {\em Handbook of satisfiability}, Vol. 185.
 \newblock IOS Press, 2009.
 
+\bibitem{bixby2002solving}
+Robert~E Bixby.
+\newblock Solving real-world linear programs: A decade and more of progress.
+\newblock {\em Operations research}, Vol.~50, No.~1, pp. 3--15, 2002.
+
 \bibitem{blum1997fast}
 Avrim~L Blum and Merrick~L Furst.
 \newblock Fast planning through planning graph analysis.
@@ -64,6 +69,16 @@ Jean-Charles R{\'e}gin.
 \newblock Global constraints and filtering algorithms.
 \newblock In {\em Constraint and Integer Programming}, pp. 89--135. Springer
   US, 2004.
+
+\bibitem{rintanen2011madagascar}
+Jussi Rintanen.
+\newblock Madagascar: Efficient planning with sat.
+\newblock {\em The 2011 International Planning Competition}, p.~61, 2011.
+
+\bibitem{RN}
+Stuart~Jonathan Russell, Peter Norvig, 康一, 古川.
+\newblock エージェントアプローチ人工知能.
+\newblock 共立出版, 2008.
 
 \bibitem{van2005optiplan}
 Menkes van~den Briel and Subbarao Kambhampati.

@@ -5,46 +5,46 @@ The style file: jplain.bst
 Database file #1: paper.bib
 Warning--empty journal in kautz1998role
 Warning--empty journal in vossen1999use
-You've used 16 entries,
+You've used 19 entries,
             2620 wiz_defined-function locations,
-            683 strings with 6613 characters,
-and the built_in function-call counts, 6356 in all, are:
-= -- 547
-> -- 217
-< -- 15
-+ -- 91
-- -- 74
-* -- 316
-:= -- 878
-add.period$ -- 48
-call.type$ -- 16
-change.case$ -- 81
+            701 strings with 6965 characters,
+and the built_in function-call counts, 7436 in all, are:
+= -- 635
+> -- 253
+< -- 19
++ -- 106
+- -- 86
+* -- 369
+:= -- 1031
+add.period$ -- 57
+call.type$ -- 19
+change.case$ -- 95
 chr.to.int$ -- 0
-cite$ -- 18
-duplicate$ -- 347
-empty$ -- 554
-format.name$ -- 111
-if$ -- 1463
+cite$ -- 21
+duplicate$ -- 412
+empty$ -- 648
+format.name$ -- 129
+if$ -- 1710
 int.to.chr$ -- 0
-int.to.str$ -- 16
-missing$ -- 17
-newline$ -- 81
-num.names$ -- 32
-pop$ -- 166
+int.to.str$ -- 19
+missing$ -- 21
+newline$ -- 96
+num.names$ -- 38
+pop$ -- 194
 preamble$ -- 1
-purify$ -- 68
+purify$ -- 80
 quote$ -- 0
-skip$ -- 332
+skip$ -- 389
 stack$ -- 0
-substring$ -- 300
-swap$ -- 84
-text.length$ -- 15
+substring$ -- 338
+swap$ -- 98
+text.length$ -- 19
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 58
+type$ -- 68
 warning$ -- 2
-while$ -- 53
-width$ -- 18
-write$ -- 168
-is.kanji.str$ -- 169
+while$ -- 63
+width$ -- 21
+write$ -- 200
+is.kanji.str$ -- 199
 (There were 2 warnings)

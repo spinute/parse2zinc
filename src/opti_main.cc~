@@ -3,8 +3,9 @@
 using namespace std;
 
 #include <chrono>
+#include "sas_parser.cc"
 #include "opti_generator.cc"
-#include "opti_pgraph.cc"
+//#include "opti_pgraph.cc"
 
 int main(int argc, char const *argv[])
 {
@@ -19,13 +20,13 @@ int main(int argc, char const *argv[])
 	auto startTime = std::chrono::system_clock::now();
 	Problem *problem_ptr = parse2gurobi(argv[1]);
 	int t = create_planningGraph(*problem_ptr);
-	// cout << t << endl;
+	cout << t << endl;
 	auto endTime = std::chrono::system_clock::now();
 	auto timeSpan = endTime - startTime;
 	std::cerr << "time(parse):" << std::chrono::duration_cast<std::chrono::milliseconds>(timeSpan).count() << "[ms]" << std::endl;
 	
 	startTime = std::chrono::system_clock::now();
-	for (int i = t; i < 1000 ; i++)
+	for (int i = t; i < 100 ; ++i)
 	{
 		cout << "level: " << i << endl;
 		if (optiplan_solve(i, *problem_ptr))

@@ -34,18 +34,16 @@ create_planningGraph(const Problem &problem)
 
 	int t = 1;
 	pg_Actions acts;
-	int n_acts = 0;
+	// int n_acts = 0;
 	while (true)
 	{
-		int n_acts_old = n_acts;
-		for (int var = 0; var < problem.n_vars; ++var)
-		{
-			for (int val = 0; val < problem.vars.at(var).range; ++val)
-			{
-				Prop p(var, val);
-				old_ps[p] = new_ps[p];
-			}
-		}
+		// int n_acts_old = n_acts;
+		// 	for (int val = 0; val < problem.vars.at(var).range; ++val)
+		// 	{
+		// 		Prop p(var, val);
+		// 		//old_ps[p] = new_ps[p];
+		// 	}
+		// }
 
 		for (int op = 0; op < problem.n_ops; ++op)
 		{
@@ -81,14 +79,14 @@ create_planningGraph(const Problem &problem)
 
 			if (flg)
 			{
-				n_acts++;
+				// n_acts++;
 				for (auto p = posts.begin(); p != posts.end(); ++p)
 					new_ps[*p] = t;
 			}
 		}
 
-		if(n_acts == n_acts_old)
-			break;
+		// if(n_acts == n_acts_old)
+			// break;
 
 		bool flg = false;
 		for (auto p = problem.goal.begin(); p != problem.goal.end(); ++p)
@@ -101,10 +99,12 @@ create_planningGraph(const Problem &problem)
 		if (flg)
 			++t;
 		else{
-			cout << "i'm here\n";
+			// cout << "i'm here\n";
 			break;
 		}
 	}
+
+	// cout << "tttttttttttttttttt -> " << t << endl;
 
 	return t;
 }
