@@ -5,7 +5,7 @@
 \indexentry{global constraint}{4}
 \indexentry{local constraint}{4}
 \indexentry{プランニンググラフ}{6}
-\indexentry{こてんてきぷらんにんぐ@古典的プランニング}{7}
+\indexentry{こてんてきぷらんにんぐ@古典的プランニング}{8}
 \indexentry{ひてい@否定}{8}
 \indexentry{リテラル}{8}
 \indexentry{せいのりてらる@正のリテラル}{8}
@@ -18,38 +18,38 @@
 \indexentry{こうか@効果}{8}
 \indexentry{せいのこうか@正の効果}{8}
 \indexentry{ふのこうか@負の効果}{8}
-\indexentry{じっこうかのうなこうい@実行可能な行為}{8}
+\indexentry{じっこうかのうなこうい@実行可能な行為}{9}
 \indexentry{しょきじょうたい@初期状態}{9}
 \indexentry{もくてきじょうたい@目的状態}{9}
 \indexentry{ぷらん@プラン}{9}
-\indexentry{PDDL}{9}
+\indexentry{PDDL}{10}
 \indexentry{じゅうそくかのうせいもんだい@充足可能性問題}{13}
 \indexentry{かんぜんなわりあて@完全な割り当て}{13}
 \indexentry{せつ@節}{13}
-\indexentry{せいすうけいかくもんだい@整数計画問題}{13}
-\indexentry{もくてきかんすう@目的関数}{13}
-\indexentry{ふとうしきせいやく@不等式制約}{13}
-\indexentry{じっこうかのうかい@実行可能解}{13}
-\indexentry{じっこうかのうりょういき@実行可能領域}{13}
+\indexentry{せいすうけいかくもんだい@整数計画問題}{14}
+\indexentry{もくてきかんすう@目的関数}{14}
+\indexentry{ふとうしきせいやく@不等式制約}{14}
+\indexentry{じっこうかのうかい@実行可能解}{14}
+\indexentry{じっこうかのうりょういき@実行可能領域}{14}
 \indexentry{さいてきかい@最適解}{14}
 \indexentry{さいてきち@最適値}{14}
 \indexentry{せいやく@制約}{14}
-\indexentry{CPのかい@CPの解}{14}
-\indexentry{SCP}{14}
-\indexentry{CP}{14}
+\indexentry{CPのかい@CPの解}{15}
+\indexentry{CSP}{15}
+\indexentry{CP}{15}
 \indexentry{しょきじょうたい@初期状態}{16}
-\indexentry{しゅうりょうじょうたい@終了状態}{16}
-\indexentry{じじょうたいこうり@次状態公理}{16}
+\indexentry{しゅうりょうじょうたい@終了状態}{17}
+\indexentry{じじょうたいこうり@次状態公理}{17}
 \indexentry{ぜんていじょうけんこうり@前提条件公理}{17}
 \indexentry{はいたこういこうり@排他行為公理}{17}
 \indexentry{プランニンググラフ}{17}
-\indexentry{そうごはいたかんけい@相互排他関係}{17}
+\indexentry{そうごはいたかんけい@相互排他関係}{18}
 \indexentry{ちょくれつぷらんにんぐ@直列プランニング}{18}
 \indexentry{へいれつぷらんにんぐ@並列プランニング}{18}
-\indexentry{state change model}{18}
+\indexentry{state change model}{19}
 \indexentry{IPC}{22}
-\indexentry{gurobi}{23}
+\indexentry{Gurobi Optimizer}{23}
 \indexentry{SATPLAN}{23}
-\indexentry{GP-CSP}{24}
-\indexentry{global constraint}{24}
-\indexentry{Gecode}{26}
+\indexentry{GP-CSP}{26}
+\indexentry{global constraint}{26}
+\indexentry{Gecode}{28}

@@ -30,6 +30,11 @@ Minh~Binh Do and Subbarao Kambhampati.
   compiling it into csp.
 \newblock {\em Artificial Intelligence}, Vol. 132, No.~2, pp. 151--182, 2001.
 
+\bibitem{helmert2006fast}
+Malte Helmert.
+\newblock The fast downward planning system.
+\newblock {\em J. Artif. Intell. Res.(JAIR)}, Vol.~26, pp. 191--246, 2006.
+
 \bibitem{howey2004val}
 Richard Howey, Derek Long, and Maria Fox.
 \newblock Val: Automatic plan validation, continuous effects and mixed
@@ -60,6 +65,11 @@ Bernhard Meindl and Matthias Templ.
 \newblock {\em Eurostat and Statistics Netherlands within the project ESSnet on
   common tools and harmonised methodology for SDC in the ESS}, 2012.
 
+\bibitem{mohr1986arc}
+Roger Mohr and Thomas~C Henderson.
+\newblock Arc and path consistency revisited.
+\newblock {\em Artificial intelligence}, Vol.~28, No.~2, pp. 225--233, 1986.
+
 \bibitem{optimization2013gurobi}
 Gurobi Optimization.
 \newblock Gurobi optimizer, 2013.
@@ -84,6 +94,11 @@ Stuart~Jonathan Russell, Peter Norvig, 康一, 古川.
 Menkes van~den Briel and Subbarao Kambhampati.
 \newblock Optiplan: Unifying ip-based and graph-based planning.
 \newblock {\em J. Artif. Intell. Res.(JAIR)}, Vol.~24, pp. 919--931, 2005.
+
+\bibitem{van2001alldifferent}
+Willem-Jan van Hoeve.
+\newblock The alldifferent constraint: A survey.
+\newblock {\em arXiv preprint cs/0105015}, 2001.
 
 \bibitem{vossen1999use}
 Thomas Vossen, Michael~O Ball, Amnon Lotem, and Dana Nau.

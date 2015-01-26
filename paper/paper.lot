@@ -1,4 +1,8 @@
 \contentsline {table}{\numberline {1}{\ignorespaces 実験に使用したドメイン一覧}}{22}
 \contentsline {table}{\numberline {2}{\ignorespaces 実験に使用したプランナ一覧}}{22}
-\contentsline {table}{\numberline {3}{\ignorespaces 実験に使用したドメイン一覧}}{27}
-\contentsline {table}{\numberline {4}{\ignorespaces 実験に使用したプランナ一覧}}{27}
+\contentsline {table}{\numberline {3}{\ignorespaces optiplanとその再実装の比較（セル内の数字は解けた問題数である。ドメインごとの問題数をドメイン名の後ろの括弧内に記した。また，SATPLAN2006の実行時エラーの会ったドメインはfail, optiplanのIPC4の結果に含まれていないドメインはハイフンを記した。）}}{24}
+\contentsline {table}{\numberline {4}{\ignorespaces speedup値 ( = optiplanモデル(1コア)の実行時間 / optiplanモデル(8コア)の実行時間)}}{25}
+\contentsline {table}{\numberline {5}{\ignorespaces 実験に使用したドメイン一覧}}{29}
+\contentsline {table}{\numberline {6}{\ignorespaces 実験に使用したプランナ一覧}}{29}
+\contentsline {table}{\numberline {7}{\ignorespaces CP-optiplanのベンチマーク（セル内の数字は解けた問題数である。ドメインごとの問題数をドメイン名の後ろの括弧内に記した。また，SATPLAN2006の実行時エラーの会ったドメインはfail, optiplanのIPC4の結果に含まれていないドメインはハイフンを記した。）}}{30}
+\contentsline {table}{\numberline {8}{\ignorespaces 全てのプランナがモデルを生成できた問題集合(563問)について，モデルファイルをbzip2で圧縮した場合のファイルサイズの平均値(単位はbyteである。また，ドメイン名の後ろに各ドメインの問題数を記した。)}}{31}
